@@ -1,0 +1,6 @@
+# Out-of-tree DSH Bundle patch. The host plugin contributes model guidance and
+# a direct /blueprint command through the base profile's registries.
+
+- insert:
+    - id: design-blueprint
+      name: '@dsh-plugins/design-blueprint'

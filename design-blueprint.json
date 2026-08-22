@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "authority": {
+    "instructions": [
+      "AGENTS.md"
+    ],
+    "architecture": [
+      "DESIGN.md"
+    ],
+    "publicContracts": [
+      "README.md"
+    ],
+    "specsRoot": ".specs"
+  },
+  "changePolicy": {
+    "requireSpecFor": [
+      "**"
+    ],
+    "allowWithoutSpec": [
+      ".specs/**",
+      ".blueprint/approvals/**",
+      ".blueprint/architecture/**",
+      "design-blueprint.json",
+      "README.i18n.yaml"
+    ]
+  },
+  "features": {
+    "root": ".blueprint/features",
+    "approvalsRoot": ".blueprint/approvals"
+  },
+  "architecture": {
+    "root": ".blueprint/architecture"
+  },
+  "documentation": {
+    "standards": [
+      "docs/AGENTS.md"
+    ],
+    "roles": {
+      "tutorials": "docs/cookbook/**",
+      "references": "docs/reference/**",
+      "productGuides": "docs/user/**",
+      "decisions": ".specs/**"
+    },
+    "i18n": {
+      "enabled": true,
+      "include": [
+        "README.md",
+        "docs/**/*.md"
+      ],
+      "exclude": [
+        "docs/AGENTS.md",
+        "docs/i18n/terminology.md",
+        "docs/i18n/style-samples.md"
+      ],
+      "migrationSeverity": "recommended"
+    }
+  }
+}

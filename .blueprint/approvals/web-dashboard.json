@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "featureId": "web-dashboard",
+  "spec": ".specs/proposed/host-owned-feature-artifact-workflow.md",
+  "specHash": "eacf1b1240156347649d8cae131f97a09a5992292c4a161fd78cfe0ea4f1fb70",
+  "approvedAt": "2026-08-22T06:18:05.964Z"
+}

@@ -1,0 +1,2 @@
+// Manual debug entry retained for local troubleshooting; the canonical npm test command runs `node --experimental-test-isolation=none --test`.
+console.log("tests/debug-init.js is a manual debug entry; run `npm test` instead.");

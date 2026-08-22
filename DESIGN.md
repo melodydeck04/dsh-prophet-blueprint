@@ -1,0 +1,89 @@
+# Design Blueprint architecture
+
+## Purpose
+
+Design Blueprint helps an AI-assisted repository follow lifecycle-managed specifications, direct-developer feature approval, and explicit documentation roles. It does not replace product or translation review and does not execute arbitrary verification commands. Its enforcement unit is a deterministic relationship between authority documents, one repository snapshot, lifecycle specs, exact approval hashes, bilingual document identities, and a staged change set.
+
+## Authority model
+
+`design-blueprint.json` is the machine-readable authority index. It names standing instructions, current architecture, public contracts, the root of the specification lifecycle, documentation standards, document-tier locations, and bilingual scope. Those documents have different jobs and do not copy each other's facts.
+
+`AGENTS.md` contains standing development orders. This file describes current component ownership. `README.md` and `README.zh.md` describe consumer-visible behavior. `.specs/` records proposal and decision rationale. `docs/AGENTS.md` owns human-facing document placement, while `docs/i18n/` owns the bilingual contract, rules, terminology, and style samples. Project-local Skills under `.dsh/skills/` guide AI workflows but do not become product authority.
+
+## Components
+
+```text
+design-blueprint.json
+        |
+        +--> lib/project-root.js - explicit project anchor
+		+--> lib/project-discovery.js - bounded first-run target discovery
+        |
+        v
+  lib/config.js -------- authority, policy, features, architecture, and document roles
+        |
+        +--> lib/snapshot.js ---- working tree or exact Git index
+        +--> lib/specs.js ------- lifecycle Markdown parser
+        +--> lib/policy.js ------ one-spec scope correspondence
+        +--> lib/features.js ---- feature hierarchy + document satisfaction + component allocations
+        +--> lib/architecture.js - component catalog, typed edges, cycles, owned-path conflicts
+        +--> lib/artifacts.js --- canonical identity, artifact preparation + migration, architecture preview/apply
+        +--> lib/workflow.js ---- feature/spec state + exact-hash approval
+        +--> lib/version.js ----- Host package identity
+        +--> lib/docs.js -------- bilingual discovery, structure, and blob identity
+                    |
+                    v
+              lib/scan.js
+               /       \
+              v         v
+       lib/cli.js   lib/index.js -------- lib/web-api.js
+          |          prompt + command       |
+          v                                 v
+   local Git hook / CI                 lib/client.js
+                                    conversation.view tab
+```
+
+`lib/path-utils.js` owns repository-relative validation and the small glob dialect. `lib/init.js` creates a non-destructive project scaffold, adds documentation configuration to an older valid Blueprint config, and seeds project-local DSH Skills. `lib/docs.js` owns bilingual scope discovery, Git blob identity, language-switcher and Markdown-structure checks, and explicit pair confirmation. `lib/install-hook.js` installs the CLI gate. `lib/stamps.js` remains an optional freshness signal and is not the semantic specification owner.
+
+`lib/architecture.js` owns the developer-authored component catalog under `.blueprint/architecture/components/`. Each component record carries a stable ASCII Id, Kind, optional Container, Deployment identifier, Status, owned source paths, provided contracts, typed dependencies (`depends_on`, `calls`, `publishes`, `consumes`, `exposes`, `extends`), supported Feature ids, and required/recommended documents. The loader reports invalid references, unsupported relation types, containment cycles, ambiguous owned paths, and reused deployment or contract identifiers. Component identity is decoupled from `Container`, so reparenting a component is a graph placement change and never renames the artifact path or its descendants; legacy component records continue to load and parse. Feature allocations are many-to-many between `.blueprint/features/*.md` and the component catalog and never rewrite either identity. The catalog also owns the architectural preview/apply boundary used by Blueprint Web and any future reviewer: a preview enumerates added, updated, removed components, every typed edge change, deployment effects, contract ownership changes, ambiguous path ownership, containment cycles, document effects, and approval invalidations; apply recomputes the same preview against the current snapshot, refuses stale or expanded diffs, and only writes the registered component file under the configured architecture root.
+
+`lib/project-root.js` searches upward for `design-blueprint.json`; failure is terminal and occurs before snapshot traversal. `lib/features.js` owns canonical feature Markdown, hierarchy validation, and required-document satisfaction. `lib/artifacts.js` owns deterministic local-key identity, the complete Feature artifact descriptor, recoverable bilingual skeleton preparation, and stale-preview-protected identity migration. `lib/workflow.js` joins `Feature: <id>` specs to direct-developer approval records and derives draft, prepared, review, approved, rejected, or implemented state. `lib/version.js` owns the Host package identity returned by the dashboard. `lib/web-api.js` is a narrow same-origin JSON boundary that reads a complete dashboard and writes only validated feature files, registered artifact sets, explicit migrations, or exact-hash approval records with optimistic concurrency. `lib/client.js` owns presentation, version comparison, the structured Chinese requirement view, the original React/SVG hierarchy layout, main-session workflow prompts, and independent review-session orchestration.
+
+`lib/project-discovery.js` is the pre-anchor exception used only for first-run setup. It recognizes the containing Git root or a deliberately small marker set, inspects at most 100 direct child directories for non-actionable hints, and never recursively selects a project. When strong recognition fails, it separately exposes the exact non-root DSH workspace as a developer-confirmable target. The initialize API accepts either the exact strong candidate returned by a fresh discovery call or that exact current-workspace fallback with an explicit confirmation bit.
+
+## Snapshot semantics
+
+The default scan first searches upward for the `design-blueprint.json` anchor. When that project root is also the containing Git root, it reads the index. The change list is NUL-delimited, rename-aware staged metadata. Every authority and spec document is read from the same index, so an unstaged edit cannot approve or reject a different staged artifact. An unanchored directory is rejected before traversal; a 200,000-file ceiling remains as a final working-tree safeguard.
+
+`--all` reads the working tree and validates authority and lifecycle structure. It has no invented staged change set, so it does not apply staged scope coverage.
+
+## Specification state
+
+`proposed` documents state intent, alternatives, observable acceptance criteria, verification declarations, and risks. Their scopes can own staged implementation files. An English lifecycle document may have a same-directory `.zh.md` counterpart. The loader parses only the English owner as a specification, attaches the Chinese content as another presentation, and derives one review hash from both exact files.
+
+`implemented` documents state shipped decisions, verification, alternatives, and consequences. An implemented document owns a new staged implementation change only when that spec is also staged, forcing the decision record to participate in the change.
+
+`rejected` documents retain a proposal only when its reason prevents a plausible mistake. They never own implementation changes.
+
+## Failure policy
+
+Configuration parse failures, invalid paths, missing authorities or document standards, malformed lifecycle documents, stale feature approvals, implementation covered only by an unapproved Feature-linked proposal, broken established translation triplets, stale translation confirmations, structural translation drift, missing acceptance evidence, uncovered staged files, and ambiguous ownership are required issues. A lone pre-adoption document is recommended by default so initialization never fabricates its counterpart. The CLI exits 1 when required issues are present and 2 when the scanner itself cannot run.
+
+The policy engine does not infer semantic approval from a hash or passing command. Pair confirmation records that a reviewer has asserted semantic equivalence and that the observable structure matches; it cannot prove translation meaning. Review owns natural-language intent; project tests and CI own executed evidence.
+
+## DSH integration
+
+The package manifest declares one out-of-tree Bundle patch and one Web client entry. The patch inserts the host function plugin, whose named exports match the current DSH contract. It injects `systemPrompt`, `commands`, and `webServer`; registers an order-90 prompt section, `/blueprint [all]`, and the exact `/design-blueprint/api` route. All registrations are Cordis effects and unwind with the plugin fiber.
+
+The `dsh.client` declaration targets DSH 0.1.1-rc.2 and is ordered after its runtime, Markdown primitives, and conversation UI packages. Its browser output follows DSH's lazy `window.__ModuleLoader__` contract and contributes a session-scoped `conversation.view` entry. The entry reads the session's declared `cwd`; the Host independently resolves that path to a configured Blueprint root before any read or write.
+
+`BlueprintView` owns three primary workspace states. `spec` is the default and composes `SpecDocument` with `ReviewerPanel`: the former defaults to the selected feature's Chinese Product brief, switches between Product brief and Development Spec and between Chinese and English, exposes the physical artifact path and workflow authority, and never substitutes another language when a counterpart is absent. Product brief, Spec, Feature-definition, and approval paths come from the Host artifact descriptor; browser code neither reconstructs them from the title/id nor searches for alternatives. `Generate development plan` calls Host preparation with the selected Feature hash before sending the immutable descriptor to the Agent. Formal Spec presentations come from the descriptor's lifecycle pair. `ReviewerPanel` owns the independent Session projection and direct-edit interaction. `structure` composes `FeatureDiagram` or `TreeRows` with `FeatureRead`/`FeatureForm`; new records collect a display title, parent, and developer-confirmed ASCII local key while previewing the derived id and artifact set. Its explicit normalization action previews and confirms migrations; ordinary edits cannot silently reparent identity. `architecture` is the third primary workspace: it composes `ArchitectureGraph` (a logical component graph that distinguishes containment from typed dependency edges, selects canonical component details, and exposes deployment, provided contracts, source ownership, supported Features, document state, and validation issues) with `ArchitectureAssistant` (an independent Host-born Session that mirrors the Spec reviewer boundary but reads the architecture model and approved decisions). The backing architecture Session remains recoverable in the DSH Session list, but the Architecture design workspace is the user-facing conversation surface: it projects finalized messages, streaming Markdown, reasoning and tool activity, errors, cancellation, cached recovery, and bottom-follow behavior inline without navigating to an ungrouped chat. Selecting a Feature in `architecture` highlights every allocated component; selecting a component highlights every supported Feature. Architecture changes use an optimistic-concurrency preview/apply boundary: a preview enumerates every node, edge, deployment, contract, document, and approval invalidation; apply recomputes the preview against the live snapshot and refuses stale or expanded diffs. The selected feature id and the selected component id are independent view-local targets shared across the three workspaces, so choosing a node or document selector changes only its own canonical detail view.
+
+The review column calls the concrete client runtime's Host-born `sessions.create({ cwd })` capability. It renames the blank Session with stable review-protocol and project-local feature identity, explicitly calls `Session.open()` before the first or any later prompt, and subscribes to the same `ConversationSnapshot` business material used by DSH Chat. On DSH 0.1.1-rc.2 it prefers the official `snapshot.chat.legacy` finalized nodes, `partial`, and `runningCalls`; former top-level fields remain a migration fallback. Reasoning blocks, nested running or settled tool calls, file operations, tasks, subagents, retry, and failure material become defensive activity entries, while text blocks remain streaming Markdown. Unknown blocks are omitted rather than serialized. The bounded flex layout gives the conversation viewport sole ownership of history scrolling, prevents turns and activity cards from shrinking, and bounds oversized message bodies, activity details, code blocks, and tables with nested overflow. A near-bottom pin follows streaming updates until manual upward scrolling releases it; the explicit latest-content control restores the pin. Spec hashes do not participate in Session identity, so a direct edit preserves the conversation; only a protocol change or explicit reset starts a clean Session. Every submission still carries a fresh delimited feature/brief/Spec snapshot plus the developer message. The role is prompt-constrained and does not claim a narrower tool capability than the active DSH composition actually supplies.
+
+Every review submission carries a presentation mode. Simple mode is the default product-facing projection: the role prompt makes repository-derived engineering choices automatic, caps clarification at three user-visible or business-boundary decisions, and requests a stable Chinese outline rather than defect codes. Technical mode exposes the full engineering review. Assistant text uses the public `MarkdownText` primitive from `@deepseek-ai/dsh-client-ui-primitives`, including its incremental parser and untrusted-link/HTML policy. The Session context contains the English and Chinese Product brief plus the English and Chinese Spec; missing briefs still carry exact Feature-id-derived target paths and a separate missing state. The direct-edit action is a plain-language authorization inside the Session prompt, limited to synchronizing those exact current paired artifacts and keeping one language per file. The panel reloads the dashboard once when either a finalized assistant turn appears or an explicitly submitted Session changes from running to settled, so tool-only file turns also cause the Host to recompute content, the combined Spec review hash, workflow state, and structured analysis. This is a prompt-level file boundary, not a narrower DSH capability grant.
+
+## Web write boundary
+
+The browser API is not a general file service. Requests must be same-origin JSON below a fixed size. Ordinary dashboard and feature actions require `design-blueprint.json`; the configured roots and Host-derived Feature ID are repository-relative and validated. New local keys start with an ASCII letter, reject purely numeric identity, and combine with the selected parent as `<parent-id>--<local-key>`. Feature size and field counts are bounded, parent links must exist and remain acyclic, and an existing file is written only when its current SHA-256 equals the browser's expected value. Preparation uses create-if-absent staging and rollback for the registered bilingual brief and proposed Spec set. Migration previews bind every source hash, target, descendant identity, reference update, collision, and approval invalidation; apply recomputes the preview, stages all replacement content, backs up sources, and restores authority on failure. Dashboard reads attach the exact artifact descriptor and the architecture catalog. Approval writes are confined to `<features.approvalsRoot>/<id>.json`, require exactly one Feature-linked proposed Spec, and reject a review hash that no longer matches the combined English and optional Chinese Spec contents in the working tree. Blueprint Web and `design-blueprint approve <feature-id> --spec-hash <sha256> --yes` call the same approval operation; the CLI fallback is valid only as an explicit developer action when Web is unavailable. Architecture writes are confined to `<architecture.root>/components/<validated-id>.md`, use the same SHA-256 + preview-hash optimistic concurrency, and refuse stale, expanded, conflicting, cyclic, or out-of-bound changes. Neither the architecture Session nor any reviewer Session can edit implementation files, move lifecycle documents to `implemented`, write approval records, or approve its own result.
+
+The discovery/initialize pair is the sole pre-anchor write exception. Initialization rechecks that the requested target is either the current strong candidate or the exact non-root current workspace accompanied by explicit developer confirmation, then uses create-if-missing writes for prose. Direct child project hints remain warnings and are never recursively selected. It may add the absent `documentation` object to an older valid Blueprint JSON configuration without changing its existing keys. Its generated implemented spec adopts governance without claiming knowledge of product architecture or translating existing content.

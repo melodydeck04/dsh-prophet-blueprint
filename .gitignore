@@ -1,0 +1,58 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+.yarn/
+.npm/
+.npmrc
+
+# Generated output and test artifacts
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+*.tgz
+
+# Runtime logs and caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.cache/
+.parcel-cache/
+.eslintcache
+.turbo/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Editor and operating-system state
+.idea/
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local agent state; project-owned .dsh/skills remains versioned
+.codex/
+.agents/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig

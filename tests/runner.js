@@ -1,0 +1,2 @@
+// Manual runner retained for local debugging; the canonical npm test command runs `node --experimental-test-isolation=none --test`.
+console.log("tests/runner.js is a manual debug entry; run `npm test` instead.");

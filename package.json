@@ -1,0 +1,130 @@
+{
+  "name": "@dsh-plugins/design-blueprint",
+  "description": "Bilingual Spec lifecycle, direct-developer approval, feature architecture diagrams, an architecture design workspace, and a streaming DSH activity-aware Spec assistant.",
+	"version": "0.14.2",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "bin": {
+    "design-blueprint": "lib/cli.js"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-primitives",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ],
+      "platform": "web"
+    }
+  },
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./invariant": {
+      "default": "./lib/invariant.js"
+    },
+    "./scan": {
+      "default": "./lib/scan.js"
+    },
+    "./architecture": {
+      "default": "./lib/architecture.js"
+    },
+    "./config": {
+      "default": "./lib/config.js"
+    },
+    "./docs": {
+      "default": "./lib/docs.js"
+    },
+    "./specs": {
+      "default": "./lib/specs.js"
+    },
+    "./policy": {
+      "default": "./lib/policy.js"
+    },
+    "./snapshot": {
+      "default": "./lib/snapshot.js"
+    },
+    "./init": {
+      "default": "./lib/init.js"
+    },
+    "./install-hook": {
+      "default": "./lib/install-hook.js"
+    },
+    "./cli": {
+      "default": "./lib/cli.js"
+    },
+    "./stamps": {
+      "default": "./lib/stamps.js"
+    },
+    "./features": {
+      "default": "./lib/features.js"
+    },
+    "./project-root": {
+      "default": "./lib/project-root.js"
+    },
+    "./project-discovery": {
+      "default": "./lib/project-discovery.js"
+    },
+    "./web-api": {
+      "default": "./lib/web-api.js"
+    },
+    "./workflow": {
+      "default": "./lib/workflow.js"
+    },
+    "./artifacts": {
+      "default": "./lib/artifacts.js"
+    },
+    "./version": {
+      "default": "./lib/version.js"
+    },
+    "./src/*": "./lib/*",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    ".blueprint/**/*.md",
+    ".dsh/skills/**/*.md",
+    ".specs/**/*.md",
+    "docs/**/*.md",
+    "docs/**/*.yaml",
+    "AGENTS.md",
+    "design-blueprint.json",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "README.i18n.yaml",
+    "LICENSE",
+    "DESIGN.md"
+  ],
+  "scripts": {
+    "scan": "node lib/cli.js scan",
+    "test": "node --experimental-test-isolation=none --test",
+    "stamp": "node lib/cli.js stamp",
+    "install-hook": "node lib/cli.js install-hook",
+    "lint:js": "node --check lib/index.js && node --check lib/client.js && node --check lib/cli.js && node --check lib/config.js && node --check lib/docs.js && node --check lib/features.js && node --check lib/init.js && node --check lib/path-utils.js && node --check lib/policy.js && node --check lib/project-discovery.js && node --check lib/project-root.js && node --check lib/scan.js && node --check lib/snapshot.js && node --check lib/specs.js && node --check lib/web-api.js && node --check lib/workflow.js && node --check lib/artifacts.js && node --check lib/version.js && node --check lib/install-hook.js && node --check lib/invariant.js && node --check lib/stamps.js && node --check lib/architecture.js"
+  },
+  "engines": {
+    "node": ">=22.19"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-invariants": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-commands": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-system-prompt": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-host-webserver": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-runtime": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-ui-primitives": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-ui-conversation": "^0.1.1-rc.2",
+    "react": "^18.2.0"
+  }
+}
