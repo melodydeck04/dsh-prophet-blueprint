@@ -55,7 +55,7 @@ Architecture changes use an optimistic-concurrency preview/apply boundary. A pre
 
 A dedicated architecture-review Session is created per project and protocol, separate from both the development conversation and the Spec reviewer. Every submission carries delimited current Feature records, component records, `DESIGN.md`, relevant manifests, public contracts, approved decision summaries, the selected Feature or component, and the developer's proposal. Repository material is treated as untrusted context rather than instructions.
 
-The separate Session is a persistence and isolation mechanism, not a separate user-facing chat destination. `ArchitectureAssistant` embeds the same finalized messages, streaming partial Markdown, reasoning summaries, tool activity, errors, cancellation, scroll pinning, and conversation recovery used by the Spec reviewer inside the Architecture design workspace. Creating or reopening the backing Session must not replace the Blueprint view or require the developer to continue in an ungrouped chat; any Session-list entry is only recoverable backing state.
+The separate Session is a persistence and isolation mechanism, not a separate user-facing chat destination. `ArchitectureAssistant` embeds the same finalized messages, streaming partial Markdown, reasoning summaries, tool activity, errors, cancellation, scroll pinning, and conversation recovery used by the Spec reviewer inside the Architecture design workspace. Creating or reopening the backing Session must not replace the Blueprint view or require the developer to continue in another chat. Because the current DSH create contract has no hidden or parent-session option, Blueprint immediately archives the backing Session through the official Workspace API. Archived backing Sessions keep their durable log and remain addressable by the embedded assistant, but are excluded from normal Workspace and Ungrouped grouping surfaces. Reopening a legacy unarchived architecture Session also archives it before use.
 
 The assistant must distinguish repository facts, inferences, assumptions, and developer decisions. Its response covers product placement, component allocation, typed relation changes, interface and data impact, deployment and plugin boundaries, source ownership, compatibility and migration impact, at least one viable alternative, and unresolved user-visible or business-boundary questions. It may recommend extending an existing component, adding an internal component, adding a peer service, or adding a plugin, but a page or dependency alone is not evidence for a plugin.
 
@@ -77,6 +77,10 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 
 **Create a separate architecture plugin immediately.** Rejected because the capability extends Blueprint's existing governance, Web client, Host API, and approval workflow; no independent installation or lifecycle boundary has been established.
 
+## Acceptance criteria
+
+- AC-ARCH-10: Creating or reopening an architecture-assistant Session keeps the Blueprint Architecture design workspace selected, renders the conversation only through the embedded assistant, and archives the backing Session so it does not remain in normal Workspace or Ungrouped chat groups while its durable history remains recoverable.
+
 ## Verification
 
 - AC-ARCH-1: `tests/architecture.test.js`, `tests/config.test.js`
@@ -88,9 +92,10 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 - AC-ARCH-7: `tests/architecture-reviewer.test.js`, `tests/web-api.test.js`, `tests/staged-policy.test.js`
 - AC-ARCH-8: `tests/scan.test.js`, `tests/staged-policy.test.js`, command `node lib/cli.js scan --all --cwd .`
 - AC-ARCH-9: `tests/plugin.test.js`, command `node lib/cli.js docs check --cwd .`, command `npm.cmd test`, command `npm.cmd run lint:js`
+- AC-ARCH-10: `tests/architecture-reviewer.test.js`; newly created and recovered backing Sessions are archived through the injected DSH Workspace service before use
 
 ## Consequences
 
-Developers can now distinguish product capability placement from software component, dependency, deployment, and source-ownership design through one stable, audit-able model. The Feature map and the Architecture design workspace share a stable component and Feature identity that survives `Parent` and `Container` changes, so reparenting discussions do not rename documents, descendants, or approvals. The architecture assistant grounds placement analysis in the current repository facts, keeps its complete conversation visibly embedded in the architecture workspace while retaining an independent backing Session, and cannot approve its own result; every architecture change still requires a developer action and the same exact-hash approval workflow that protects Spec lifecycles.
+Developers can now distinguish product capability placement from software component, dependency, deployment, and source-ownership design through one stable, audit-able model. The Feature map and the Architecture design workspace share a stable component and Feature identity that survives `Parent` and `Container` changes, so reparenting discussions do not rename documents, descendants, or approvals. The architecture assistant grounds placement analysis in the current repository facts, keeps its complete conversation visibly embedded in the architecture workspace while retaining an archived independent backing Session outside normal Workspace and Ungrouped groupings, and cannot approve its own result; every architecture change still requires a developer action and the same exact-hash approval workflow that protects Spec lifecycles.
 
 The proposed surface was large enough that staged internal milestones may follow, but any scope split or behavior reduction requires updating and reapproving this Spec. The architecture Session remains prompt-constrained within the active DSH Agent capability surface, so exact write endpoints, optimistic concurrency, approval invalidation, and scanner enforcement remain necessary. A dense component graph can become unreadable without filtering and bounded layout, and typed path ownership may reveal existing overlaps that require an adoption policy rather than automatic repair.

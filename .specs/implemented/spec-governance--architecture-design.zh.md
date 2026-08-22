@@ -55,7 +55,7 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 
 为每个项目和协议创建专用架构审核 Session，并与开发对话及 Spec 审核助手分开。每次提交都携带经过分隔的当前 Feature 记录、组件记录、`DESIGN.md`、相关清单、公共契约、已批准决策摘要、选中的 Feature 或组件，以及开发者提案。仓库材料被视为不可信上下文，而不是指令。
 
-独立 Session 是持久化与隔离机制，不是另一个面向用户的聊天目的地。`ArchitectureAssistant` 会在“架构设计”工作区内嵌展示与 Spec 审核助手相同的已完成消息、流式 Markdown、思考摘要、工具活动、错误、取消、滚动跟随和对话恢复。创建或重新打开后台 Session 时不得替换 Blueprint 视图，也不得要求开发者转到 ungrouped chat 继续操作；会话列表中的条目只作为可恢复的后台状态。
+独立 Session 是持久化与隔离机制，不是另一个面向用户的聊天目的地。`ArchitectureAssistant` 会在“架构设计”工作区内嵌展示与 Spec 审核助手相同的已完成消息、流式 Markdown、思考摘要、工具活动、错误、取消、滚动跟随和对话恢复。创建或重新打开后台 Session 时不得替换 Blueprint 视图，也不得要求开发者转到其他聊天继续操作。由于当前 DSH 创建契约不支持隐藏或指定父 Session，Blueprint 会通过官方 Workspace API 立即归档后台 Session。归档后的后台 Session 保留持久日志，并且仍可由内嵌助手寻址，但不会出现在普通 Workspace 或 Ungrouped 分组界面中。重新打开旧的未归档架构 Session 时，也必须先将其归档。
 
 助手必须区分仓库事实、推断、假设和开发者决定。回复需要覆盖产品位置、组件分配、类型化关系变化、接口与数据影响、部署与插件边界、源码所有权、兼容性与迁移影响、至少一个可行备选方案，以及尚未解决的用户可见或业务边界问题。它可以建议扩展现有组件、新增内部组件、新增平级服务或新增插件，但页面或依赖本身不能作为新增插件的依据。
 
@@ -77,6 +77,10 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 
 **立即创建独立架构插件。** 不采用，因为这项能力扩展 Blueprint 现有的治理、Web 客户端、Host API 和审批工作流；目前没有建立独立安装或生命周期边界。
 
+## 验收标准
+
+- AC-ARCH-10：创建或重新打开架构助手 Session 时，“架构设计”工作区保持选中，对话只通过内嵌助手呈现；后台 Session 会被归档，因此不会继续出现在普通 Workspace 或 Ungrouped 聊天分组中，同时其持久历史仍可恢复。
+
 ## 验证
 
 - AC-ARCH-1：`tests/architecture.test.js`、`tests/config.test.js`
@@ -88,9 +92,10 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 - AC-ARCH-7：`tests/architecture-reviewer.test.js`、`tests/web-api.test.js`、`tests/staged-policy.test.js`
 - AC-ARCH-8：`tests/scan.test.js`、`tests/staged-policy.test.js`、命令 `node lib/cli.js scan --all --cwd .`
 - AC-ARCH-9：`tests/plugin.test.js`、命令 `node lib/cli.js docs check --cwd .`、命令 `npm.cmd test`、命令 `npm.cmd run lint:js`
+- AC-ARCH-10：`tests/architecture-reviewer.test.js`；新建和恢复的后台 Session 在使用前都会通过注入的 DSH Workspace 服务归档
 
 ## 后果
 
-开发者现在可以借助一个稳定且可审计的模型，把产品能力位置与软件组件、依赖、部署和源码所有权设计区分开。功能图与架构设计工作区共享同一套稳定的组件与 Feature 身份，身份在 `Parent` 和 `Container` 变化时保持不变，因此挂接讨论不会重命名文档、后代节点或审批。架构助手把分析建立在当前仓库事实之上，在保留独立后台 Session 的同时，把完整对话持续内嵌在架构工作区中，并且无法自行批准结果；每项架构变化仍然要求开发者操作，并复用保护 Spec 生命周期的同一套精确哈希审批工作流。
+开发者现在可以借助一个稳定且可审计的模型，把产品能力位置与软件组件、依赖、部署和源码所有权设计区分开。功能图与架构设计工作区共享同一套稳定的组件与 Feature 身份，身份在 `Parent` 和 `Container` 变化时保持不变，因此挂接讨论不会重命名文档、后代节点或审批。架构助手把分析建立在当前仓库事实之上，在保留独立且已归档、不会进入普通 Workspace 与 Ungrouped 分组的后台 Session 的同时，把完整对话持续内嵌在架构工作区中，并且无法自行批准结果；每项架构变化仍然要求开发者操作，并复用保护 Spec 生命周期的同一套精确哈希审批工作流。
 
 提议范围较大，可以分阶段推进内部里程碑，但任何 Scope 拆分或行为缩减都必须在代码变化前更新并重新批准本 Spec。架构 Session 仍受当前 DSH Agent 能力面的提示约束，因此精确写入端点、乐观并发、审批失效和扫描器执行仍然必要。密集组件图如果缺少过滤和有界布局，可能难以阅读；类型化路径所有权可能暴露现有重叠，需要采用策略而不是自动修复。

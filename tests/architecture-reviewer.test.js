@@ -73,6 +73,10 @@ test("architecture service refuses to send without a DSH session capability", as
 			async create() { return "review-arch"; },
 			binding() { return { session: reviewSession }; },
 		},
+		workspaces: {
+			list: { getSnapshot: () => ({ archivedSessionIds: [] }) },
+			async archiveSession(sessionId) { assert.equal(sessionId, "review-arch"); lifecycle.push("archive"); },
+		},
 	};
 	client.apply(ctx);
 	assert.equal(typeof injectedCallback, "function");
@@ -81,6 +85,7 @@ test("architecture service refuses to send without a DSH session capability", as
 	const sessionId = await injected.architectureReviewer.send("D:/project", { id: "accounts" }, { id: "backend-api" }, { architecture: { components: [] }, catalog: { features: [] } }, "评估");
 	assert.equal(sessionId.sessionId, "review-arch");
 	assert.ok(lifecycle.includes("prompt"));
+	assert.deepEqual(lifecycle, ["archive", "rename", "open", "prompt"]);
 });
 
 test("architecture assistant keeps the backing session visibly embedded in Blueprint", async () => {
@@ -97,4 +102,5 @@ test("architecture assistant keeps the backing session visibly embedded in Bluep
 	assert.match(assistant, /onScroll: \(event\) => updateScrollPin\(event\.currentTarget\)/);
 	assert.match(assistant, /"回到最新"/);
 	assert.doesNotMatch(assistant, /navigate|location\.|window\.open/);
+	assert.match(code, /ctx\.workspaces\.archiveSession\(sessionId\)/);
 });
