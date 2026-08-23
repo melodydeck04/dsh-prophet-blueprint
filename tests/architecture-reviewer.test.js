@@ -159,3 +159,17 @@ test("architecture proposal card previews through Host before exact-hash apply",
 	assert.match(code, /onApply\(change, preview\.previewHash\)/);
 	assert.match(code, /setData\(result\.dashboard\)/);
 });
+
+test("architecture workspace preserves its mounted assistant, draft, and archived session across tab switches", async () => {
+	const code = await readFile(new URL("../lib/client.js", import.meta.url), "utf8");
+	assert.match(code, /const \[architectureMounted, setArchitectureMounted\] = useState\(false\)/);
+	assert.match(code, /setArchitectureMounted\(true\); setWorkspaceTab\("architecture"\)/);
+	assert.match(code, /architectureMounted \? h\("div", \{ hidden: workspaceTab !== "architecture"/);
+	assert.match(code, /const draftStorageKey = `\$\{storageKey\}:draft`/);
+	assert.match(code, /const sessionStorageKey = `\$\{storageKey\}:session`/);
+	assert.match(code, /setDraft\(window\.localStorage\.getItem\(draftStorageKey\) \?\? ""\)/);
+	assert.match(code, /window\.localStorage\.setItem\(draftStorageKey, value\)/);
+	assert.match(code, /rememberedSessionId = window\.localStorage\.getItem\(sessionStorageKey\)/);
+	assert.match(code, /architectureService\.send\(cwd, feature, component, dashboard, text, sessionId\)/);
+	assert.match(code, /preferredSessionId && ctx\.sessions\.binding\?\.\(preferredSessionId\)\?\.session/);
+});
