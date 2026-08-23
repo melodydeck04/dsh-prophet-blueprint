@@ -12,7 +12,7 @@ When a developer proposes a capability, Blueprint presents product-placement and
 
 ## How to use
 
-Open Architecture design, select an existing Feature or describe a planned capability, and ask the architecture assistant to assess placement. Review the proposed Feature relationship, component allocation, dependencies, deployment boundary, affected paths, alternatives, and unresolved product decisions. Compare the current and proposed diagrams, then explicitly accept the architecture proposal before Blueprint synchronizes the registered architecture records and proposed Spec. Review and approve the resulting Spec through the existing exact-hash workflow before starting implementation.
+Open Architecture design. If the logical component graph is empty, select **Initialize architecture model**, review the repository-level component ID, kind, and owned paths derived from the project manifest, and confirm creation. Select an existing Feature or describe a planned capability, then ask the architecture assistant to assess placement and refine that coarse initial boundary. Review the proposed Feature relationship, component allocation, dependencies, deployment boundary, affected paths, alternatives, and unresolved product decisions. Compare the current and proposed diagrams, then explicitly accept the architecture proposal before Blueprint synchronizes the registered architecture records and proposed Spec. Review and approve the resulting Spec through the existing exact-hash workflow before starting implementation.
 
 ## Usage notes
 

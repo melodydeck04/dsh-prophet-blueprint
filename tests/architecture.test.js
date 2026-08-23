@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { DEFAULT_CONFIG } from "../lib/config.js";
 import { COMPONENT_ID_PATTERN, COMPONENT_KINDS, COMPONENT_RELATION_TYPES, COMPONENT_STATUSES, loadArchitectureCatalog, parseComponent, serializeComponent } from "../lib/architecture.js";
-import { applyArchitectureChange, previewArchitectureChange } from "../lib/artifacts.js";
+import { applyArchitectureChange, applyArchitectureInitialization, previewArchitectureChange, previewArchitectureInitialization } from "../lib/artifacts.js";
 import { workingTreeSnapshot } from "../lib/snapshot.js";
 import { initBlueprint } from "../lib/init.js";
 
@@ -139,6 +139,21 @@ test("preview and apply upsert a new component with stable identity", async () =
 	assert.ok(persisted);
 	assert.equal(persisted.deployment, "prod-cluster-1");
 	assert.equal(persisted.containerId, null);
+});
+
+test("architecture initialization derives and applies one manifest-grounded starter only for an empty catalog", async () => {
+	const root = await mkdtemp(join(tmpdir(), "blueprint-architecture-init-"));
+	await initBlueprint(root);
+	await writeFile(join(root, "package.json"), JSON.stringify({ name: "@fixture/sample-plugin", description: "Sample DSH plugin.", files: ["lib/**", "README.md"], dsh: { client: {} } }, null, 2) + "\n", "utf8");
+	await writeFile(join(root, "README.md"), "# Project\n", "utf8");
+	await writeFile(join(root, "DESIGN.md"), "# Design\n", "utf8");
+	const preview = await previewArchitectureInitialization({ cwd: root });
+	assert.equal(preview.proposal.id, "sample-plugin");
+	assert.equal(preview.proposal.kind, "plugin");
+	assert.deepEqual(preview.proposal.ownedPaths, ["lib/**", "README.md"]);
+	const applied = await applyArchitectureInitialization({ cwd: root, expectedPreviewHash: preview.preview.previewHash });
+	assert.equal(applied.change.id, "sample-plugin");
+	await assert.rejects(previewArchitectureInitialization({ cwd: root }), /already initialized/);
 });
 
 test("apply rejects an expansion that exceeds the original preview", async () => {

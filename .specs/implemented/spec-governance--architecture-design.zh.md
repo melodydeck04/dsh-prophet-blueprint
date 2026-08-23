@@ -51,6 +51,8 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 
 架构变化采用乐观并发的预览与应用边界。预览列出每个组件和 Feature 映射的新增、更新或删除，每条变化的类型化边，路径所有权冲突，受影响接口与部署单元，旧身份影响，文档变化和审批失效。应用操作重新计算预览，并且只写入已登记的 Feature 规划和架构工件。来源过期、引用无效、冲突、路径所有权歧义、环或差异扩张时，操作必须失败关闭。
 
+空架构目录是一种可执行状态，而不是文件系统操作说明。逻辑组件图会显示“初始化架构模型”操作。Host 根据当前项目名称、包清单、发布文件边界和已有权威文档生成一个仓库级起始组件，再返回标准架构变更的精确预览。浏览器会向开发者展示拟创建的组件身份、类型和拥有路径，只有明确确认后才应用预览哈希。初始化是幂等的；一旦已有任何组件就会失败关闭。它只建立一个粗粒度初始边界，不宣称已经推断出项目内部架构；开发者随后可以借助架构助手和普通组件变更继续拆分细化。
+
 ### 独立架构助手
 
 为每个项目和协议创建专用架构审核 Session，并与开发对话及 Spec 审核助手分开。每次提交都携带经过分隔的当前 Feature 记录、组件记录、`DESIGN.md`、相关清单、公共契约、已批准决策摘要、选中的 Feature 或组件，以及开发者提案。仓库材料被视为不可信上下文，而不是指令。
@@ -80,6 +82,7 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 ## 验收标准
 
 - AC-ARCH-10：创建或重新打开架构助手 Session 时，“架构设计”工作区保持选中，对话只通过内嵌助手呈现；后台 Session 会被归档，因此不会继续出现在普通 Workspace 或 Ungrouped 聊天分组中，同时其持久历史仍可恢复。
+- AC-ARCH-11：空的逻辑组件图提供初始化按钮；它会先预览，并在明确确认后通过现有哈希绑定架构应用流程创建一个基于项目清单的仓库组件；当目录非空时，初始化拒绝覆盖或追加。
 
 ## 验证
 
@@ -93,6 +96,7 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 - AC-ARCH-8：`tests/scan.test.js`、`tests/staged-policy.test.js`、命令 `node lib/cli.js scan --all --cwd .`
 - AC-ARCH-9：`tests/plugin.test.js`、命令 `node lib/cli.js docs check --cwd .`、命令 `npm.cmd test`、命令 `npm.cmd run lint:js`
 - AC-ARCH-10：`tests/architecture-reviewer.test.js`；新建和恢复的后台 Session 在使用前都会通过注入的 DSH Workspace 服务归档
+- AC-ARCH-11：`tests/architecture.test.js`、`tests/web-api.test.js`、`tests/client.test.js`；确定性起始组件推导、预览/应用并发保护、非空拒绝、按钮和确认流程
 
 ## 后果
 

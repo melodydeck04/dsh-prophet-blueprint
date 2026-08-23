@@ -16,6 +16,9 @@ test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contra
 	assert.match(client, /fetch\("\/design-blueprint\/api"/);
 	assert.match(client, /action: "discover"/);
 	assert.match(client, /action: "initialize"/);
+	assert.match(client, /action: "architecture-initialize-preview"/);
+	assert.match(client, /action: "architecture-initialize-apply"/);
+	assert.match(client, /初始化架构模型/);
 	assert.match(client, /action: "approve"/);
 	assert.match(client, /action: "prepare"/);
 	assert.match(client, /action: "migration-preview"/);
@@ -81,5 +84,5 @@ test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contra
 	assert.match(client, /Host 工件路径预览/);
 	assert.match(client, /规范化身份/);
 	assert.match(client, /不得另选、自创或模糊搜索文件名/);
-	assert.equal(manifest.version, "0.14.3");
+	assert.equal(manifest.version, "0.14.4");
 });

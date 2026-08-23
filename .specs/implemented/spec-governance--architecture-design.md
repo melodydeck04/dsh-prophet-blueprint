@@ -51,6 +51,8 @@ Architecture design is the third primary Blueprint workspace beside Optimize Spe
 
 Architecture changes use an optimistic-concurrency preview/apply boundary. A preview lists every component and Feature mapping addition, update, or removal; every changed typed edge; path ownership conflicts; affected interfaces and deployment units; legacy identity effects; document changes; and approval invalidation. Apply recomputes the preview and writes only registered Feature-planning and architecture artifacts. Stale sources, invalid references, collisions, ambiguous path ownership, cycles, or an expanded diff fail closed.
 
+An empty architecture catalog is an actionable state rather than a file-system instruction. The logical component graph presents an `Initialize architecture model` action. The Host derives one repository-level starter component from the current project name, package manifest, published file boundary, and existing authority documents, then returns the exact ordinary architecture preview. The browser shows the proposed component identity, kind, and owned paths for developer confirmation before applying the preview hash. Initialization is idempotent and fails closed once any component exists; it establishes a coarse first boundary and does not claim to infer the project's internal architecture. The developer can then use the architecture assistant and normal component changes to refine it.
+
 ### Independent architecture assistant
 
 A dedicated architecture-review Session is created per project and protocol, separate from both the development conversation and the Spec reviewer. Every submission carries delimited current Feature records, component records, `DESIGN.md`, relevant manifests, public contracts, approved decision summaries, the selected Feature or component, and the developer's proposal. Repository material is treated as untrusted context rather than instructions.
@@ -80,6 +82,7 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 ## Acceptance criteria
 
 - AC-ARCH-10: Creating or reopening an architecture-assistant Session keeps the Blueprint Architecture design workspace selected, renders the conversation only through the embedded assistant, and archives the backing Session so it does not remain in normal Workspace or Ungrouped chat groups while its durable history remains recoverable.
+- AC-ARCH-11: An empty logical component graph offers an initialization button that previews and, after explicit confirmation, creates one manifest-grounded repository component through the existing hash-bound architecture apply path; initialization refuses to overwrite or append to a non-empty catalog.
 
 ## Verification
 
@@ -93,6 +96,7 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 - AC-ARCH-8: `tests/scan.test.js`, `tests/staged-policy.test.js`, command `node lib/cli.js scan --all --cwd .`
 - AC-ARCH-9: `tests/plugin.test.js`, command `node lib/cli.js docs check --cwd .`, command `npm.cmd test`, command `npm.cmd run lint:js`
 - AC-ARCH-10: `tests/architecture-reviewer.test.js`; newly created and recovered backing Sessions are archived through the injected DSH Workspace service before use
+- AC-ARCH-11: `tests/architecture.test.js`, `tests/web-api.test.js`, `tests/client.test.js`; deterministic starter derivation, preview/apply concurrency, non-empty refusal, button and confirmation flow
 
 ## Consequences
 

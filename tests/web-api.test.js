@@ -166,6 +166,20 @@ test("Web architecture-preview and architecture-apply enforce optimistic concurr
 	assert.ok(applied.dashboard.architecture.components.some((entry) => entry.id === "backend-api"));
 });
 
+test("Web architecture initialization previews and creates the first repository component", async () => {
+	const root = await mkdtemp(join(tmpdir(), "blueprint-web-arch-init-"));
+	await initBlueprint(root);
+	await writeFile(join(root, "package.json"), JSON.stringify({ name: "starter-app", description: "Starter application.", files: ["src/**"] }, null, 2) + "\n", "utf8");
+	await writeFile(join(root, "README.md"), "# Project\n", "utf8");
+	await writeFile(join(root, "DESIGN.md"), "# Design\n", "utf8");
+	const preview = await handleBlueprintAction({ action: "architecture-initialize-preview", cwd: root });
+	assert.equal(preview.proposal.id, "starter-app");
+	const applied = await handleBlueprintAction({ action: "architecture-initialize-apply", cwd: root, expectedPreviewHash: preview.preview.previewHash });
+	assert.equal(applied.applied.change.id, "starter-app");
+	assert.equal(applied.dashboard.architecture.components[0].id, "starter-app");
+	await assert.rejects(handleBlueprintAction({ action: "architecture-initialize-preview", cwd: root }), /already initialized/);
+});
+
 test("Web architecture actions refuse stale preview hashes and out-of-bound changes", async () => {
 	const root = await mkdtemp(join(tmpdir(), "blueprint-web-arch-stale-"));
 	await initBlueprint(root);
