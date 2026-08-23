@@ -83,6 +83,7 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 
 - AC-ARCH-10: Creating or reopening an architecture-assistant Session keeps the Blueprint Architecture design workspace selected, renders the conversation only through the embedded assistant, and archives the backing Session so it does not remain in normal Workspace or Ungrouped chat groups while its durable history remains recoverable.
 - AC-ARCH-11: An empty logical component graph offers an initialization button that previews and, after explicit confirmation, creates one manifest-grounded repository component through the existing hash-bound architecture apply path; initialization refuses to overwrite or append to a non-empty catalog.
+- AC-ARCH-12: The Architecture design workspace keeps the graph and selected Feature/component detail together in the left column, with the detail directly below the graph, while the right column is reserved for the architecture assistant from its top edge.
 
 ## Verification
 
@@ -97,6 +98,7 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 - AC-ARCH-9: `tests/plugin.test.js`, command `node lib/cli.js docs check --cwd .`, command `npm.cmd test`, command `npm.cmd run lint:js`
 - AC-ARCH-10: `tests/architecture-reviewer.test.js`; newly created and recovered backing Sessions are archived through the injected DSH Workspace service before use
 - AC-ARCH-11: `tests/architecture.test.js`, `tests/web-api.test.js`, `tests/client.test.js`; deterministic starter derivation, preview/apply concurrency, non-empty refusal, button and confirmation flow
+- AC-ARCH-12: `tests/client.test.js`; architecture-column structure and detail-before-assistant placement
 
 ## Consequences
 

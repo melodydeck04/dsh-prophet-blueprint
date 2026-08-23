@@ -83,6 +83,7 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 
 - AC-ARCH-10：创建或重新打开架构助手 Session 时，“架构设计”工作区保持选中，对话只通过内嵌助手呈现；后台 Session 会被归档，因此不会继续出现在普通 Workspace 或 Ungrouped 聊天分组中，同时其持久历史仍可恢复。
 - AC-ARCH-11：空的逻辑组件图提供初始化按钮；它会先预览，并在明确确认后通过现有哈希绑定架构应用流程创建一个基于项目清单的仓库组件；当目录非空时，初始化拒绝覆盖或追加。
+- AC-ARCH-12：“架构设计”工作区把逻辑组件图和选中的 Feature/组件详情放在同一左栏，详情紧接在图下方；右栏从顶部开始只保留架构助手。
 
 ## 验证
 
@@ -97,6 +98,7 @@ Blueprint 当前把开发者拥有的 Feature 层级呈现为项目结构图，�
 - AC-ARCH-9：`tests/plugin.test.js`、命令 `node lib/cli.js docs check --cwd .`、命令 `npm.cmd test`、命令 `npm.cmd run lint:js`
 - AC-ARCH-10：`tests/architecture-reviewer.test.js`；新建和恢复的后台 Session 在使用前都会通过注入的 DSH Workspace 服务归档
 - AC-ARCH-11：`tests/architecture.test.js`、`tests/web-api.test.js`、`tests/client.test.js`；确定性起始组件推导、预览/应用并发保护、非空拒绝、按钮和确认流程
+- AC-ARCH-12：`tests/client.test.js`；架构左栏结构，以及详情位于助手之前的位置
 
 ## 后果
 
