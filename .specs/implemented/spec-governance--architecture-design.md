@@ -61,7 +61,9 @@ The separate Session is a persistence and isolation mechanism, not a separate us
 
 The assistant must distinguish repository facts, inferences, assumptions, and developer decisions. Its response covers product placement, component allocation, typed relation changes, interface and data impact, deployment and plugin boundaries, source ownership, compatibility and migration impact, at least one viable alternative, and unresolved user-visible or business-boundary questions. It may recommend extending an existing component, adding an internal component, adding a peer service, or adding a plugin, but a page or dependency alone is not evidence for a plugin.
 
-The assistant first produces a structured before/after proposal. Only an explicit developer action may apply the exact current proposal to the registered architecture records and synchronize the Feature-linked Product brief and proposed Spec pair. It cannot edit implementation files, move lifecycle documents to implemented, write approval records, or approve its own result. Any applied Spec change invalidates an earlier approval through the existing exact-hash workflow.
+The assistant first produces a structured before/after proposal. When that proposal maps to exactly one registered component upsert or deletion, the finalized assistant message may carry one delimited, machine-readable change using only the current component schema. The embedded workspace removes that machine block from the conversational Markdown and renders a proposal card that first asks the Host for the exact architecture preview, displays the resulting component, edge, deployment, contract, document, and approval-invalidation delta, and only then exposes an explicit developer apply action bound to that preview hash. Invalid, stale, multi-component, or unsupported proposals remain non-applicable. Feature hierarchy edits, Feature-to-Feature relationship types, structured contract metadata, and any UI surface not implemented by Blueprint must never be invented as executable actions.
+
+Only an explicit developer action may apply the exact current proposal to the registered architecture records. The assistant itself still cannot write architecture files, synchronize Feature planning documents, edit implementation files, move lifecycle documents to implemented, write approval records, or approve its own result. Any later Spec change continues to invalidate an earlier approval through the existing exact-hash workflow.
 
 ### Current architecture and public contract
 
@@ -84,6 +86,7 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 - AC-ARCH-10: Creating or reopening an architecture-assistant Session keeps the Blueprint Architecture design workspace selected, renders the conversation only through the embedded assistant, and archives the backing Session so it does not remain in normal Workspace or Ungrouped chat groups while its durable history remains recoverable.
 - AC-ARCH-11: An empty logical component graph offers an initialization button that previews and, after explicit confirmation, creates one manifest-grounded repository component through the existing hash-bound architecture apply path; initialization refuses to overwrite or append to a non-empty catalog.
 - AC-ARCH-12: The Architecture design workspace keeps the graph and selected Feature/component detail together in the left column, with the detail directly below the graph, while the right column is reserved for the architecture assistant from its top edge.
+- AC-ARCH-13: A finalized architecture-assistant response can carry at most one exact current-schema component change; Blueprint converts it into an embedded proposal card, obtains and displays the Host-computed preview before enabling a separate developer-confirmed apply action with the exact preview hash, refreshes the graph after success, and refuses malformed, stale, multi-component, or unsupported actions without inventing absent management tabs or relationship types.
 
 ## Verification
 
@@ -99,6 +102,7 @@ Implementation updates `DESIGN.md` with the resulting component ownership and au
 - AC-ARCH-10: `tests/architecture-reviewer.test.js`; newly created and recovered backing Sessions are archived through the injected DSH Workspace service before use
 - AC-ARCH-11: `tests/architecture.test.js`, `tests/web-api.test.js`, `tests/client.test.js`; deterministic starter derivation, preview/apply concurrency, non-empty refusal, button and confirmation flow
 - AC-ARCH-12: `tests/client.test.js`; architecture-column structure and detail-before-assistant placement
+- AC-ARCH-13: `tests/architecture-reviewer.test.js`, `tests/client.test.js`, `tests/web-api.test.js`; delimited proposal parsing, current-schema prompt contract, embedded preview/apply card, exact-hash Host bridge, invalid proposal refusal, and refreshed dashboard
 
 ## Consequences
 

@@ -18,6 +18,8 @@ test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contra
 	assert.match(client, /action: "initialize"/);
 	assert.match(client, /action: "architecture-initialize-preview"/);
 	assert.match(client, /action: "architecture-initialize-apply"/);
+	assert.match(client, /action: "architecture-preview"/);
+	assert.match(client, /action: "architecture-apply"/);
 	assert.match(client, /初始化架构模型/);
 	assert.match(client, /action: "approve"/);
 	assert.match(client, /action: "prepare"/);
@@ -29,7 +31,7 @@ test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contra
 	assert.match(client, /生成开发方案/);
 	assert.match(client, /审核并确认方案/);
 	assert.match(client, /开始开发/);
-	assert.match(client, /CLIENT_VERSION = "0\.14\.2"/);
+	assert.match(client, /CLIENT_VERSION = "0\.14\.6"/);
 	assert.match(client, /Host v\$\{hostVersion\} · Client v\$\{CLIENT_VERSION\}/);
 	assert.match(client, /版本不一致，请完整重启 DSH Web/);
 	assert.match(client, /function RequirementAnalysis/);
@@ -68,6 +70,9 @@ test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contra
 	assert.match(client, /function ArchitectureGraph/);
 	assert.match(client, /function ArchitectureDetail/);
 	assert.match(client, /function ArchitectureAssistant/);
+	assert.match(client, /function ArchitectureProposalCard/);
+	assert.match(client, /生成变更预览/);
+	assert.match(client, /确认并应用/);
 	assert.match(client, /className: "bp-arch-column"/);
 	assert.ok(client.indexOf("h(ArchitectureDetail") < client.indexOf("h(ArchitectureAssistant"));
 	assert.match(client, /componentGraphLayout/);
@@ -86,5 +91,5 @@ test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contra
 	assert.match(client, /Host 工件路径预览/);
 	assert.match(client, /规范化身份/);
 	assert.match(client, /不得另选、自创或模糊搜索文件名/);
-	assert.equal(manifest.version, "0.14.5");
+	assert.equal(manifest.version, "0.14.6");
 });
