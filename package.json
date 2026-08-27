@@ -1,7 +1,7 @@
 {
   "name": "@dsh-plugins/design-blueprint",
-  "description": "Bilingual Spec lifecycle, direct-developer approval, feature architecture diagrams, an architecture design workspace, and a streaming DSH activity-aware Spec assistant.",
-	"version": "0.14.7",
+  "description": "DSH-native requirement refinement, Spec-driven implementation, proportional verification, and a navigable Feature system map.",
+  "version": "0.19.0",
   "private": true,
   "type": "module",
   "main": "lib/index.js",
@@ -16,7 +16,8 @@
       "inject": [
         "@deepseek-ai/dsh-client-runtime",
         "@deepseek-ai/dsh-client-ui-primitives",
-        "@deepseek-ai/dsh-client-ui-conversation"
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-input-trigger"
       ],
       "platform": "web"
     }
@@ -36,6 +37,15 @@
     },
     "./architecture": {
       "default": "./lib/architecture.js"
+    },
+    "./reconciliation": {
+      "default": "./lib/reconciliation.js"
+    },
+    "./assistant-actions": {
+      "default": "./lib/assistant-actions.js"
+    },
+    "./verification": {
+      "default": "./lib/verification.js"
     },
     "./config": {
       "default": "./lib/config.js"
@@ -87,7 +97,13 @@
     },
     "./src/*": "./lib/*",
     "./cordis.patch.yml": "./cordis.patch.yml",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./orchestration": {
+      "default": "./lib/orchestration.js"
+    },
+    "./chat-commands": {
+      "default": "./lib/chat-commands.js"
+    }
   },
   "files": [
     "lib/**/*.js",
@@ -107,24 +123,34 @@
   ],
   "scripts": {
     "scan": "node lib/cli.js scan",
-    "test": "node --experimental-test-isolation=none --test",
+    "test": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test",
     "stamp": "node lib/cli.js stamp",
     "install-hook": "node lib/cli.js install-hook",
-    "lint:js": "node --check lib/index.js && node --check lib/client.js && node --check lib/cli.js && node --check lib/config.js && node --check lib/docs.js && node --check lib/features.js && node --check lib/init.js && node --check lib/path-utils.js && node --check lib/policy.js && node --check lib/project-discovery.js && node --check lib/project-root.js && node --check lib/scan.js && node --check lib/snapshot.js && node --check lib/specs.js && node --check lib/web-api.js && node --check lib/workflow.js && node --check lib/artifacts.js && node --check lib/version.js && node --check lib/install-hook.js && node --check lib/invariant.js && node --check lib/stamps.js && node --check lib/architecture.js"
+    "lint:js": "node --check lib/index.js && node --check lib/client.js && node --check lib/cli.js && node --check lib/config.js && node --check lib/docs.js && node --check lib/features.js && node --check lib/init.js && node --check lib/path-utils.js && node --check lib/policy.js && node --check lib/project-discovery.js && node --check lib/project-root.js && node --check lib/scan.js && node --check lib/snapshot.js && node --check lib/specs.js && node --check lib/web-api.js && node --check lib/workflow.js && node --check lib/artifacts.js && node --check lib/assistant-actions.js && node --check lib/verification.js && node --check lib/version.js && node --check lib/install-hook.js && node --check lib/invariant.js && node --check lib/stamps.js && node --check lib/architecture.js && node --check lib/reconciliation.js && node --check lib/orchestration.js && node --check lib/chat-commands.js"
   },
   "engines": {
     "node": ">=22.19"
   },
+  "blueprintCompatibility": {
+    "profile": "web",
+    "dshRelease": "0.1.1-rc.2",
+    "officialReleaseRevision": "dsh-v0.1.1-rc.2 (b150a55)",
+    "verifiedNode": "22.23.1",
+    "hostComposition": "Cordis function plugin",
+    "clientComposition": "conversation.view via slots.inject/register",
+    "verifiedAt": "2026-08-27"
+  },
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-invariants": "^0.1.1-rc.2",
-    "@deepseek-ai/dsh-commands": "^0.1.1-rc.2",
-    "@deepseek-ai/dsh-system-prompt": "^0.1.1-rc.2",
-    "@deepseek-ai/dsh-host-webserver": "^0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-runtime": "^0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-ui-primitives": "^0.1.1-rc.2",
-    "@deepseek-ai/dsh-client-ui-conversation": "^0.1.1-rc.2",
-    "react": "^18.2.0"
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-commands": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-system-prompt": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-host-webserver": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-runtime": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.1-rc.2",
+    "react": "^18.2.0",
+    "@deepseek-ai/dsh-tools": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-client-ui-input-trigger": "0.1.1-rc.2"
   }
 }

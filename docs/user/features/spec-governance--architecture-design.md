@@ -1,23 +1,53 @@
-# Architecture design workspace
+# DSH-native spec-driven Blueprint
 
 English | [中文](spec-governance--architecture-design.zh.md)
 
 ## What it does
 
-The Architecture design workspace keeps the product Feature map separate from the software architecture model. It records stable components, containment, typed dependencies, deployment units, source ownership, and the many-to-many mapping between Features and components. A dedicated architecture assistant uses those repository facts to discuss where a proposed capability belongs instead of treating a Feature parent, source directory, or plugin boundary as the same decision.
+Design Blueprint is a DSH plugin that turns one developer requirement into a refined specification, an implementation, verified evidence, and an updated map of the system. The developer works in DSH's normal Chat and does not choose a Spec assistant, architecture assistant, implementer, verifier, lifecycle stage, or repository file.
 
-## Expected result
+Blueprint combines three ideas in one opinionated workflow:
 
-When a developer proposes a capability, Blueprint presents product-placement and component-placement alternatives and lists interface, deployment, file-ownership, compatibility, and migration impact. The architecture assistant's complete message history, streaming answer, and tool activity remain embedded in the Architecture design workspace. Its independent backing Session is archived immediately, keeping durable recovery without appearing in normal Workspace or Ungrouped chat groups; existing unarchived architecture Sessions are migrated when reopened. When the recommendation is exactly one supported component change, the answer includes an embedded proposal card with a Host-computed preview and a separate developer-confirmed apply action. Feature and component identities remain stable when their parent or container changes, so an architecture discussion does not automatically rename documents, descendants, or approval identities.
+- Spec Kit-style refinement discovers ambiguity, decomposes user scenarios, checks requirement quality, and analyzes consistency before implementation.
+- OpenSpec-style change deltas describe what is changing, while the Feature brief remains the current behavioral truth after a completed change is merged.
+- Blueprint's Feature tree presents the current system as a navigable hierarchy whose nodes expose behavior, code ownership, dependencies, tests, active changes, and historical decisions.
 
-After the workspace is opened once, moving between Blueprint tabs does not reset the assistant. Its current conversation, streaming state, proposal card, scroll position, and unsent draft remain available on return. Draft text and the archived backing Session identity are also restored after a remount for the same project and selected focus.
+The default path is intentionally small. A developer describes a requirement; Blueprint locates the owning Feature, reads the existing brief, code, tests, and relevant authority, drafts the change, asks only questions whose answers materially alter behavior, implements the accepted result, verifies it, and updates the current Feature truth. Advanced artifact and diagnostic details remain available without becoming required user workflow.
 
-## How to use
+## Specification refinement
 
-Open Architecture design. If the logical component graph is empty, select **Initialize architecture model**, review the repository-level component ID, kind, and owned paths derived from the project manifest, and confirm creation. Select an existing Feature or describe a planned capability, then ask the architecture assistant to assess placement and refine that coarse initial boundary. Review the proposed product relationship, component allocation, dependencies, deployment boundary, affected paths, alternatives, and unresolved decisions. For a supported one-component proposal, select **Generate change preview**, inspect the exact Host delta, and then select **Confirm and apply**. Blueprint applies the preview hash and refreshes the graph. If implementation or Feature planning documents must also change, use their separate Spec workflow before development.
+Blueprint must improve a requirement rather than copy it into Markdown. For every meaningful change it identifies the actor and goal, entry point, normal flow, inputs and outputs, state transitions, business rules, failures, edge cases, compatibility constraints, non-goals, and observable acceptance scenarios.
 
-You may switch to Optimize Spec or Project structure while composing or while the assistant is responding, then return to Architecture design without starting a new conversation. Changing the selected Feature or component intentionally changes the architecture focus and may therefore open that focus's own saved draft and Session.
+Material ambiguity produces at most three focused questions in one round. Non-material gaps become visible assumptions that can be corrected before or during implementation. Requirements use stable identifiers and concrete scenarios so every implementation task and verification result can trace back to an intended behavior.
 
-## Usage notes
+Before implementation Blueprint performs three internal quality passes:
 
-Feature `Parent` means product capability containment only; calls, reuse, integration, and shared screens may be architecture concerns, but the current proposal card applies only the registered Component-to-Component relation types. It does not provide a Component tab, a generic Relationships panel, Feature hierarchy edits, Feature-to-Feature relation writes, structured contract metadata, or multi-component transactions. Source files follow component ownership rather than mirroring the Feature tree, and a Web page does not require a new plugin unless it has an independent installation, version, permission, or host-extension lifecycle. The architecture assistant is grounded in the current Feature catalog, component model, authority documents, manifests, and approved decisions. It distinguishes repository facts from assumptions and cannot apply or approve its own proposal.
+1. Clarification finds missing decisions and contradictory interpretations.
+2. A requirements checklist tests whether the specification is complete, unambiguous, bounded, and verifiable.
+3. Cross-artifact analysis checks that the requirement delta, optional technical design, tasks, code scope, and verification plan agree.
+
+Simple changes may use a compact change document. A technical design is generated only when the work changes module ownership, a public contract, persistence, deployment, permissions, migration, or another structural boundary. The developer can inspect and edit every artifact, but does not have to drive each phase manually.
+
+## Current truth and change history
+
+The Feature map and its bilingual Feature brief describe what the system does now. An active change describes only the delta being considered or implemented. A completed change updates the owning Feature's current brief and moves its immutable change package into history. Rejected or abandoned changes never become current truth.
+
+Each active change retains the original request, refined requirements and scenarios, explicit assumptions, optional design, ordered tasks, implementation progress, and verification evidence. This keeps the current system understandable without discarding why a behavior changed.
+
+The Feature tree is the primary product hierarchy. Parent and child links express capability containment; dependencies and technical ownership are separate details rather than a second hierarchy the developer must maintain. Clicking a Feature shows its summary, current behavior, children, dependencies, primary code paths, tests, documents, active change, and completed change history.
+
+## DSH plugin contract
+
+DSH's normal Chat is the only conversational surface. Blueprint contributes one leading-input `/blueprint ` command and the equivalent model-facing tool; ordinary natural language may reach the same request contract. `/blueprint-status` and `/blueprint-map` are deterministic convenience commands. Blueprint Web is a dashboard and document viewer, not another Chat.
+
+Implementation must target one exact DSH version resolved from the active profile. Host commands, model tools, services, Agent or Workflow continuation, typed Host APIs, Client slots, and cleanup must use only public extension points documented for that version. The plugin must not patch the DSH core, call private composer APIs, infer authority from Session titles or prompt markers, or mix APIs from current master documentation with an older installed package set.
+
+The plugin remains a normal installable DSH bundle. Host and Client responsibilities stay separate, every registration is disposable with its Cordis scope, and compatibility tests boot the real target profile. Repository artifacts are durable authority; browser storage, React effects, process-local Jobs, and assistant prose are not.
+
+## Developer experience
+
+The ordinary interaction is: developer requirement → refine the specification → ask only blocking questions → implement → verify → update the Feature map and current brief.
+
+User-visible progress is limited to `refining`, `ready`, `implementing`, `verifying`, `blocked`, and `completed`. Internal DSH turns, tool calls, snapshots, retries, and diagnostic records may exist, but they are shown only when needed to explain a failure.
+
+Completion requires the declared tests and repository checks to pass and the Feature's current truth to match the shipped behavior. High-risk changes may require explicit review or an independent verification pass; ordinary bounded changes do not create a mandatory multi-Agent ceremony.

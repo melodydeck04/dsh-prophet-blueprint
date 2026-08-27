@@ -52,7 +52,8 @@ test("Host prepares only the registered bilingual artifact set", async () => {
 	assert.match(await readFile(join(root, ".specs", "proposed", "accounts.md"), "utf8"), new RegExp(PREPARED_MARKER));
 	const dashboard = await getBlueprintDashboard(root);
 	const feature = dashboard.catalog.features[0];
-	assert.equal(feature.workflow.stage, "prepared");
+	assert.equal(feature.workflow.stage, "refining");
+	assert.equal(feature.workflow.internalStage, "prepared");
 	assert.equal(feature.artifacts.spec.en.file, ".specs/proposed/accounts.md");
 	await mkdir(join(root, "docs", "user", "features"), { recursive: true });
 	await writeFile(join(root, "docs", "user", "features", "account.md"), "# Stray\n", "utf8");

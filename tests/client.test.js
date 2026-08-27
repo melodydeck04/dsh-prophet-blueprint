@@ -2,97 +2,47 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-test("manifest and browser bundle expose the DSH 0.1.1-rc.2 client-loader contract", async () => {
+test("manifest and browser bundle expose a dashboard-only Blueprint contract", async () => {
 	const manifest = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 	const client = await readFile(new URL("../lib/client.js", import.meta.url), "utf8");
+	assert.equal(manifest.version, "0.19.0");
 	assert.equal(manifest.dsh.client.platform, "web");
-	assert.ok(manifest.dsh.client.inject.includes("@deepseek-ai/dsh-client-ui-conversation"));
-	assert.ok(manifest.dsh.client.inject.includes("@deepseek-ai/dsh-client-ui-primitives"));
-	assert.equal(manifest.peerDependencies["@deepseek-ai/dsh-client-ui-primitives"], "^0.1.1-rc.2");
-	assert.equal(manifest.exports["./client"].default, "./lib/client.js");
+	assert.ok(manifest.dsh.client.inject.includes("@deepseek-ai/dsh-client-ui-input-trigger"));
+	assert.equal(manifest.exports["./orchestration"].default, "./lib/orchestration.js");
+	assert.equal(manifest.exports["./chat-commands"].default, "./lib/chat-commands.js");
 	assert.match(client, /^window\.__ModuleLoader__\.load\(/);
 	assert.match(client, /ctx\.slots\.inject\("conversation\.view"/);
-	assert.match(client, /id: "blueprint"/);
+	assert.match(client, /ctx\.inputTriggers\.registerSource/);
 	assert.match(client, /fetch\("\/design-blueprint\/api"/);
-	assert.match(client, /action: "discover"/);
-	assert.match(client, /action: "initialize"/);
-	assert.match(client, /action: "architecture-initialize-preview"/);
-	assert.match(client, /action: "architecture-initialize-apply"/);
-	assert.match(client, /action: "architecture-preview"/);
-	assert.match(client, /action: "architecture-apply"/);
-	assert.match(client, /初始化架构模型/);
-	assert.match(client, /action: "approve"/);
-	assert.match(client, /action: "prepare"/);
-	assert.match(client, /action: "migration-preview"/);
-	assert.match(client, /action: "migration-apply"/);
-	assert.match(client, /session\.prompt\(\[\{ type: "text", text: prompt \}\], "queue"\)/);
-	assert.match(client, /function FeatureDiagram/);
-	assert.match(client, /bp-diagram-edge/);
-	assert.match(client, /生成开发方案/);
-	assert.match(client, /审核并确认方案/);
-	assert.match(client, /开始开发/);
-	assert.match(client, /CLIENT_VERSION = "0\.14\.7"/);
-	assert.match(client, /Host v\$\{hostVersion\} · Client v\$\{CLIENT_VERSION\}/);
-	assert.match(client, /版本不一致，请完整重启 DSH Web/);
-	assert.match(client, /function RequirementAnalysis/);
-	assert.match(client, /中文需求分析/);
-	assert.match(client, /function ReviewerPanel/);
-	assert.match(client, /Spec 助手/);
-	assert.match(client, /ctx\.sessions\.create\(\{ cwd \}\)/);
-	assert.match(client, /Blueprint 审核 · \$\{REVIEW_PROTOCOL_VERSION\} · \$\{feature\.id\}/);
-	assert.match(client, /session\.cancel\(\)/);
-	assert.match(client, /await session\.open\(\)/);
-	assert.match(client, /snapshot\?\.partial/);
-	assert.match(client, /conversation\.runningCalls/);
-	assert.match(client, /bp-review-activity/);
-	assert.match(client, /正在思考/);
-	assert.match(client, /文件修改/);
-	assert.match(client, /子任务/);
-	assert.match(client, /bp-stream-cursor/);
+	assert.match(client, /Feature 层级/);
+	assert.match(client, /搜索 Feature/);
+	assert.match(client, /批准精确 Spec 哈希/);
+	assert.match(client, /活动变更与历史/);
+	assert.match(client, /action:"document"/);
 	assert.match(client, /MarkdownText/);
-	assert.match(client, /简明模式/);
-	assert.match(client, /技术细节/);
-	assert.match(client, /直接优化并写入 Spec/);
-	assert.match(client, /刷新结果/);
-	assert.match(client, /新建对话/);
-	assert.match(client, /onRefresh: load/);
-	assert.match(client, /element\.scrollTop = element\.scrollHeight/);
-	assert.match(client, /初始化当前项目/);
-	assert.match(client, /confirmCurrentWorkspace/);
-	assert.match(client, /确认此目录并初始化/);
-	assert.match(client, /正在检查/);
-	assert.match(client, /优化 Spec/);
-	assert.match(client, /项目结构/);
-	assert.match(client, /架构设计/);
-	assert.match(client, /architectureReviewer/);
-	assert.match(client, /ARCHITECTURE_PROTOCOL_VERSION/);
-	assert.match(client, /ARCHITECTURE_MESSAGE_MARKER/);
-	assert.match(client, /function ArchitectureGraph/);
-	assert.match(client, /function ArchitectureDetail/);
-	assert.match(client, /function ArchitectureAssistant/);
-	assert.match(client, /function ArchitectureProposalCard/);
-	assert.match(client, /生成变更预览/);
-	assert.match(client, /确认并应用/);
-	assert.match(client, /architectureMounted/);
-	assert.match(client, /draftStorageKey/);
-	assert.match(client, /sessionStorageKey/);
-	assert.match(client, /className: "bp-arch-column"/);
-	assert.ok(client.indexOf("h(ArchitectureDetail") < client.indexOf("h(ArchitectureAssistant"));
-	assert.match(client, /componentGraphLayout/);
-	assert.match(client, /architectureTitle/);
-	assert.match(client, /architecturePrompt/);
-	assert.match(client, /bp-arch-graph/);
-	assert.match(client, /bp-arch-workspace/);
-	assert.match(client, /bp-arch-edge contains/);
-	assert.match(client, /bp-arch-edge typed/);
-	assert.match(client, /function ArchitectureDetail\(\{ component, features, supportedFeatures, onFeatureSelect \}\)/);
-	assert.match(client, /selected-feature/);
-	assert.match(client, /selected-component/);
-	assert.match(client, /页面或依赖本身不能作为新增插件的依据/);
-	assert.match(client, /不创建或修改 \.blueprint\/approvals、\.blueprint\/architecture 或实现文件/);
-	assert.match(client, /feature\.artifacts/);
-	assert.match(client, /Host 工件路径预览/);
-	assert.match(client, /规范化身份/);
-	assert.match(client, /不得另选、自创或模糊搜索文件名/);
-	assert.equal(manifest.version, "0.14.7");
+	assert.match(client, /CLIENT_VERSION = "0\.19\.0"/);
+});
+
+test("Blueprint Web has no second Chat, browser role orchestration, or canned AI follow-up controls", async () => {
+	const client = await readFile(new URL("../lib/client.js", import.meta.url), "utf8");
+	for (const forbidden of [
+		"UnifiedAssistant",
+		"<textarea",
+		"localStorage",
+		"sessions.create",
+		"sendPrompt",
+		"assistantRequest",
+		"verification-start",
+		"verification-result",
+		"verification-finalize",
+		"报告问题",
+		"提出新能力",
+		"规划新能力",
+		"整理现有能力",
+		"开始开发",
+		"新建会话",
+	]) assert.doesNotMatch(client, new RegExp(forbidden));
+	assert.match(client, /\/blueprint @feature:\$\{feature\.id\} 描述你的需求/);
+	assert.match(client, /页面选择仅用于浏览，不会改变 Chat 目标或授予写权限/);
+	assert.match(client, /不会创建第二个助手/);
 });

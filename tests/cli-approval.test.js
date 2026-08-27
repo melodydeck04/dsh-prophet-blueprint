@@ -2,12 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { initBlueprint } from "../lib/init.js";
 import { serializeFeature } from "../lib/features.js";
+import { serializeComponent } from "../lib/architecture.js";
 import { getBlueprintDashboard } from "../lib/web-api.js";
 
 const execute = promisify(execFile);
@@ -60,6 +61,12 @@ async function fixture() {
 		documents: [{ level: "required", path: "README.md" }],
 		acceptance: ["Accounts are visible."],
 		notes: "",
+	}), "utf8");
+	await mkdir(join(root, ".blueprint", "architecture", "components"), { recursive: true });
+	await writeFile(join(root, ".blueprint", "architecture", "components", "accounts-service.md"), serializeComponent({
+		id: "accounts-service", title: "Accounts service", kind: "service", containerId: null, deployment: null, status: "active",
+		summary: "Owns accounts.", ownedPaths: ["lib/accounts/**"], contracts: [], dependencies: [], supportedFeatures: ["accounts"],
+		documents: [{ level: "required", path: "DESIGN.md" }],
 	}), "utf8");
 	await writeFile(join(root, ".specs", "proposed", "accounts.md"), SPEC, "utf8");
 	await writeFile(join(root, ".specs", "proposed", "accounts.zh.md"), "# Spec: Accounts (Chinese)\n\nEquivalent proposal.\n", "utf8");

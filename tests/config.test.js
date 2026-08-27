@@ -6,9 +6,11 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { workingTreeSnapshot } from "../lib/snapshot.js";
 
-test("default config exposes the architecture root and excludes its components from spec coverage", () => {
+test("default config exposes architecture and Host verification roots outside implementation coverage", () => {
 	assert.equal(DEFAULT_CONFIG.architecture.root, ".blueprint/architecture");
+	assert.equal(DEFAULT_CONFIG.features.verificationsRoot, ".blueprint/verifications");
 	assert.ok(DEFAULT_CONFIG.changePolicy.allowWithoutSpec.includes(".blueprint/architecture/**"));
+	assert.ok(DEFAULT_CONFIG.changePolicy.allowWithoutSpec.includes(".blueprint/verifications/**"));
 });
 
 test("loadConfig fills the architecture root when omitted and reports invalid paths", async () => {

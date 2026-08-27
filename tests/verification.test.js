@@ -1,0 +1,443 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { execFile as execFileCallback } from "node:child_process";
+import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { promisify } from "node:util";
+import { serializeComponent } from "../lib/architecture.js";
+import { loadConfig } from "../lib/config.js";
+import { serializePairRecord } from "../lib/docs.js";
+import { serializeFeature } from "../lib/features.js";
+import { initBlueprint } from "../lib/init.js";
+import { scan } from "../lib/scan.js";
+import { workingTreeSnapshot } from "../lib/snapshot.js";
+import { loadSpecs } from "../lib/specs.js";
+import {
+	beginFeatureImplementation,
+	bindFeatureCycleRole,
+	completeVerifiedFeature,
+	failFeatureVerificationOrchestration,
+	loadVerificationCatalog,
+	normalizeVerificationResult,
+	parseVerificationRecord,
+	prepareFeatureVerification,
+	requestFeatureVerification,
+	requestLegacyFeatureVerification,
+	startFeatureVerification,
+	submitFeatureVerificationResult,
+	verificationRepairPrompt,
+} from "../lib/verification.js";
+import { approveFeatureProposal, loadFeatureWorkflow } from "../lib/workflow.js";
+import { getBlueprintDashboard } from "../lib/web-api.js";
+import { loadFeatureCatalog } from "../lib/features.js";
+import { loadArchitectureCatalog } from "../lib/architecture.js";
+
+const execFile = promisify(execFileCallback);
+
+const FEATURE = {
+	id: "accounts",
+	title: "Accounts",
+	status: "planned",
+	parentId: null,
+	summary: "Owns account behavior.",
+	scope: ["lib/accounts/**"],
+	documents: [{ level: "required", path: "README.md" }],
+	acceptance: ["Account behavior is observable."],
+	notes: "",
+	components: ["accounts-service"],
+};
+
+function component(status = "planned") {
+	return serializeComponent({
+		id: "accounts-service",
+		title: "Accounts service",
+		kind: "service",
+		containerId: null,
+		deployment: null,
+		status,
+		summary: "Owns account behavior.",
+		ownedPaths: ["lib/accounts/**"],
+		contracts: [],
+		dependencies: [],
+		supportedFeatures: ["accounts"],
+		documents: [{ level: "required", path: "DESIGN.md" }],
+	});
+}
+
+function spec(status = "proposed") {
+	const decision = status === "implemented" ? "Decision" : "Proposal";
+	return `# Spec: Accounts
+
+Status: ${status}
+Feature: accounts
+
+## Problem
+
+Account behavior needs governed delivery.
+
+## Scope
+
+- allow: \`lib/accounts/**\`
+- allow: \`.blueprint/features/accounts.md\`
+- allow: \`.blueprint/architecture/components/accounts-service.md\`
+- allow: \`.specs/**\`
+- allow: \`.blueprint/verifications/**\`
+- allow: \`docs/user/features/**\`
+
+## ${decision}
+
+Deliver and verify account behavior.
+
+## Alternatives considered
+
+**Self-certification.** Rejected because implementation and verification responsibilities must remain separate.
+
+## Acceptance criteria
+
+- AC-1: Account behavior is observable.
+
+## Verification
+
+- AC-1: command: \`node --test\`
+
+${status === "implemented" ? "## Consequences\n\nThe historical implementation is present and awaits lifecycle verification.\n\n" : ""}## Risks
+
+The test environment may be unavailable.
+`;
+}
+
+const ZH_SPEC = `# 规格：账户
+
+状态：拟议
+功能：accounts
+
+## 问题
+
+账户行为需要受治理的交付。
+
+## 范围
+
+- 允许：\`lib/accounts/**\`
+
+## 方案
+
+交付并验证账户行为。
+
+## 其他方案
+
+拒绝自我认证。
+
+## 验收条件
+
+- AC-1：账户行为可以被观察。
+
+## 验证
+
+- AC-1：命令：\`node --test\`
+
+## 风险
+
+测试环境可能不可用。
+`;
+
+const BRIEF_EN = "# Accounts\n\nEnglish | [中文](accounts.zh.md)\n\n## What it does\n\nManages account behavior.\n";
+const BRIEF_ZH = "# 账户\n\n[English](accounts.md) | 中文\n\n## 实现什么\n\n管理账户行为。\n";
+
+async function git(root, ...args) {
+	return execFile("git", ["-c", `safe.directory=${root}`, "-C", root, ...args], { windowsHide: true, maxBuffer: 16 * 1024 * 1024 });
+}
+
+async function commitAll(root, message) {
+	await git(root, "add", "-A");
+	await git(root, "commit", "-m", message);
+}
+
+async function createGitFixture({ implemented = false } = {}) {
+	const root = await mkdtemp(join(tmpdir(), "blueprint-verification-"));
+	await initBlueprint(root);
+	await mkdir(join(root, ".blueprint", "architecture", "components"), { recursive: true });
+	await mkdir(join(root, "lib", "accounts"), { recursive: true });
+	await writeFile(join(root, ".blueprint", "features", "accounts.md"), serializeFeature(FEATURE), "utf8");
+	await writeFile(join(root, ".blueprint", "architecture", "components", "accounts-service.md"), component(), "utf8");
+	const lifecycle = implemented ? "implemented" : "proposed";
+	await writeFile(join(root, ".specs", lifecycle, "accounts.md"), spec(implemented ? "implemented" : "proposed"), "utf8");
+	await writeFile(join(root, ".specs", lifecycle, "accounts.zh.md"), ZH_SPEC, "utf8");
+	await mkdir(join(root, "docs", "user", "features"), { recursive: true });
+	await writeFile(join(root, "docs", "user", "features", "accounts.md"), BRIEF_EN, "utf8");
+	await writeFile(join(root, "docs", "user", "features", "accounts.zh.md"), BRIEF_ZH, "utf8");
+	await writeFile(join(root, "docs", "user", "features", "accounts.i18n.yaml"), serializePairRecord("docs/user/features/accounts.md", BRIEF_EN, "docs/user/features/accounts.zh.md", BRIEF_ZH), "utf8");
+	if (implemented) await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = true;\n", "utf8");
+	await git(root, "init");
+	await git(root, "config", "user.email", "blueprint@example.test");
+	await git(root, "config", "user.name", "Blueprint Test");
+	await commitAll(root, "fixture");
+	return root;
+}
+
+async function facts(root) {
+	const snapshot = await workingTreeSnapshot(root);
+	const { config } = await loadConfig(snapshot);
+	const specs = await loadSpecs(snapshot, config);
+	const features = await loadFeatureCatalog(snapshot, config);
+	const architecture = await loadArchitectureCatalog(snapshot, config);
+	const verification = await loadVerificationCatalog(snapshot, config, features.features);
+	const workflow = await loadFeatureWorkflow(snapshot, config, specs.specs, features.features, architecture.components, verification.records);
+	return { snapshot, config, specs, features, architecture, verification, workflow };
+}
+
+function failedResult(domain = "development") {
+	return {
+		conclusion: "failed",
+		summary: "One required check failed.",
+		acResults: [{ id: "AC-1", status: "failed", evidence: ["Observed the missing account result."] }],
+		checks: [{ id: "node-test", kind: "command", status: "failed", summary: "Test command exited with status 1." }],
+		findings: [{ id: "account-result", domain, severity: "required", message: "Return the observable account result." }],
+	};
+}
+
+function passedResult() {
+	return {
+		conclusion: "passed",
+		summary: "Every acceptance criterion and required check passed.",
+		acResults: [{ id: "AC-1", status: "passed", evidence: ["The account module returns the expected observable result."] }],
+		checks: [{ id: "node-test", kind: "command", status: "passed", summary: "Node test command exited with status 0." }],
+		findings: [],
+	};
+}
+
+async function startPreparedVerification(root, record, sessionId) {
+	const prepared = await prepareFeatureVerification({ cwd: root, featureId: "accounts", expectedRecordHash: record.hash });
+	return startFeatureVerification({
+		cwd: root,
+		featureId: "accounts",
+		expectedRecordHash: record.hash,
+		sessionId,
+		workspacePath: prepared.workspacePath,
+		preparationCapability: prepared.preparationCapability,
+	});
+}
+
+test("approved delivery fails once, retains evidence, and completes automatically after a fresh passing attempt", async () => {
+	const root = await createGitFixture();
+	let current = await facts(root);
+	const hash = current.workflow.states.get("accounts").spec.reviewHash;
+	await approveFeatureProposal({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	await commitAll(root, "approve proposal");
+	const begun = await beginFeatureImplementation({ cwd: root, featureId: "accounts", expectedSpecHash: hash, intent: "change", requestSessionId: "coordinator-session" });
+	assert.match(begun.record.cycle.id, /^cycle-/);
+	assert.equal(begun.record.cycle.roles.coordinator.sessionId, "coordinator-session");
+	await bindFeatureCycleRole({ cwd: root, featureId: "accounts", cycleId: begun.record.cycle.id, role: "implementer", sessionId: "implementer-session-1", expectedSpecHash: hash });
+	const rebound = await bindFeatureCycleRole({ cwd: root, featureId: "accounts", cycleId: begun.record.cycle.id, role: "implementer", sessionId: "implementer-session-2", expectedSpecHash: hash });
+	assert.equal(rebound.record.cycle.roles.implementer.sessionId, "implementer-session-2");
+	assert.equal(rebound.record.cycle.superseded.at(-1).sessionId, "implementer-session-1");
+	await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = false;\n", "utf8");
+	await git(root, "add", "lib/accounts/index.js");
+
+	await requestFeatureVerification({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	current = await facts(root);
+	assert.equal(current.workflow.states.get("accounts").stage, "verification_ready");
+	const ready = current.verification.records.get("accounts");
+	const first = await startPreparedVerification(root, ready, "fresh-verifier-1");
+	current = await facts(root);
+	const running = current.verification.records.get("accounts");
+	const publicDashboard = await getBlueprintDashboard(root);
+	assert.equal(Object.hasOwn(publicDashboard.catalog.features.find((entry) => entry.id === "accounts").workflow.verification.attempts.at(-1), "capabilityHash"), false);
+	const failed = await submitFeatureVerificationResult({ cwd: root, featureId: "accounts", expectedRecordHash: running.hash, attemptId: first.attempt.id, resultCapability: first.resultCapability, result: failedResult("development") });
+	assert.equal(failed.record.stage, "needs_changes");
+	assert.equal(failed.record.attempts.length, 1);
+	assert.equal(failed.record.attempts[0].findings[0].domain, "development");
+
+	await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = true;\n", "utf8");
+	await git(root, "add", "lib/accounts/index.js");
+	await requestFeatureVerification({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	current = await facts(root);
+	const repaired = current.verification.records.get("accounts");
+	const second = await startPreparedVerification(root, repaired, "fresh-verifier-2");
+	current = await facts(root);
+	const rerun = current.verification.records.get("accounts");
+	const result = passedResult();
+	const verifiedResult = await submitFeatureVerificationResult({ cwd: root, featureId: "accounts", expectedRecordHash: rerun.hash, attemptId: second.attempt.id, resultCapability: second.resultCapability, result });
+	assert.equal(verifiedResult.verified, true);
+	assert.equal(verifiedResult.record.stage, "verified");
+	assert.equal(Object.hasOwn(verifiedResult.record.attempts.at(-1), "capabilityHash"), false);
+	current = await facts(root);
+	const verified = current.verification.records.get("accounts");
+	const beforeIndex = (await git(root, "diff", "--cached", "--binary")).stdout;
+	const rollbackFiles = [
+		".specs/proposed/accounts.md",
+		".specs/proposed/accounts.zh.md",
+		".blueprint/features/accounts.md",
+		".blueprint/architecture/components/accounts-service.md",
+		".blueprint/verifications/accounts.json",
+	];
+	const beforeFiles = new Map(await Promise.all(rollbackFiles.map(async (file) => [file, await readFile(join(root, ...file.split("/")), "utf8")] )));
+	for (const failAt of ["after-temp-writes", "after-backups", "after-commits", "after-stage", "after-validate"]) {
+		await assert.rejects(
+			completeVerifiedFeature({ cwd: root, featureId: "accounts", expectedRecordHash: verified.hash, transactionOptions: { failAt, recordFailure: false } }),
+			new RegExp(failAt),
+		);
+		assert.equal((await git(root, "diff", "--cached", "--binary")).stdout, beforeIndex);
+		for (const [file, content] of beforeFiles) assert.equal(await readFile(join(root, ...file.split("/")), "utf8"), content);
+		assert.equal((await facts(root)).verification.records.get("accounts").stage, "verified");
+	}
+	const accepted = await completeVerifiedFeature({ cwd: root, featureId: "accounts", expectedRecordHash: verified.hash });
+	assert.equal(accepted.completed, true);
+	assert.equal(accepted.record.stage, "completed");
+	assert.equal(accepted.record.attempts.length, 2);
+
+	current = await facts(root);
+	assert.equal(current.workflow.states.get("accounts").stage, "completed");
+	assert.equal(current.features.features.find((entry) => entry.id === "accounts").status, "active");
+	assert.equal(current.architecture.components.find((entry) => entry.id === "accounts-service").status, "active");
+	assert.equal(current.snapshot.exists(".specs/proposed/accounts.md"), false);
+	assert.equal(current.snapshot.exists(".specs/implemented/accounts.md"), true);
+	assert.match(await readFile(join(root, "docs", "user", "features", "accounts.md"), "utf8"), /## Verified current behavior[\s\S]*AC-1: Account behavior is observable/);
+	assert.match(await readFile(join(root, "docs", "user", "features", "accounts.zh.md"), "utf8"), /## 已验证的当前行为[\s\S]*AC-1：账户行为可以被观察/);
+	const audit = await scan({ cwd: root });
+	assert.equal(audit.issues.filter((entry) => entry.severity === "required").length, 0);
+
+	const duplicate = await submitFeatureVerificationResult({ cwd: root, featureId: "accounts", expectedRecordHash: rerun.hash, attemptId: second.attempt.id, result });
+	assert.equal(duplicate.idempotent, true);
+});
+
+test("lifecycle-drifted historical implementation uses the same verifier without rewriting its Spec", async () => {
+	const root = await createGitFixture({ implemented: true });
+	const original = await readFile(join(root, ".specs", "implemented", "accounts.md"), "utf8");
+	let current = await facts(root);
+	assert.equal(current.workflow.states.get("accounts").stage, "verification_required");
+	const queued = await requestLegacyFeatureVerification({ cwd: root, featureId: "accounts" });
+	assert.equal(queued.record.stage, "verification_ready");
+	current = await facts(root);
+	assert.equal(current.workflow.states.get("accounts").stage, "verification_ready");
+	const ready = current.verification.records.get("accounts");
+	const started = await startPreparedVerification(root, ready, "legacy-verifier-1");
+	current = await facts(root);
+	const running = current.verification.records.get("accounts");
+	const verifiedResult = await submitFeatureVerificationResult({ cwd: root, featureId: "accounts", expectedRecordHash: running.hash, attemptId: started.attempt.id, resultCapability: started.resultCapability, result: passedResult() });
+	assert.equal(verifiedResult.record.stage, "verified");
+	current = await facts(root);
+	await completeVerifiedFeature({ cwd: root, featureId: "accounts", expectedRecordHash: current.verification.records.get("accounts").hash });
+	assert.equal(await readFile(join(root, ".specs", "implemented", "accounts.md"), "utf8"), original);
+	current = await facts(root);
+	assert.equal(current.workflow.states.get("accounts").stage, "completed");
+	assert.equal(current.features.features.find((entry) => entry.id === "accounts").status, "active");
+	assert.equal(current.architecture.components.find((entry) => entry.id === "accounts-service").status, "active");
+	const audit = await scan({ cwd: root });
+	assert.equal(audit.issues.filter((entry) => entry.severity === "required").length, 0);
+});
+
+test("forged result capabilities fail closed and snapshot drift becomes needs_changes", async () => {
+	const root = await createGitFixture();
+	let current = await facts(root);
+	const hash = current.workflow.states.get("accounts").spec.reviewHash;
+	await approveFeatureProposal({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	await commitAll(root, "approve proposal");
+	const begun = await beginFeatureImplementation({ cwd: root, featureId: "accounts", expectedSpecHash: hash, intent: "change", requestSessionId: "coordinator-session" });
+	assert.match(begun.record.cycle.id, /^cycle-/);
+	assert.equal(begun.record.cycle.roles.coordinator.sessionId, "coordinator-session");
+	await bindFeatureCycleRole({ cwd: root, featureId: "accounts", cycleId: begun.record.cycle.id, role: "implementer", sessionId: "implementer-session-1", expectedSpecHash: hash });
+	const rebound = await bindFeatureCycleRole({ cwd: root, featureId: "accounts", cycleId: begun.record.cycle.id, role: "implementer", sessionId: "implementer-session-2", expectedSpecHash: hash });
+	assert.equal(rebound.record.cycle.roles.implementer.sessionId, "implementer-session-2");
+	assert.equal(rebound.record.cycle.superseded.at(-1).sessionId, "implementer-session-1");
+	await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = true;\n", "utf8");
+	await git(root, "add", "lib/accounts/index.js");
+	await requestFeatureVerification({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	current = await facts(root);
+	const started = await startPreparedVerification(root, current.verification.records.get("accounts"), "capability-verifier");
+	current = await facts(root);
+	const running = current.verification.records.get("accounts");
+	await assert.rejects(
+		submitFeatureVerificationResult({ cwd: root, featureId: "accounts", expectedRecordHash: running.hash, attemptId: started.attempt.id, resultCapability: "forged", result: passedResult() }),
+		/forged/,
+	);
+	assert.equal((await facts(root)).verification.records.get("accounts").stage, "verifying");
+	await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = 'changed';\n", "utf8");
+	await git(root, "add", "lib/accounts/index.js");
+	const stale = await submitFeatureVerificationResult({ cwd: root, featureId: "accounts", expectedRecordHash: running.hash, attemptId: started.attempt.id, resultCapability: started.resultCapability, result: passedResult() });
+	assert.equal(stale.hostFailure, true);
+	assert.equal(stale.record.stage, "needs_changes");
+	assert.equal(stale.record.attempts.at(-1).findings.at(-1).id, "host-verification-gate");
+});
+
+test("pre-result orchestration failures become durable needs_changes evidence", async () => {
+	const root = await createGitFixture();
+	let current = await facts(root);
+	const hash = current.workflow.states.get("accounts").spec.reviewHash;
+	await approveFeatureProposal({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	await commitAll(root, "approve proposal");
+	const begun = await beginFeatureImplementation({ cwd: root, featureId: "accounts", expectedSpecHash: hash, intent: "change", requestSessionId: "coordinator-session" });
+	assert.match(begun.record.cycle.id, /^cycle-/);
+	assert.equal(begun.record.cycle.roles.coordinator.sessionId, "coordinator-session");
+	await bindFeatureCycleRole({ cwd: root, featureId: "accounts", cycleId: begun.record.cycle.id, role: "implementer", sessionId: "implementer-session-1", expectedSpecHash: hash });
+	const rebound = await bindFeatureCycleRole({ cwd: root, featureId: "accounts", cycleId: begun.record.cycle.id, role: "implementer", sessionId: "implementer-session-2", expectedSpecHash: hash });
+	assert.equal(rebound.record.cycle.roles.implementer.sessionId, "implementer-session-2");
+	assert.equal(rebound.record.cycle.superseded.at(-1).sessionId, "implementer-session-1");
+	await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = true;\n", "utf8");
+	await git(root, "add", "lib/accounts/index.js");
+	await requestFeatureVerification({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	current = await facts(root);
+	const ready = current.verification.records.get("accounts");
+	const failedSetup = await failFeatureVerificationOrchestration({
+		cwd: root,
+		featureId: "accounts",
+		expectedRecordHash: ready.hash,
+		phase: "session-setup",
+		message: "The independent Session could not be archived.",
+	});
+	assert.equal(failedSetup.record.stage, "needs_changes");
+	assert.equal(failedSetup.record.attempts.at(-1).conclusion, "failed");
+	assert.equal(failedSetup.record.attempts.at(-1).findings[0].id, "host-verification-orchestration");
+	assert.match(verificationRepairPrompt({ id: "accounts" }, failedSetup.record), /session-setup/);
+
+	await requestFeatureVerification({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	current = await facts(root);
+	const started = await startPreparedVerification(root, current.verification.records.get("accounts"), "orchestration-verifier");
+	current = await facts(root);
+	const running = current.verification.records.get("accounts");
+	const failedPrompt = await failFeatureVerificationOrchestration({
+		cwd: root,
+		featureId: "accounts",
+		expectedRecordHash: running.hash,
+		phase: "prompt-send",
+		message: "The verifier prompt was not accepted.",
+		attemptId: started.attempt.id,
+		sessionId: started.attempt.sessionId,
+	});
+	assert.equal(failedPrompt.record.stage, "needs_changes");
+	assert.equal(failedPrompt.record.attempts.at(-1).checks.at(-1).id, "host-verification-gate");
+	await assert.rejects(
+		failFeatureVerificationOrchestration({ cwd: root, featureId: "accounts", expectedRecordHash: running.hash, phase: "unknown", message: "no" }),
+		/phase is invalid/,
+	);
+});
+
+test("verification schemas reject unknown, duplicate, unsafe, and incomplete evidence", () => {
+	assert.throws(() => normalizeVerificationResult({ ...passedResult(), surprise: true }), /unknown fields/);
+	assert.throws(() => normalizeVerificationResult({ ...passedResult(), checks: [passedResult().checks[0], passedResult().checks[0]] }), /duplicate ids/);
+	const unsafe = {
+		version: 1,
+		featureId: "accounts",
+		stage: "verification_ready",
+		spec: { sourceFile: "../outside.md", approvedHash: "a".repeat(64), implementedFile: null },
+		snapshot: { kind: "git-index", digest: "b".repeat(64) },
+		requestedAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
+		completedAt: null,
+		attempts: [],
+		history: [],
+	};
+	assert.throws(() => parseVerificationRecord(".blueprint/verifications/accounts.json", JSON.stringify(unsafe)), /relative path|outside|\.\./i);
+});
+
+test("failed findings produce deterministic development, Spec, architecture, and mixed repair routes", () => {
+	for (const domain of ["development", "spec", "architecture"]) {
+		const prompt = verificationRepairPrompt({ id: "accounts" }, { attempts: [{ findings: [{ id: `finding-${domain}`, domain, severity: "required", message: `${domain} repair` }] }] });
+		assert.match(prompt, new RegExp(`路线：${domain}`));
+	}
+	const mixed = verificationRepairPrompt({ id: "accounts" }, { attempts: [{ findings: [
+		{ id: "finding-development", domain: "development", severity: "required", message: "implementation repair" },
+		{ id: "finding-architecture", domain: "architecture", severity: "required", message: "ownership repair" },
+	] }] });
+	assert.match(mixed, /路线：mixed/);
+});

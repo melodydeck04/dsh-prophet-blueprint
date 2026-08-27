@@ -129,6 +129,7 @@ test("preview and apply upsert a new component with stable identity", async () =
 	assert.equal(preview.preview.change.action, "upsert");
 	assert.equal(preview.preview.delta.added[0], "backend-api");
 	assert.equal(preview.preview.delta.deploymentEffects[0], "prod-cluster-1");
+	assert.deepEqual(preview.preview.delta.approvalInvalidations, [], "projects without the architecture-governance Feature must not report a fictional approval invalidation");
 	const applied = await applyArchitectureChange({ cwd: root, change, expectedPreviewHash: preview.preview.previewHash });
 	assert.equal(applied.change.id, "backend-api");
 	const snapshot = await workingTreeSnapshot(root);

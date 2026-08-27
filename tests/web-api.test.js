@@ -70,6 +70,7 @@ test("Web save is confined to a feature id and rejects stale updates", async () 
 	assert.equal(dashboard.plugin.hostVersion, PLUGIN_VERSION);
 	assert.equal(dashboard.catalog.features[0].id, "search");
 	assert.equal(dashboard.catalog.features[0].satisfaction, 100);
+	assert.ok(dashboard.reconciliation.items.every((entry) => entry.owner && entry.actionKind));
 	await assert.rejects(saveBlueprintFeature({ cwd: root, feature: feature({ title: "Changed" }), expectedHash: "0".repeat(64) }), /changed after the page loaded/);
 	await assert.rejects(saveBlueprintFeature({ cwd: root, feature: feature({ id: "../outside" }), expectedHash: null }), /Host-derived canonical id/);
 });
@@ -129,14 +130,39 @@ test("Web approval binds the exact visible proposed spec", async () => {
 	await writeFile(join(root, "docs", "user", "features", "search.zh.md"), "# 搜索\n\n## 实现什么\n\n提供搜索。\n", "utf8");
 	let dashboard = await getBlueprintDashboard(root);
 	let search = dashboard.catalog.features.find((entry) => entry.id === "search");
-	assert.equal(search.workflow.stage, "review");
+	assert.equal(search.workflow.stage, "ready");
+	assert.equal(search.workflow.internalStage, "review");
 	assert.equal(search.brief.zh.file, "docs/user/features/search.zh.md");
 	assert.equal(search.workflow.spec.languages.zh.file, ".specs/proposed/search.zh.md");
 	assert.match(search.workflow.spec.hash, /^[a-f0-9]{64}$/);
+	await assert.rejects(handleBlueprintAction({ action: "approve", cwd: root, featureId: "search", expectedSpecHash: search.workflow.spec.hash }), /requires at least one valid non-deprecated Component owner/);
+	await mkdir(join(root, ".blueprint", "architecture", "components"), { recursive: true });
+	await writeFile(join(root, ".blueprint", "architecture", "components", "search-service.md"), serializeComponent({
+		id: "search-service", title: "Search service", kind: "service", containerId: null, deployment: null, status: "active",
+		summary: "Owns search behavior.", ownedPaths: ["src/search/**"], contracts: [], dependencies: [], supportedFeatures: ["search"],
+		documents: [{ level: "required", path: "DESIGN.md" }],
+	}), "utf8");
+	dashboard = await getBlueprintDashboard(root);
+	search = dashboard.catalog.features.find((entry) => entry.id === "search");
+	assert.equal(search.architecture.ready, true);
+	assert.deepEqual(search.components, ["search-service"]);
 	dashboard = await handleBlueprintAction({ action: "approve", cwd: root, featureId: "search", expectedSpecHash: search.workflow.spec.hash });
 	search = dashboard.catalog.features.find((entry) => entry.id === "search");
-	assert.equal(search.workflow.stage, "approved");
+	assert.equal(search.workflow.stage, "ready");
+	assert.equal(search.workflow.internalStage, "approved");
 	assert.equal(search.workflow.spec.content, FEATURE_SPEC);
+});
+
+test("Web document reads only files registered to the selected Feature", async () => {
+	const root = await mkdtemp(join(tmpdir(), "blueprint-web-doc-"));
+	await initBlueprint(root);
+	await writeFile(join(root, "README.md"), "# Registered\n", "utf8");
+	await saveBlueprintFeature({ cwd: root, feature: feature(), expectedHash: null });
+	const result = await handleBlueprintAction({ action: "document", cwd: root, featureId: "search", file: "README.md" });
+	assert.equal(result.content, "# Registered\n");
+	await writeFile(join(root, "secret.md"), "not registered\n", "utf8");
+	await assert.rejects(handleBlueprintAction({ action: "document", cwd: root, featureId: "search", file: "secret.md" }), /not registered/);
+	await assert.rejects(handleBlueprintAction({ action: "document", cwd: root, featureId: "search", file: "../outside.md" }), /repository-relative/);
 });
 
 test("Web architecture-preview and architecture-apply enforce optimistic concurrency on the registered component file", async () => {

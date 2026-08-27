@@ -19,6 +19,7 @@
     "allowWithoutSpec": [
       ".specs/**",
       ".blueprint/approvals/**",
+      ".blueprint/verifications/**",
       ".blueprint/architecture/**",
       "design-blueprint.json",
       "README.i18n.yaml"
@@ -26,7 +27,8 @@
   },
   "features": {
     "root": ".blueprint/features",
-    "approvalsRoot": ".blueprint/approvals"
+    "approvalsRoot": ".blueprint/approvals",
+    "verificationsRoot": ".blueprint/verifications"
   },
   "architecture": {
     "root": ".blueprint/architecture"

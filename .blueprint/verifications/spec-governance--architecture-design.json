@@ -1,0 +1,1012 @@
+{
+  "version": 1,
+  "featureId": "spec-governance--architecture-design",
+  "stage": "needs_changes",
+  "cycle": {
+    "id": "cycle-47662246-43e6-4313-99eb-165f60f7f776",
+    "intent": "change",
+    "requestSessionId": "01a0337b-09e4-7f00-a70f-0bd350ada68e",
+    "roles": {
+      "coordinator": {
+        "sessionId": "01a0337b-09e4-7f00-a70f-0bd350ada68e",
+        "boundAt": "2026-08-27T00:23:53.634Z"
+      },
+      "architecture": null,
+      "implementer": null
+    },
+    "superseded": []
+  },
+  "spec": {
+    "sourceFile": ".specs/proposed/automatic-verification-and-completion-loop.md",
+    "approvedHash": "a2f93a87acef8f59e2f1f0fa05819c163fc20451d0f557680b3e0e360553e035",
+    "implementedFile": null
+  },
+  "snapshot": {
+    "kind": "git-index",
+    "digest": "6f13d9b95e3e065686879b2d60810dbe751fb54d3314c5b1d688cf6b76386ca1"
+  },
+  "requestedAt": "2026-08-27T01:00:03.849Z",
+  "updatedAt": "2026-08-27T01:01:15.442Z",
+  "completedAt": null,
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "sessionId": "01a0337b-09e4-7f00-a70f-0bd350ada68e",
+      "capabilityHash": "9556769b373aaab8ce72761aee0d27d86985c4d93c273af7fc15eb83e7c0c797",
+      "startedAt": "2026-08-27T00:37:36.027Z",
+      "completedAt": "2026-08-27T00:37:45.157Z",
+      "conclusion": "failed",
+      "summary": "Implementation, syntax, 96-test regression, bilingual docs, staged scan, public six-stage map, safe document reads, and atomic bilingual current-truth merge are verified. Completion remains blocked because ambiguity/checklist/task gates are currently instructional packet contracts rather than persisted Host-enforced artifacts, and this environment has neither a DSH launcher nor the browser-control runtime needed for real profile unload/restart and visual end-to-end verification.",
+      "acResults": [
+        {
+          "id": "AC-SIMPLE-001",
+          "status": "passed",
+          "evidence": [
+            "Command and tool dispatch tests share one typed packet and the Client contains no second Chat."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-002",
+          "status": "passed",
+          "evidence": [
+            "Owner-resolution and reconciliation fixtures cover exact, repository-match, ambiguous, and brownfield boundaries."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-003",
+          "status": "passed",
+          "evidence": [
+            "Refinement packet tests enforce stable REQ/scenario formats and all declared decomposition dimensions."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-004",
+          "status": "failed",
+          "evidence": [
+            "Question and assumption rules are declared, but answers and blocking ambiguity are not persisted and enforced by Host state."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-005",
+          "status": "failed",
+          "evidence": [
+            "Checklist mappings are declared, but no Host validator rejects contradictory or unmapped generated change packages."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-006",
+          "status": "failed",
+          "evidence": [
+            "Design triggers are tested, but task-to-requirement traceability has no persisted task schema or enforcement gate."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-007",
+          "status": "passed",
+          "evidence": [
+            "Single-current-Agent begin/complete orchestration and optional verifier guards are covered by tests."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-008",
+          "status": "passed",
+          "evidence": [
+            "Completion merges both Feature briefs, refreshes pair hashes, archives the Spec, and passes rollback/idempotency tests."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-009",
+          "status": "failed",
+          "evidence": [
+            "Static Client/API tests cover hierarchy and documents; required real-browser navigation could not run."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-010",
+          "status": "passed",
+          "evidence": [
+            "Public workflow projection and Client tests assert exactly six visible stages."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-011",
+          "status": "failed",
+          "evidence": [
+            "Exact rc.2 peers/public APIs are checked, but unavailable DSH executable prevents real boot/unload cleanup."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-012",
+          "status": "failed",
+          "evidence": [
+            "No local dsh command or browser runtime is available for real profile boot, restart, and end-to-end completion."
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "npm-test",
+          "kind": "command",
+          "status": "passed",
+          "summary": "npm test passed 96/96; the changed current-truth completion scenario also passed its targeted end-to-end test."
+        },
+        {
+          "id": "lint-js",
+          "kind": "command",
+          "status": "passed",
+          "summary": "npm run lint:js passed for every shipped JavaScript module."
+        },
+        {
+          "id": "docs-check",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint docs check reports all 5 bilingual pairs synchronized."
+        },
+        {
+          "id": "staged-scan",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan reports 0 required and 0 recommended issues for the staged Git snapshot."
+        },
+        {
+          "id": "real-browser",
+          "kind": "browser",
+          "status": "failed",
+          "summary": "The Browser skill is installed, but its required runtime tool is unavailable in this task; no visual claim was substituted."
+        },
+        {
+          "id": "real-dsh-profile",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "The web profile links this plugin and official bundles, but no dsh/deepseek executable or running DSH process exists."
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-refinement-gates",
+          "domain": "development",
+          "severity": "required",
+          "message": "Persist refinement decisions, requirements, scenarios, tasks, and mappings, then block begin while ambiguity or consistency findings remain."
+        },
+        {
+          "id": "real-profile-e2e",
+          "domain": "development",
+          "severity": "required",
+          "message": "Expose the DSH 0.1.1-rc.2 launcher and browser runtime, then run web profile navigation, unload, restart, and recovery checks."
+        }
+      ]
+    },
+    {
+      "id": "attempt-2",
+      "sessionId": "01a0337b-09e4-7f00-a70f-0bd350ada68e-retry-2",
+      "capabilityHash": "3a4825ea24338c9e8ae173318c745dca28700956b8df83e6bdc31f1f7e0a3d6b",
+      "startedAt": "2026-08-27T01:00:22.970Z",
+      "completedAt": "2026-08-27T01:01:15.442Z",
+      "conclusion": "failed",
+      "summary": "Exact DSH rc.2 now boots, serves Blueprint 0.19.0, enforces document boundaries, releases its listener and restores durable state after restart. Completion remains blocked by missing persisted refinement gates and automated visual navigation.",
+      "acResults": [
+        {
+          "id": "AC-SIMPLE-001",
+          "status": "passed",
+          "evidence": [
+            "Command/tool tests and real Client confirm one Chat."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-002",
+          "status": "passed",
+          "evidence": [
+            "Owner and reconciliation fixtures cover bounded resolution."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-003",
+          "status": "passed",
+          "evidence": [
+            "REQ/scenario formats and decomposition dimensions are tested."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-004",
+          "status": "failed",
+          "evidence": [
+            "Resolved answers and blocking ambiguity are not persisted as Host state."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-005",
+          "status": "failed",
+          "evidence": [
+            "No Host validator yet rejects contradictory or unmapped packages."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-006",
+          "status": "failed",
+          "evidence": [
+            "Persisted task-to-requirement mapping remains absent."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-007",
+          "status": "passed",
+          "evidence": [
+            "Current-Agent orchestration and optional guards pass."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-008",
+          "status": "passed",
+          "evidence": [
+            "Completion merges bilingual truth and immutable history transactionally."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-009",
+          "status": "failed",
+          "evidence": [
+            "Real Client bundle loaded, but automated visual navigation could not run."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-010",
+          "status": "passed",
+          "evidence": [
+            "Real Host and Client expose six public states."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-011",
+          "status": "passed",
+          "evidence": [
+            "Exact rc.2 booted, served 0.19.0, stopped and restarted with state restored."
+          ]
+        },
+        {
+          "id": "AC-SIMPLE-012",
+          "status": "failed",
+          "evidence": [
+            "Visual navigation and remaining refinement gates block the full scenario."
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "npm-test",
+          "kind": "command",
+          "status": "passed",
+          "summary": "96/96 regression and targeted current-truth completion passed."
+        },
+        {
+          "id": "lint-docs-scan",
+          "kind": "command",
+          "status": "passed",
+          "summary": "Syntax, 5/5 docs and staged scan pass with zero issues."
+        },
+        {
+          "id": "real-profile-host",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "DSH rc.2 on 3081 served Blueprint Host 0.19.0 and zero audit issues."
+        },
+        {
+          "id": "real-client-bundle",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "Served Client contains 0.19.0, Feature hierarchy, documents and conversation.view."
+        },
+        {
+          "id": "document-boundary",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "Registered README succeeded; AGENTS.md returned DOCUMENT_NOT_REGISTERED."
+        },
+        {
+          "id": "unload-restart",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "Stop released 3081; restart restored the durable prior attempt."
+        },
+        {
+          "id": "visual-browser",
+          "kind": "browser",
+          "status": "failed",
+          "summary": "The skill-required browser-control runtime is unavailable for automated clicks."
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-refinement-gates",
+          "domain": "development",
+          "severity": "required",
+          "message": "Persist decisions, requirements, scenarios, tasks and mappings, and block begin while findings remain."
+        },
+        {
+          "id": "visual-system-map-e2e",
+          "domain": "development",
+          "severity": "required",
+          "message": "Run tree search, status filter, detail and document navigation with Browser control."
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "stage": "needs_changes",
+      "cycle": null,
+      "spec": {
+        "sourceFile": ".specs/proposed/automatic-verification-and-completion-loop.md",
+        "approvedHash": "062b4fe0cfe09075668baf08ede8f07d21e34423adcf2d410f0db5cf5c170ccc",
+        "implementedFile": null
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "3dd541b1581873776b61b07520febe4f4bc0ae45923992cdcf5589a023ac7302"
+      },
+      "completedAt": null,
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "codex-independent-verifier-attempt-1",
+          "capabilityHash": null,
+          "startedAt": "2026-08-25T07:41:10.189Z",
+          "completedAt": "2026-08-25T07:56:50.251Z",
+          "conclusion": "failed",
+          "summary": "审批哈希与 staged 快照绑定正确，syntax、103 项 Node 测试、文档检查及两种 Blueprint scan 均通过；但验收者身份未由 Host 可信绑定、只读守卫可绕过、Host gate 失败会停在 verifying，且无法完成批准 Spec 强制要求的真实浏览器场景。",
+          "acResults": [
+            {
+              "id": "AC-VC-001",
+              "status": "failed",
+              "evidence": [
+                "生命周期实现支持新阶段，但 verified 仅作为完成事务前的内存对象，未形成可观察持久状态；测试也未覆盖 implementing、verifying、verified 全部阶段。"
+              ]
+            },
+            {
+              "id": "AC-VC-002",
+              "status": "failed",
+              "evidence": [
+                "开发 prompt 禁止直接完成生命周期，但 verification-result API 不验证调用者就是记录中的验收 Session，开发角色仍可构造通过结果自我认证。"
+              ]
+            },
+            {
+              "id": "AC-VC-003",
+              "status": "failed",
+              "evidence": [
+                "客户端测试证明每次创建并归档新 Session；但 Host 仅信任客户端提交的 sessionId，且 shell 黑名单可被 node -e、git apply 等写操作绕过。"
+              ]
+            },
+            {
+              "id": "AC-VC-004",
+              "status": "passed",
+              "evidence": [
+                "双语 Spec reviewHash 精确为 062b4fe0cfe09075668baf08ede8f07d21e34423adcf2d410f0db5cf5c170ccc，Git-index digest 精确匹配记录中的 d6511b5236bc2d1ce611fabb0e951f3ba97986e8d7e9d1d54e9ce6d2e5c6e11f；代码在开始和提交结果时重新计算绑定。"
+              ]
+            },
+            {
+              "id": "AC-VC-005",
+              "status": "failed",
+              "evidence": [
+                "显式 failed 结果会保存分类问题和历史尝试；但快照变化或 Host scan/docs/architecture gate 抛错时记录仍停在 verifying，不会自动生成 needs_changes 及修复交接。"
+              ]
+            },
+            {
+              "id": "AC-VC-006",
+              "status": "failed",
+              "evidence": [
+                "lint、测试、文档、working-tree scan 和 staged scan 均通过，但批准 Spec 所要求的真实浏览器检查无法运行，因此必需证据不完整。"
+              ]
+            },
+            {
+              "id": "AC-VC-007",
+              "status": "passed",
+              "evidence": [
+                "verification.test.js 对五个事务边界注入失败并验证文件与 Git index 回滚，同时验证成功迁移、Feature/Component 激活及重复提交幂等。"
+              ]
+            },
+            {
+              "id": "AC-VC-008",
+              "status": "failed",
+              "evidence": [
+                "源码包含自动排队、启动、结果消费、持久面板及无最终完成按钮；但未完成真实浏览器执行，且 Host gate 异常后的 verifying 状态不能自动恢复。"
+              ]
+            },
+            {
+              "id": "AC-VC-009",
+              "status": "failed",
+              "evidence": [
+                "页面源码提供报告问题和提出新能力快捷入口，prompt 声明完成后分流规则；测试未实际提交缺陷、新能力、架构和歧义四类报告并验证路由结果。"
+              ]
+            },
+            {
+              "id": "AC-VC-010",
+              "status": "passed",
+              "evidence": [
+                "工作流和端到端 fixture 测试验证 completed_legacy 不伪造证据，并验证生命周期漂移的 implemented Spec 进入 verification_required 后可完成且不改写历史 Spec。"
+              ]
+            },
+            {
+              "id": "AC-VC-011",
+              "status": "failed",
+              "evidence": [
+                "Schema、哈希、快照、重复 id、未知 AC 和事务回滚具备防护；但 Host 不认证结果提交者或 Session 身份，伪造 passing result 不能可靠失败关闭。"
+              ]
+            },
+            {
+              "id": "AC-VC-012",
+              "status": "failed",
+              "evidence": [
+                "兼容性全量测试 103/103、文档检查、working-tree scan 与 staged-index scan 均通过；真实浏览器工作流未执行，git diff --cached --check 另发现两份 proposed Spec 的 EOF 空行。"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "syntax",
+              "kind": "command",
+              "status": "passed",
+              "summary": "npm.cmd run lint:js 成功检查全部列出的 JavaScript 模块。"
+            },
+            {
+              "id": "node-tests",
+              "kind": "command",
+              "status": "passed",
+              "summary": "node --experimental-test-isolation=none --test：103 通过，0 失败。"
+            },
+            {
+              "id": "docs-check",
+              "kind": "command",
+              "status": "passed",
+              "summary": "design-blueprint docs check：5 个登记文档配对全部正常。"
+            },
+            {
+              "id": "working-tree-scan",
+              "kind": "command",
+              "status": "passed",
+              "summary": "working-tree Blueprint scan 返回 0 required、0 issues。"
+            },
+            {
+              "id": "staged-index-scan",
+              "kind": "command",
+              "status": "passed",
+              "summary": "精确 staged Git-index Blueprint scan 返回 0 required、0 issues。"
+            },
+            {
+              "id": "snapshot-binding",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "独立重算的 staged digest 与 verification attempt-1 记录一致，审批和双语 Spec hash 一致。"
+            },
+            {
+              "id": "browser-workflow",
+              "kind": "browser",
+              "status": "failed",
+              "summary": "当前独立验收会话没有可调用的真实浏览器控制能力；按批准 Spec 不允许用模拟或静态检查替代。"
+            },
+            {
+              "id": "diff-check",
+              "kind": "command",
+              "status": "failed",
+              "summary": "git diff --cached --check 报告两份 automatic-verification Spec 文件在 EOF 新增空行。"
+            }
+          ],
+          "findings": [
+            {
+              "id": "F-VERIFIER-AUTHORITY",
+              "domain": "architecture",
+              "severity": "required",
+              "message": "让 Host 创建并持有不可伪造的验收 capability，并将 start/result 与真实新建、已归档 Session 身份绑定；用只读执行环境或命令 allowlist 替代可绕过的写命令黑名单。"
+            },
+            {
+              "id": "F-HOST-GATE-STALL",
+              "domain": "development",
+              "severity": "required",
+              "message": "将快照过期及 Host approval/docs/architecture/scan gate 失败原子记录为 needs_changes，并生成分类修复交接，避免工作流永久停留在 verifying。"
+            },
+            {
+              "id": "F-BROWSER-E2E",
+              "domain": "development",
+              "severity": "required",
+              "message": "在具备真实浏览器能力的独立会话中执行实现、首次失败、修复、通过、自动完成和完成后报告问题的完整场景。"
+            },
+            {
+              "id": "F-VERIFIED-STATE",
+              "domain": "development",
+              "severity": "required",
+              "message": "明确持久化或删除 verified 阶段契约，并增加覆盖 implementing、verification_ready、verifying、needs_changes、verified、completed 的逐阶段测试。"
+            },
+            {
+              "id": "F-POST-ROUTING",
+              "domain": "development",
+              "severity": "required",
+              "message": "增加真实的完成后缺陷、新能力、架构变化和实质歧义输入测试，验证可见解释与受治理提案路线，而不只断言 prompt 文本。"
+            },
+            {
+              "id": "F-DIFF-WHITESPACE",
+              "domain": "development",
+              "severity": "advisory",
+              "message": "清理中英文 automatic-verification proposed Spec 的 EOF 多余空行，使 git diff --check 通过。"
+            }
+          ]
+        },
+        {
+          "id": "attempt-2",
+          "sessionId": "codex-independent-verifier-attempt-2",
+          "capabilityHash": "3d35cf978122949f9555edb3a92ef2f3cfa00fe5b546cf471c5af920cf03ea93",
+          "startedAt": "2026-08-25T08:23:51.660Z",
+          "completedAt": "2026-08-25T08:45:45.868Z",
+          "conclusion": "failed",
+          "summary": "批准的双语 Spec 哈希与 Host 绑定值一致；lint、docs check、working-tree scan 通过，但 105 项全量测试有 1 项失败，且无法执行批准 Spec 必需的真实浏览器闭环。静态检查还确认快照准备、Session 创建/归档或权限锁定在 attempt 启动前失败时仅向 UI 报错，记录仍停留在 verification_ready，未转为 needs_changes 或产生修复交接。",
+          "acResults": [
+            {
+              "id": "AC-VC-001",
+              "status": "passed",
+              "evidence": [
+                "工作流实现显式派生 implementing、verification_ready、verifying、needs_changes、verified、completed；测试覆盖普通与历史生命周期。"
+              ]
+            },
+            {
+              "id": "AC-VC-002",
+              "status": "passed",
+              "evidence": [
+                "开发 prompt 限定为 verification request 交接；Host API 分离 begin/request/result/finalize，插件守卫测试通过。"
+              ]
+            },
+            {
+              "id": "AC-VC-003",
+              "status": "passed",
+              "evidence": [
+                "每次 attempt 创建并归档新 Session；cwd 绑定 Host 准备目录并执行权限锁定；mutation guard 测试通过。"
+              ]
+            },
+            {
+              "id": "AC-VC-004",
+              "status": "passed",
+              "evidence": [
+                "双语 review hash 为批准值，Host git-index 摘要绑定正确；运行中快照漂移转为 needs_changes。"
+              ]
+            },
+            {
+              "id": "AC-VC-005",
+              "status": "failed",
+              "evidence": [
+                "结果 findings 路由测试通过，但 verification-prepare、Session 创建/归档、权限和 verification-start 失败只进入 UI 错误，未持久化 needs_changes。"
+              ]
+            },
+            {
+              "id": "AC-VC-006",
+              "status": "passed",
+              "evidence": [
+                "Host 强制完整 AC、command/browser 证据并重算 snapshot、Spec、scan、文档和架构门禁。"
+              ]
+            },
+            {
+              "id": "AC-VC-007",
+              "status": "passed",
+              "evidence": [
+                "五个事务边界的文件与 Git index 回滚测试通过，并验证 durable verified 后自动完成。"
+              ]
+            },
+            {
+              "id": "AC-VC-008",
+              "status": "failed",
+              "evidence": [
+                "页面实现自动准备、启动、结果消费与 finalize；但预启动失败可能停在 verification_ready/verifying，不能可靠自动恢复。"
+              ]
+            },
+            {
+              "id": "AC-VC-009",
+              "status": "passed",
+              "evidence": [
+                "测试覆盖 defect、capability、architecture、mixed 与 ambiguity；页面提供完成后快捷入口。"
+              ]
+            },
+            {
+              "id": "AC-VC-010",
+              "status": "passed",
+              "evidence": [
+                "测试覆盖 completed_legacy、verification_required 与历史 Spec 不倒退。"
+              ]
+            },
+            {
+              "id": "AC-VC-011",
+              "status": "passed",
+              "evidence": [
+                "伪造 capability、未知字段、重复 id、不安全路径和不完整证据均失败关闭；公开 dashboard 不泄漏 capabilityHash。"
+              ]
+            },
+            {
+              "id": "AC-VC-012",
+              "status": "failed",
+              "evidence": [
+                "全量测试 104/105；临时快照无 Git 元数据；当前任务没有真实 Browser 控制通道，未执行真实浏览器闭环。"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "approved-spec-binding",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "双语 Spec 组合 SHA-256 与批准值完全一致。"
+            },
+            {
+              "id": "lint-js",
+              "kind": "command",
+              "status": "passed",
+              "summary": "npm.cmd run lint:js 退出码 0。"
+            },
+            {
+              "id": "full-node-suite",
+              "kind": "command",
+              "status": "failed",
+              "summary": "npm.cmd test：105 项中 104 通过、1 失败；architecture preview 回归。"
+            },
+            {
+              "id": "docs-check",
+              "kind": "command",
+              "status": "passed",
+              "summary": "design-blueprint docs check 全部通过。"
+            },
+            {
+              "id": "working-tree-scan",
+              "kind": "command",
+              "status": "passed",
+              "summary": "working-tree scan 为 0 required、0 recommended。"
+            },
+            {
+              "id": "real-browser-workflow",
+              "kind": "browser",
+              "status": "failed",
+              "summary": "当前任务无真实 Browser 控制通道，按批准 Spec 禁止静态替代。"
+            },
+            {
+              "id": "prestart-host-failure",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "prepare/create/archive/permission/start 异常没有 Host 状态转换。"
+            }
+          ],
+          "findings": [
+            {
+              "id": "FIND-VC-001",
+              "domain": "development",
+              "severity": "required",
+              "message": "在真实 Browser 环境补跑批准 Spec 的完整端到端场景；没有真实 Browser 通过证据不得接受 AC-VC-012。"
+            },
+            {
+              "id": "FIND-VC-002",
+              "domain": "development",
+              "severity": "required",
+              "message": "让 verification-prepare、Host 快照复核、Session 创建/归档、权限锁定、verification-start 与 prompt 发送失败都通过 Host 原子记录转为 needs_changes。"
+            },
+            {
+              "id": "FIND-VC-003",
+              "domain": "architecture",
+              "severity": "required",
+              "message": "修复 computeArchitectureDelta 无条件生成 approval invalidation 的回归，并恢复全量测试通过。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "needs_changes",
+      "cycle": {
+        "id": "cycle-8f4935bc-d35e-45c2-b7ee-a79732ef70ca",
+        "intent": "change",
+        "requestSessionId": null,
+        "roles": {
+          "coordinator": null,
+          "architecture": null,
+          "implementer": {
+            "sessionId": "a5eaea4a-8d35-4ab7-b545-a953ce76a11f",
+            "boundAt": "2026-08-26T07:51:18.340Z"
+          }
+        },
+        "superseded": [
+          {
+            "role": "implementer",
+            "sessionId": "94cbf730-548d-445b-a3d2-031fa12f5c33",
+            "supersededAt": "2026-08-26T07:30:39.579Z",
+            "reason": "Host replaced an unavailable role Session"
+          },
+          {
+            "role": "implementer",
+            "sessionId": "18958a3b-584c-4b44-a20e-e64db51ed776",
+            "supersededAt": "2026-08-26T07:44:16.216Z",
+            "reason": "Host replaced an unavailable role Session"
+          },
+          {
+            "role": "implementer",
+            "sessionId": "e58dad3e-d8ab-4cf2-b92b-b27bfa3b93b7",
+            "supersededAt": "2026-08-26T07:51:18.340Z",
+            "reason": "Host replaced an unavailable role Session"
+          }
+        ]
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/automatic-verification-and-completion-loop.md",
+        "approvedHash": "c656335532db68bb5afa4b247bb534a47e3e089ebd898c0d7bb74f10ebf7084f",
+        "implementedFile": null
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "eff47f246ab099c6f50a3e8482062c409d40017fd34be93c05470d9bf431f9ab"
+      },
+      "completedAt": null,
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "da111ed5-42ff-48ba-9e7c-9d3c2e4fdd54",
+          "capabilityHash": "39fab9fd3bac3ce29cda2cd9ec1f1b2888c0a1cee3c4690a1ff652295a21b731",
+          "startedAt": "2026-08-26T07:59:56.081Z",
+          "completedAt": "2026-08-26T08:21:11.989Z",
+          "conclusion": "failed",
+          "summary": "Snapshot binds Feature to approved hash c6563355…084f. Browser evidence at http://127.0.0.1:3080 confirms the Blueprint dashboard renders without canned-AI buttons. Architecture-reviewer tests and npm run lint:js pass. However, the verifier sandbox blocks `node lib/cli.js scan --all --cwd .`, `node lib/cli.js docs check --cwd .`, and 51/96 npm tests fail with EPERM on mkdtemp, preventing declared Verification commands from settling.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "npm-test",
+              "kind": "command",
+              "status": "failed",
+              "summary": "npm test: 96 tests run; 45 passed, 51 failed with EPERM mkdtemp (sandbox restriction)."
+            },
+            {
+              "id": "npm-run-lint-js",
+              "kind": "command",
+              "status": "passed",
+              "summary": "npm run lint:js: exit code 0; all 25 lib modules passed node --check."
+            },
+            {
+              "id": "cli-scan-all",
+              "kind": "command",
+              "status": "failed",
+              "summary": "node lib/cli.js scan --all --cwd .: verifier shell policy rejected the command."
+            },
+            {
+              "id": "cli-docs-check",
+              "kind": "command",
+              "status": "failed",
+              "summary": "node lib/cli.js docs check --cwd .: verifier shell policy rejected the command."
+            },
+            {
+              "id": "browser-check",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "blueprint_browser_check http://127.0.0.1:3080: real Chrome captured evidence; dashboard contains design-blueprint and excludes forbidden canned-prompt buttons."
+            },
+            {
+              "id": "approval-record",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "approval record binds featureId=spec-governance--architecture-design, specHash=c6563355…084f."
+            }
+          ],
+          "findings": [
+            {
+              "id": "finding-1",
+              "domain": "development",
+              "severity": "required",
+              "message": "51/96 npm tests fail with EPERM on mkdtemp because the verifier sandbox denies temp directory creation; required filesystem-dependent AC evidence cannot settle."
+            },
+            {
+              "id": "finding-2",
+              "domain": "development",
+              "severity": "required",
+              "message": "node lib/cli.js scan --all --cwd . and node lib/cli.js docs check --cwd . were rejected by the verifier shell allowlist; the staged snapshot has not been validated end-to-end against the declared Verification commands."
+            }
+          ]
+        },
+        {
+          "id": "attempt-2",
+          "sessionId": "1b7f8084-1e5e-42d0-92ed-2ba79682e9f7",
+          "capabilityHash": "cd9030ba510dfe9e7e96fc928bf56488135e0657f806d888c6696dccc2cc9275",
+          "startedAt": "2026-08-26T08:40:10.643Z",
+          "completedAt": "2026-08-26T08:54:04.031Z",
+          "conclusion": "failed",
+          "summary": "Spec hash and reviewed-pair SHA-1 mismatches, plus blocked test suite, prevent certification of any AC-DSH-001..015. The snapshot's approval record (c656335532db68bb5afa4b247bb534a47e3e089ebd898c0d7bb74f10ebf7084f) does not match the on-disk SHA-256 of .specs/proposed/automatic-verification-and-completion-loop.md (fa88389749ad8cdb67314c544a946250c70ea2dd66d045064892243bc5eec161). The bilingual doc pair SHA-1s in docs/user/features/spec-governance--architecture-design.i18n.yaml also do not match the on-disk SHA-1s. scan --all and docs check exit 0 on the working tree, but the staged-Git snapshot scan (mandated by AGENTS.md and AC-DSH-014) was not exercised, and the full Node suite could not run because the verifier sandbox denied child_process.spawn with piped stdio (EPERM). AC-DSH-015's real-browser check could only confirm the Blueprint plugin still mounts; the end-to-end command→completion scenario did not run. A passing verifier result is impossible until the spec body matches the approved hash and the reviewed-pair handshake is regenerated.",
+          "acResults": [
+            {
+              "id": "AC-DSH-001",
+              "status": "failed",
+              "evidence": [
+                "Approved spec hash does not match on-disk spec body (c656335… vs fa88389…); approval authority fails closed.",
+                "Static read shows lib/client.js no longer exports UnifiedAssistant or textarea handler.",
+                "grep finds no occurrence of \"报告问题\" or \"UnifiedAssistant\" in lib/.",
+                "Client/component test assertions could not run in this sandbox (EPERM)."
+              ]
+            },
+            {
+              "id": "AC-DSH-002",
+              "status": "failed",
+              "evidence": [
+                "chat-commands contract tests could not run (sandbox EPERM on child_process.spawn).",
+                "Static reading of lib/chat-commands.js shows WORK_COMMANDS and DIRECT_COMMANDS registered and parseWorkCommand throws when raw is empty."
+              ]
+            },
+            {
+              "id": "AC-DSH-003",
+              "status": "failed",
+              "evidence": [
+                "Router tests blocked by EPERM.",
+                "No executable evidence that work commands and natural language create the same typed Host request without duplicating command text."
+              ]
+            },
+            {
+              "id": "AC-DSH-004",
+              "status": "failed",
+              "evidence": [
+                "Role-routing tests blocked by EPERM.",
+                "orchestrator.requiresArchitectureRole helper exists in lib/orchestration.js but not certified."
+              ]
+            },
+            {
+              "id": "AC-DSH-005",
+              "status": "failed",
+              "evidence": [
+                "Hash mismatch on approved spec means role binding cannot use the recorded specHash as authority.",
+                "Authorization tests in tests/orchestration.test.js were not executed."
+              ]
+            },
+            {
+              "id": "AC-DSH-006",
+              "status": "failed",
+              "evidence": [
+                "Approval cannot be enacted because approved spec hash ≠ on-disk hash.",
+                "Implementer tests did not execute."
+              ]
+            },
+            {
+              "id": "AC-DSH-007",
+              "status": "failed",
+              "evidence": [
+                "Verifier tests did not execute.",
+                "Real-browser evidence could only confirm plugin mount but not full verifier workflow."
+              ]
+            },
+            {
+              "id": "AC-DSH-008",
+              "status": "failed",
+              "evidence": [
+                "Host integration tests did not execute.",
+                "No evidence that verification continues with Blueprint Web closed."
+              ]
+            },
+            {
+              "id": "AC-DSH-009",
+              "status": "failed",
+              "evidence": [
+                "Failure-routing tests did not execute."
+              ]
+            },
+            {
+              "id": "AC-DSH-010",
+              "status": "failed",
+              "evidence": [
+                "Transaction tests did not execute.",
+                "No evidence of idempotent verified→completed transition."
+              ]
+            },
+            {
+              "id": "AC-DSH-011",
+              "status": "failed",
+              "evidence": [
+                "Brownfield fixture tests did not execute."
+              ]
+            },
+            {
+              "id": "AC-DSH-012",
+              "status": "failed",
+              "evidence": [
+                "Multi-session tests did not execute.",
+                "Static read of lib/orchestration.js shows writerByRoot serialization and one open cycle per Feature, but not certified."
+              ]
+            },
+            {
+              "id": "AC-DSH-013",
+              "status": "failed",
+              "evidence": [
+                "Restart tests did not execute."
+              ]
+            },
+            {
+              "id": "AC-DSH-014",
+              "status": "failed",
+              "evidence": [
+                "scan --all (exit 0, 0 required, 0 recommended) and docs check (exit 0, 5/5 pairs) passed.",
+                "node --check on all 27 lib/*.js files passed.",
+                "Full Node suite blocked by sandbox EPERM.",
+                "Staged-Git snapshot scan not exercised.",
+                "Approval record specHash does not match on-disk spec, breaking the approval-binding compatibility leg."
+              ]
+            },
+            {
+              "id": "AC-DSH-015",
+              "status": "failed",
+              "evidence": [
+                "End-to-end command→completion scenario did not run.",
+                "Real browser check confirmed Blueprint plugin mounts in DSH web shell at http://127.0.0.1:3080/ but required dashboard assertions did not settle in initial mount; no completion scenario executed."
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "spec-hash-binding",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "Approval record specHash (c656335532db68bb5afa4b247bb534a47e3e089ebd898c0d7bb74f10ebf7084f) does not match on-disk SHA-256 of .specs/proposed/automatic-verification-and-completion-loop.md (fa88389749ad8cdb67314c544a946250c70ea2dd66d045064892243bc5eec161). .zh.md SHA-256 is 224a98c17e15838a18b33a10e0696a85212d2145e5ae890164b6d4a705e5a2b4."
+            },
+            {
+              "id": "scan-all",
+              "kind": "command",
+              "status": "passed",
+              "summary": "node lib/cli.js scan --all --cwd . exits 0: Blueprint ready: 0 required, 0 recommended. Snapshot: working-tree; 122 file(s); 20 spec(s). Architecture: 1/1 component(s) complete; 0 missing required document(s). Documentation: 5/5 bilingual pair(s) confirmed."
+            },
+            {
+              "id": "scan-staged",
+              "kind": "command",
+              "status": "failed",
+              "summary": "node lib/cli.js scan (without --all) only validates the working tree, not the staged Git snapshot required by AC-DSH-014 and AGENTS.md. The mandatory staged scan was not exercised."
+            },
+            {
+              "id": "docs-check",
+              "kind": "command",
+              "status": "passed",
+              "summary": "node lib/cli.js docs check --cwd . exits 0; reports 5 ok pairs including docs/user/features/spec-governance--architecture-design.md."
+            },
+            {
+              "id": "docs-pair-sha1",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "docs/user/features/spec-governance--architecture-design.i18n.yaml expects en=de7aa228008ee9a7bcc6ea803455a927ebfd68a2 and zh=15a61938465d720b7eb9db5d741bf201d0325c09; on-disk SHA-1s are en=5ad49a9cd216fb8630c17608b3d22ad5b3c99e57 and zh=8c7587f9dbcabf8f52b7ef3b77bdb01b91f6dd4d. Reviewed-pair handshake stale."
+            },
+            {
+              "id": "lint-js",
+              "kind": "command",
+              "status": "passed",
+              "summary": "node --check on each of the 27 lib/*.js files referenced by package.json scripts.lint:js exits 0; no JavaScript syntax errors detected."
+            },
+            {
+              "id": "node-test-suite",
+              "kind": "command",
+              "status": "failed",
+              "summary": "node --test invocations fail with EPERM at the runner's child_process.spawn step under the verifier sandbox (named-pipe stdio denied). 0 tests executed; full Node suite unverifiable in this session. Sandbox escalation disabled."
+            },
+            {
+              "id": "browser-dashboard-mount",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Real browser (Chrome/151.0.7922.170) confirmed the Blueprint plugin mounts in the DSH web shell at http://127.0.0.1:3080/ — \"design-blueprint\" label visible and clickable, plugin view loads (evidenceId 59357d8a-1554-4a16-86ba-84e7b3105f06). Required dashboard assertions (Spec 与审批 / Component 架构 / Features) did not settle in the initial mount; deeper end-to-end command→completion scenario did not run."
+            }
+          ],
+          "findings": [
+            {
+              "id": "approved-spec-hash-mismatch",
+              "domain": "spec",
+              "severity": "required",
+              "message": ".blueprint/approvals/spec-governance--architecture-design.json records specHash c656335532db68bb5afa4b247bb534a47e3e089ebd898c0d7bb74f10ebf7084f, but the on-disk SHA-256 of .specs/proposed/automatic-verification-and-completion-loop.md is fa88389749ad8cdb67314c544a946250c70ea2dd66d045064892243bc5eec161. Approval is stale or the spec body was edited after approval — either way, exact-hash approval authority is broken and any implementation cycle cannot begin."
+            },
+            {
+              "id": "reviewed-pair-stale",
+              "domain": "spec",
+              "severity": "required",
+              "message": "docs/user/features/spec-governance--architecture-design.i18n.yaml carries reviewed SHA-1 pair hashes that no longer match the on-disk docs (en 5ad49a9c… vs expected de7aa228…; zh 8c7587f9… vs expected 15a61938…). The reviewed semantic-equivalence handshake is stale; design-blueprint docs confirm would need to rerun."
+            },
+            {
+              "id": "staged-scan-not-exercised",
+              "domain": "development",
+              "severity": "required",
+              "message": "AGENTS.md requires completion be claimed only after `design-blueprint scan` passes against the staged Git snapshot. Only the working-tree scan (--all) was run; the exact staged scan was not exercised."
+            },
+            {
+              "id": "test-suite-unverifiable",
+              "domain": "development",
+              "severity": "required",
+              "message": "Full Node suite (npm test) and individual node --test runs cannot execute in this verifier session: node:test runner fails with EPERM at child_process.spawn for piped stdio (sandbox boundary; approval prompts disabled so sandbox_permissions cannot be set). 0 tests ran; AC-DSH-001..013 cannot be certified by behavior in this round."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

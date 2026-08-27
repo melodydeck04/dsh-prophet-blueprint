@@ -1,7 +1,7 @@
 {
   "version": 1,
   "featureId": "spec-governance--architecture-design",
-  "spec": ".specs/proposed/spec-governance--architecture-design.md",
-  "specHash": "cc252d16214701e4c6c523c9e4e3708b23ded4125148e67fa21d05e119c06eeb",
-  "approvedAt": "2026-08-22T14:17:06.664Z"
+  "spec": ".specs/proposed/automatic-verification-and-completion-loop.md",
+  "specHash": "a2f93a87acef8f59e2f1f0fa05819c163fc20451d0f557680b3e0e360553e035",
+  "approvedAt": "2026-08-26T16:02:05.736Z"
 }
