@@ -23,7 +23,7 @@ test("@Feature source searches localized facts and serializes the exact stable i
 		{ id: "accounts", title: "Accounts", summary: "Manage identities" },
 	];
 	const client = await loadClientModule(async () => ({ json: async () => ({ ok: true, value: { catalog: { features } } }) }));
-	const ctx = { sessions: { list: { getSnapshot: () => ({ byId: { main: { cwd: "D:/project" } } }) } } };
+	const ctx = { sessions: { list: { getSnapshot: () => ({ byId: { main: { cwd: "C:/Users/Windows", workspaceId: "workspace-main" } }, tables: { workspaces: { "workspace-main": { path: "D:/project", title: "Project", sessionIds: ["main"] } } } }) } } };
 	const source = client.createFeatureSource(ctx);
 	assert.equal(source.trigger, "@");
 	const rows = await source.candidates({ sessionId: "main" }, { query: "证据", signal: new AbortController().signal });
@@ -52,11 +52,12 @@ test("client registers only the dashboard view and Feature input source", async 
 			inject(name, callback) { assert.equal(name, "conversation.view"); return callback(); },
 			register(value) { registration = value; return () => {}; },
 		},
-		sessions: { list: { getSnapshot: () => ({ byId: { main: { cwd: "D:/project" } } }) } },
+		sessions: { list: { getSnapshot: () => ({ byId: { main: { cwd: "C:/Users/Windows", workspace: { path: "D:/project", title: "Project" } } } }) } },
 	};
 	client.apply(ctx);
 	assert.equal(source.name, "Feature");
 	assert.equal(registration.id, "blueprint");
-	assert.deepEqual(JSON.parse(JSON.stringify(registration.inject("main"))), { cwd: "D:/project" });
+	assert.deepEqual(JSON.parse(JSON.stringify(registration.inject("main"))), { sessionId: "main", cwd: "C:/Users/Windows", dshWorkspacePath: "D:/project", dshWorkspaceTitle: "Project" });
 	assert.deepEqual(JSON.parse(JSON.stringify(client.inject)), ["slots", "sessions", "inputTriggers"]);
 });
+

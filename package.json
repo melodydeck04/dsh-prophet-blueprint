@@ -1,7 +1,7 @@
 {
   "name": "@dsh-plugins/design-blueprint",
   "description": "DSH-native requirement refinement, Spec-driven implementation, proportional verification, and a navigable Feature system map.",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "private": true,
   "type": "module",
   "main": "lib/index.js",
@@ -80,6 +80,9 @@
     "./project-root": {
       "default": "./lib/project-root.js"
     },
+    "./project-binding": {
+      "default": "./lib/project-binding.js"
+    },
     "./project-discovery": {
       "default": "./lib/project-discovery.js"
     },
@@ -126,7 +129,7 @@
     "test": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test",
     "stamp": "node lib/cli.js stamp",
     "install-hook": "node lib/cli.js install-hook",
-    "lint:js": "node --check lib/index.js && node --check lib/client.js && node --check lib/cli.js && node --check lib/config.js && node --check lib/docs.js && node --check lib/features.js && node --check lib/init.js && node --check lib/path-utils.js && node --check lib/policy.js && node --check lib/project-discovery.js && node --check lib/project-root.js && node --check lib/scan.js && node --check lib/snapshot.js && node --check lib/specs.js && node --check lib/web-api.js && node --check lib/workflow.js && node --check lib/artifacts.js && node --check lib/assistant-actions.js && node --check lib/verification.js && node --check lib/version.js && node --check lib/install-hook.js && node --check lib/invariant.js && node --check lib/stamps.js && node --check lib/architecture.js && node --check lib/reconciliation.js && node --check lib/orchestration.js && node --check lib/chat-commands.js"
+    "lint:js": "node --check lib/index.js && node --check lib/client.js && node --check lib/cli.js && node --check lib/config.js && node --check lib/docs.js && node --check lib/features.js && node --check lib/init.js && node --check lib/path-utils.js && node --check lib/policy.js && node --check lib/project-discovery.js && node --check lib/project-root.js && node --check lib/project-binding.js && node --check lib/scan.js && node --check lib/snapshot.js && node --check lib/specs.js && node --check lib/web-api.js && node --check lib/workflow.js && node --check lib/artifacts.js && node --check lib/assistant-actions.js && node --check lib/verification.js && node --check lib/version.js && node --check lib/install-hook.js && node --check lib/invariant.js && node --check lib/stamps.js && node --check lib/architecture.js && node --check lib/reconciliation.js && node --check lib/orchestration.js && node --check lib/chat-commands.js"
   },
   "engines": {
     "node": ">=22.19"
@@ -154,3 +157,6 @@
     "@deepseek-ai/dsh-client-ui-input-trigger": "0.1.1-rc.2"
   }
 }
+
+
+

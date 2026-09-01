@@ -36,8 +36,10 @@ test("DSH plugin registers native main-Chat commands, one dispatch tool, and das
 	assert.equal(section.name, "design-blueprint:spec-driven-development");
 	assert.equal(section.text, MODEL_GUIDANCE);
 	assert.equal(tool.name, "blueprint_dispatch");
-	assert.deepEqual([...commands.keys()], ["blueprint", "blueprint-status", "blueprint-map"]);
+	assert.deepEqual([...commands.keys()], ["blueprint", "blueprint-use", "blueprint-status", "blueprint-map"]);
 	assert.ok(commands.get("blueprint").input?.hint);
+	assert.ok(commands.get("blueprint-use").input?.hint);
+	assert.equal(commands.get("blueprint-use").recordInput, false);
 	assert.equal(commands.get("blueprint").recordInput, false);
 	assert.equal(route.kind, "exact");
 	assert.equal(route.path, "/design-blueprint/api");
@@ -65,3 +67,4 @@ test("DSH plugin still exports canonical architecture contracts", () => {
 	assert.ok(COMPONENT_STATUSES.has("active"));
 	assert.ok(COMPONENT_RELATION_TYPES.has("depends_on"));
 });
+

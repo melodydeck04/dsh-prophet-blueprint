@@ -13,8 +13,9 @@ test("DSH normal Chat is the only conversational surface", async () => {
 test("dashboard performs only deterministic bounded Host actions", async () => {
 	const client = await readFile(new URL("../lib/client.js", import.meta.url), "utf8");
 	const actions = [...client.matchAll(/action:\s*"([^"]+)"/g)].map((match) => match[1]);
-	assert.deepEqual([...new Set(actions)].sort(), ["approve", "dashboard", "discover", "document", "initialize"]);
+	assert.deepEqual([...new Set(actions)].sort(), ["approve", "bind", "dashboard", "discover", "document", "initialize"]);
 	assert.match(client, /window\.confirm\(.+批准精确哈希/s);
 	assert.match(client, /expectedSpecHash:feature\.workflow\.spec\.hash/);
 	assert.doesNotMatch(client, /assistant-spec-apply|architecture-apply|verification-result|resultCapability/);
 });
+

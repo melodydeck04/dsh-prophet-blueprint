@@ -12,6 +12,7 @@ Design Blueprint 是一个 DSH 插件，用于完成一条简单的开发闭环�
 
 - 输入普通需求或使用 `/blueprint <需求>`；两者进入同一个类型化完善契约。
 - 需要明确归属时使用 `@feature:<id>`。归属有歧义时会失败关闭，并且最多显示三个候选项。
+- 在 DSH Web 中，Blueprint 会自动跟随当前 Session 所属的 workspace path。`/blueprint-use <项目路径>` 只是在旧 Session、无项目 Session 或有意跨项目查看且 DSH 没有暴露可用 workspace path / Session `cwd` 时使用的手动 escape hatch。
 - Blueprint 会按需拆解参与者与目标、入口、正常流程、输入与输出、状态、规则、失败、边界、权限、持久化、兼容性、非目标和可观察验收。
 - 需求使用稳定 `REQ-*` 标识和具体 Given/When/Then 场景。实现前会执行需求清单和跨工件分析。
 - 每轮完善最多询问三个会实质改变行为、数据、兼容性、风险或范围的问题；其他不确定性会记录为假设。
@@ -37,13 +38,14 @@ Feature 父子关系表达产品能力包含。Component 归属、契约、部�
 - Host 组合：Cordis function plugin
 - Client 组合：通过 rc.2 的 `slots.inject` / `slots.register` 契约接入 `conversation.view`
 
-Host 注册公开的命令、系统提示、Web server 和工具服务。它不要求 DSH Agent 服务，也不强制创建 coordinator、architect、implementer 和 verifier 角色家族。Client 使用 DSH 懒加载模块、公开 conversation view slot、Session 投影和 input-trigger source。它不修改 Shell、不调用私有输入框 API、不创建 Session，也不拥有生命周期权限。
+Host 注册公开的命令、系统提示、Web server 和工具服务。它不要求 DSH Agent 服务，也不强制创建 coordinator、architect、implementer 和 verifier 角色家族。Client 使用 DSH 懒加载模块、公开 conversation view slot、Session 投影、理解 DSH workspace 的项目解析和 input-trigger source。它不修改 Shell、不调用私有输入框 API、不创建 Session，也不拥有生命周期权限。
 
 软件包继续作为由 `package.json` 和 `cordis.patch.yml` 声明的仓外 DSH bundle。最新 master 文档可用于迁移参考，但运行时代码遵循精确的已安装版本契约。
 
 ## 命令与 API
 
 - `/blueprint <需求>` 在当前 Chat 中完善一项需求。
+- `/blueprint-use <项目路径>` 为无项目或旧 Session 记录一个手动兜底 Blueprint 项目。普通 DSH Web workspace 会根据当前 Session 所属 workspace path 自动选择；兜底永远不会覆盖 workspace path，也不会覆盖从 Session `cwd` 发现的真实 Blueprint 项目。
 - `/blueprint-status` 不触发模型回合，直接报告公开 Feature 状态。
 - `/blueprint-map` 不触发模型回合，直接输出 Feature 层级。
 - `design-blueprint init [--cwd <路径>]` 创建或升级非破坏性的治理基线。
@@ -54,7 +56,7 @@ Host 注册公开的命令、系统提示、Web server 和工具服务。它不�
 - `design-blueprint install-hook [--local|--global] [--uninstall]` 管理 Git 门禁。
 - `design-blueprint stamp --verify|--refresh|--acknowledge [--force]` 管理可选的新鲜度标记。
 
-程序化导出包括 `./chat-commands`、`./orchestration`、`./web-api`、`./workflow`、`./verification`、`./features`、`./architecture`、`./reconciliation`、`./assistant-actions`、`./scan`、`./docs`、`./specs`、`./snapshot`、`./policy`、`./config`、`./init`、`./install-hook`、`./stamps` 和 `./version`。
+程序化导出包括 `./chat-commands`、`./orchestration`、`./project-binding`、`./web-api`、`./workflow`、`./verification`、`./features`、`./architecture`、`./reconciliation`、`./assistant-actions`、`./scan`、`./docs`、`./specs`、`./snapshot`、`./policy`、`./config`、`./init`、`./install-hook`、`./stamps` 和 `./version`。
 
 ## 项目权威
 
@@ -71,6 +73,10 @@ Host 注册公开的命令、系统提示、Web server 和工具服务。它不�
 
 ## 限制
 
-Blueprint 不保证一句不完整需求只有一个正确解释；它会暴露实质歧义和假设。它不会根据源码目录推断 Feature 层级，不会替代 DSH Chat 或权限系统，不会从仪表盘执行任意仓库命令，也不会把模型声称“通过”视为完成权威。
+Blueprint 不保证一句不完整需求只有一个正确解释；它会暴露实质歧义和假设。它不会根据源码目录推断 Feature 层级，不会替代 DSH Chat 或权限系统，不会从仪表盘执行任意仓库命令，不会让手动兜底覆盖 DSH workspace 或 cwd 自动发现，也不会把模型声称“通过”视为完成权威。
 
 本仓库是私有软件包源码，要求 Node.js `>=22.19`。
+
+
+
+

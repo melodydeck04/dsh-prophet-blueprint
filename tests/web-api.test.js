@@ -8,6 +8,7 @@ import { getBlueprintDashboard, handleBlueprintAction, saveBlueprintFeature } fr
 import { applyArchitectureChange, previewArchitectureChange } from "../lib/artifacts.js";
 import { serializeComponent } from "../lib/architecture.js";
 import { PLUGIN_VERSION } from "../lib/version.js";
+import { resetSessionBlueprintBindingsForTest, setDshWorkspaceStoreForTest, setSessionBlueprintBindingStoreForTest } from "../lib/project-binding.js";
 
 function feature(overrides = {}) {
 	return {
@@ -25,6 +26,9 @@ function feature(overrides = {}) {
 	};
 }
 
+async function writeWorkspaceStore(path, workspaces) {
+	await writeFile(path, JSON.stringify({ unit: { name: "workspace", version: 2 }, global: { initialized: true, workspaceIds: Object.keys(workspaces), archivedSessionIds: [] }, tables: { workspaces } }, null, 2) + "\n", "utf8");
+}
 const FEATURE_SPEC = `# Spec: Search
 
 Status: proposed
@@ -100,6 +104,120 @@ test("Web initialization requires an explicit bit for an unrecognized current wo
 	});
 	const result = await handleBlueprintAction({ action: "initialize", cwd: root, target: root, confirmCurrentWorkspace: true });
 	assert.equal(result.dashboard.project.root, root);
+});
+
+
+
+test("Web project resolution follows the current DSH workspace session", async () => {
+	resetSessionBlueprintBindingsForTest();
+	const workspaceA = await mkdtemp(join(tmpdir(), "blueprint-web-workspace-a-"));
+	const workspaceB = await mkdtemp(join(tmpdir(), "blueprint-web-workspace-b-"));
+	const home = await mkdtemp(join(tmpdir(), "blueprint-web-workspace-home-"));
+	const store = join(await mkdtemp(join(tmpdir(), "blueprint-web-workspace-store-")), "workspace.json");
+	await initBlueprint(workspaceA);
+	await initBlueprint(workspaceB);
+	await writeFile(join(workspaceA, "README.md"), "# Workspace A\n", "utf8");
+	await writeFile(join(workspaceB, "README.md"), "# Workspace B\n", "utf8");
+	await saveBlueprintFeature({ cwd: workspaceA, feature: feature({ title: "Workspace A Search" }), expectedHash: null });
+	await saveBlueprintFeature({ cwd: workspaceB, feature: feature({ title: "Workspace B Search" }), expectedHash: null });
+	await writeWorkspaceStore(store, {
+		"workspace-a": { path: workspaceA, title: "Workspace A", sessionIds: ["session-a"] },
+		"workspace-b": { path: workspaceB, title: "Workspace B", sessionIds: ["session-b"] },
+	});
+	setDshWorkspaceStoreForTest(store);
+	const first = await handleBlueprintAction({ action: "dashboard", cwd: home, sessionId: "session-a" });
+	const second = await handleBlueprintAction({ action: "dashboard", cwd: home, sessionId: "session-b" });
+	assert.equal(first.project.root, workspaceA);
+	assert.equal(first.project.source, "dsh-workspace-store");
+	assert.equal(first.project.workspace.title, "Workspace A");
+	assert.equal(first.catalog.features[0].title, "Workspace A Search");
+	assert.equal(second.project.root, workspaceB);
+	assert.equal(second.project.workspace.title, "Workspace B");
+	assert.equal(second.catalog.features[0].title, "Workspace B Search");
+});
+
+test("Web project resolution lets DSH workspace outrank manual fallback", async () => {
+	resetSessionBlueprintBindingsForTest();
+	const current = await mkdtemp(join(tmpdir(), "blueprint-web-workspace-current-"));
+	const fallback = await mkdtemp(join(tmpdir(), "blueprint-web-workspace-fallback-"));
+	const home = await mkdtemp(join(tmpdir(), "blueprint-web-workspace-fallback-home-"));
+	await initBlueprint(current);
+	await initBlueprint(fallback);
+	await writeFile(join(current, "README.md"), "# Current\n", "utf8");
+	await writeFile(join(fallback, "README.md"), "# Fallback\n", "utf8");
+	await saveBlueprintFeature({ cwd: current, feature: feature({ title: "Current Workspace" }), expectedHash: null });
+	await saveBlueprintFeature({ cwd: fallback, feature: feature({ title: "Manual Fallback" }), expectedHash: null });
+	await handleBlueprintAction({ action: "bind", cwd: home, sessionId: "session-workspace", target: fallback });
+	const dashboard = await handleBlueprintAction({ action: "dashboard", cwd: home, sessionId: "session-workspace", dshWorkspacePath: current, dshWorkspaceTitle: "Current" });
+	assert.equal(dashboard.project.root, current);
+	assert.equal(dashboard.project.source, "dsh-workspace-context");
+	assert.equal(dashboard.project.bound, false);
+	assert.equal(dashboard.project.workspace.title, "Current");
+	assert.equal(dashboard.catalog.features[0].title, "Current Workspace");
+});
+test("Web project binding lets a home-started Session use an existing Blueprint project", async () => {
+	resetSessionBlueprintBindingsForTest();
+	const root = await mkdtemp(join(tmpdir(), "blueprint-web-bind-root-"));
+	const home = await mkdtemp(join(tmpdir(), "blueprint-web-bind-home-"));
+	await initBlueprint(root);
+	await writeFile(join(root, "README.md"), "# Bound\n", "utf8");
+	await saveBlueprintFeature({ cwd: root, feature: feature(), expectedHash: null });
+	const bound = await handleBlueprintAction({ action: "bind", cwd: home, sessionId: "session-bind-1", target: root });
+	assert.equal(bound.project.root, root);
+	assert.equal(bound.project.bound, true);
+	assert.equal(bound.catalog.features[0].id, "search");
+	const dashboard = await handleBlueprintAction({ action: "dashboard", cwd: home, sessionId: "session-bind-1" });
+	assert.equal(dashboard.project.root, root);
+	assert.equal(dashboard.project.binding.root, root);
+	assert.equal(dashboard.project.binding.cwd, home);
+});
+
+
+
+test("Web project fallback survives a plugin cache reset", async () => {
+	const root = await mkdtemp(join(tmpdir(), "blueprint-web-persist-root-"));
+	const home = await mkdtemp(join(tmpdir(), "blueprint-web-persist-home-"));
+	const store = join(await mkdtemp(join(tmpdir(), "blueprint-web-persist-store-")), "bindings.json");
+	setSessionBlueprintBindingStoreForTest(store);
+	await initBlueprint(root);
+	await writeFile(join(root, "README.md"), "# Persisted\n", "utf8");
+	await saveBlueprintFeature({ cwd: root, feature: feature({ title: "Persisted Search" }), expectedHash: null });
+	await handleBlueprintAction({ action: "bind", cwd: home, sessionId: "first-session", target: root });
+	setSessionBlueprintBindingStoreForTest(store);
+	const dashboard = await handleBlueprintAction({ action: "dashboard", cwd: home, sessionId: "second-session" });
+	assert.equal(dashboard.project.root, root);
+	assert.equal(dashboard.project.bound, true);
+	assert.equal(dashboard.catalog.features[0].title, "Persisted Search");
+});
+
+test("Web project binding does not override a Blueprint Session cwd", async () => {
+	resetSessionBlueprintBindingsForTest();
+	const current = await mkdtemp(join(tmpdir(), "blueprint-web-bind-current-"));
+	const other = await mkdtemp(join(tmpdir(), "blueprint-web-bind-other-"));
+	await initBlueprint(current);
+	await initBlueprint(other);
+	await writeFile(join(current, "README.md"), "# Current\n", "utf8");
+	await writeFile(join(other, "README.md"), "# Other\n", "utf8");
+	await saveBlueprintFeature({ cwd: current, feature: feature({ title: "Current Search" }), expectedHash: null });
+	await saveBlueprintFeature({ cwd: other, feature: feature({ title: "Other Search" }), expectedHash: null });
+	await handleBlueprintAction({ action: "bind", cwd: current, sessionId: "session-bind-cwd", target: other });
+	const dashboard = await handleBlueprintAction({ action: "dashboard", cwd: current, sessionId: "session-bind-cwd" });
+	assert.equal(dashboard.project.root, current);
+	assert.equal(dashboard.project.bound, false);
+	assert.equal(dashboard.catalog.features[0].title, "Current Search");
+});
+
+test("Web project binding rejects unsafe binding requests", async () => {
+	resetSessionBlueprintBindingsForTest();
+	const home = await mkdtemp(join(tmpdir(), "blueprint-web-bind-bad-"));
+	await assert.rejects(handleBlueprintAction({ action: "bind", cwd: home, sessionId: "session-bind-bad", target: "" }), (error) => {
+		assert.equal(error.code, "INVALID_TARGET");
+		return true;
+	});
+	await assert.rejects(handleBlueprintAction({ action: "bind", cwd: home, sessionId: "session-bind-bad", target: home }), (error) => {
+		assert.equal(error.code, "BLUEPRINT_PROJECT_NOT_FOUND");
+		return true;
+	});
 });
 
 test("Web upgrade adds documentation governance to an older Blueprint project", async () => {
@@ -231,3 +349,7 @@ test("Web architecture actions refuse stale preview hashes and out-of-bound chan
 		/changed after preview/,
 	);
 });
+
+
+
+

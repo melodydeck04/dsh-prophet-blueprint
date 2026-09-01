@@ -32,6 +32,7 @@ Spec 质量是核心。把需求复制进 Markdown 模板远远不够。Blueprin
 - allow: `lib/snapshot.js`
 - allow: `lib/config.js`
 - allow: `lib/cli.js`
+- allow: `lib/project-binding.js`
 - allow: `lib/version.js`
 - allow: `tests/**`
 - allow: `.blueprint/features/spec-governance--architecture-design.md`
@@ -65,6 +66,7 @@ Spec 质量是核心。把需求复制进 Markdown 模板远远不够。Blueprin
 2. Blueprint Web 是系统地图和文档查看器。它不包含第二个助手、模型 Prompt 输入框、角色选择器、Agent 控制、审批能力或 Client 拥有的工作流引擎。
 3. 普通用户体验是“需求 → 完善 → 必要时进行阻塞澄清 → 实现 → 验证 → 更新当前事实”。内部步骤在有助于理解时作为证据展示，而不是成为用户必须操作的阶段。
 4. 用户可见状态只保留 `refining`、`ready`、`implementing`、`verifying`、`blocked` 和 `completed`。详细工具、重试、快照或 DSH 诊断事实只在解释失败时出现。
+5. Blueprint 会自动跟随当前 DSH workspace。开发者在 Web 端项目 A 的 workspace 中工作时，不需要先执行 Blueprint 专属项目切换；/blueprint、普通需求分发、/blueprint-status、/blueprint-map 和仪表盘动作都应使用项目 A。
 
 ### 当前事实与活动变更
 
@@ -103,10 +105,13 @@ Spec 质量是核心。把需求复制进 Markdown 模板远远不够。Blueprin
 1. 实现前必须记录精确目标 DSH profile、解析后的包版本、官方文档 revision 或 release，以及受支持的 Node 版本。Blueprint 使用的全部 DSH peer 包必须解析成相互兼容的一组契约。
 2. Host 继续作为普通 Cordis 插件，并声明服务依赖。命令通过正式命令服务注册，模型能力通过正式工具服务注册；每个监听器、注册、计时器或拥有的资源都随插件作用域释放。
 3. Host 与 Client 保持分离。浏览器通过正式类型化 Host API 获得仓库投影和确定性动作。UI 组合使用目标版本正式提供的 Client slot 或视图扩展点；不修改 Shell，也不调用私有输入框 API。
-4. Agent、Workflow、Session、goal 或 Job API 只在目标版本有正式文档且符合其所有权和持久语义时使用。Session 标题、Prompt 标记、最新消息扫描、浏览器存储和 React effect 永远不能授予权限。
-5. 软件包继续作为由 `package.json` 和 `cordis.patch.yml` 声明的可安装 DSH bundle。兼容 fixture 会把软件包安装或链接到精确目标 profile，启动真实 Host 和 Web Client，验证命令、工具与仪表盘注册，卸载插件并断言清理完成。
-6. 最新 master 手册可以用于迁移规划，但实现以解析出的精确目标契约为准。如果需要的公开扩展点不存在，Spec 必须返回修订，或者明确升级 DSH 基线；禁止用私有 API 替代。
-
+4. 项目解析必须理解 DSH workspace。给定当前 `sessionId` 时，Blueprint 首先解析该 Session 所属的 DSH workspace，并使用该 workspace 的 path 作为项目入口路径。只有 DSH 没有暴露 workspace path 时，才依次回退到 Session `cwd`、插件/进程 `cwd`，最后才使用显式手动 fallback。
+5. 手动 `/blueprint-use <项目路径>` 是 escape hatch，不是普通项目选择方式。它可以用于旧 Session、无项目 Session 或有意跨项目查看的场景，但永远不能高于当前 DSH workspace path，也不能覆盖从 Session `cwd` 发现的真实 Blueprint 项目。
+6. 每个动作开始时都从当前 DSH 状态计算一次有效项目根目录，然后把这个根目录传给仓库操作。命令、普通工具分发、仪表盘、文档读取、审批、准备、架构动作、实现和验证都共享同一个解析器，不能对当前项目产生不同判断。
+7. Blueprint Web 在可用时分别展示三种身份：DSH workspace 标题/路径、Session `cwd` 和有效 Blueprint root。如果手动 fallback 生效，UI 必须把它标记为兜底证据，并提供清晰的替换或移除入口。
+8. Agent、Workflow、Session、goal 或 Job API 只在目标版本有正式文档且符合其所有权和持久语义时使用。Session 标题、Prompt 标记、最新消息扫描、浏览器存储和 React effect 永远不能授予权限。
+9. 软件包继续作为由 `package.json` 和 `cordis.patch.yml` 声明的可安装 DSH bundle。兼容 fixture 会把软件包安装或链接到精确目标 profile，启动真实 Host 和 Web Client，验证命令、工具与仪表盘注册，卸载插件并断言清理完成。
+10. 最新 master 手册可以用于迁移规划，但实现以解析出的精确目标契约为准。如果需要的公开扩展点不存在，Spec 必须返回修订，或者明确升级 DSH 基线；禁止用私有 API 替代。
 ### 从当前提案迁移
 
 1. 之前的精确哈希审批和验收尝试属于已经被替代的编排提案。编辑本 proposed Spec 会使旧审批失效；AI 不编辑审批记录，也不会把早期实现视为新哈希下的已授权实现。
@@ -147,6 +152,7 @@ Spec 质量是核心。把需求复制进 Markdown 模板远远不够。Blueprin
 - AC-SIMPLE-010: 用户可见工作流只展示 refining、ready、implementing、verifying、blocked 和 completed；内部 DSH 诊断按需查看，而不是普通使用的必需内容。
 - AC-SIMPLE-011: 插件解析并记录一份精确 DSH 目标契约，只使用其公开 Host／Client／Cordis 扩展点，继续作为可安装 bundle，并在卸载时清理全部注册。
 - AC-SIMPLE-012: 真实目标 profile 兼容场景从需求完善经过实现、验证、当前事实更新、系统地图检查、插件卸载和重启恢复全部通过，不修改 DSH 核心，也不使用私有 Client API。
+- AC-SIMPLE-013: 在包含多个 workspace 的 DSH Web 中，Blueprint 会根据当前 Session 所属 workspace path 自动解析当前交互的项目；只有没有 DSH workspace path 且没有可用 Session cwd 时，才需要 /blueprint-use。
 
 ## 验证
 
@@ -162,6 +168,7 @@ Spec 质量是核心。把需求复制进 Markdown 模板远远不够。Blueprin
 - AC-SIMPLE-010: UI 投影测试断言六个公开状态，并验证尝试、能力、Session 绑定和快照诊断会折叠，直到用户打开失败详情。
 - AC-SIMPLE-011: 契约测试解析活动 profile 的精确包图、验证 peer 对齐、执行正式命令／工具／API／slot 注册、卸载插件，并拒绝私有或跨版本 API。
 - AC-SIMPLE-012: 运行完整 Node 测试、语法检查、双语文档检查、工作树与 staged Blueprint scan，然后启动精确 DSH 目标 profile，跨一次重启完成真实需求到地图场景。
+- AC-SIMPLE-013: workspace fixture 至少创建两个不同路径的 DSH workspace 和对应 Session id，断言命令、工具和仪表盘动作按当前 sessionId 选择项目，断言 Session cwd 只是 fallback，断言手动绑定永远不能覆盖 workspace path，并断言重启恢复依赖 DSH workspace 状态而不需要 /blueprint-use。
 
 ## 风险
 
@@ -170,4 +177,5 @@ Spec 质量是核心。把需求复制进 Markdown 模板远远不够。Blueprin
 - 把 Feature brief 作为当前事实需要安全的双语合并和迁移行为。不能通过改写历史决策制造干净的当前状态。
 - 单一 Feature 层级无法表达所有技术关系。依赖和代码归属必须保留为独立边，同时让主要树保持开发者可理解。
 - 不再强制独立角色会减少流程仪式，但也可能降低高风险变更的保障。项目策略和明确风险触发条件必须保留按比例审核与验收。
+- DSH 可能在本地 storage 文件、Client Session 投影和公开 Host 服务之间以不同形式暴露 workspace 上下文。实现必须优先使用有文档的 API，把直接读取 storage 视为兼容 fallback，并且在无法确定时显式失败，不能选错项目。
 - 仓库当前包含被替代提案留下的 staged 实现，不能把它误认为新 Spec 哈希已经授权的实现。

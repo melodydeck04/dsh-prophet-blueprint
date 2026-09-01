@@ -29,6 +29,22 @@ test("dispatch tool refines and begins an exact approved Spec", async () => {
 	await assert.rejects(orchestrator.dispatchNatural({ action: "begin", featureId: "search", specHash: "b".repeat(64) }, { agent: current }), /does not match/);
 });
 
+
+test("project binding command records a fallback for the initiating cwd", async () => {
+	const current = agent();
+	const bindings = [];
+	const dashboardCalls = [];
+	const orchestrator = createBlueprintOrchestrator({}, {
+		dashboard: async (cwd, context) => { dashboardCalls.push({ cwd, context }); return { project: { root: "D:/bound", name: "bound" }, catalog: { features: [feature()] } }; },
+		bind: async (value) => { bindings.push(value); return { sessionId: value.sessionId, root: "D:/bound", boundAt: "2026-08-31T00:00:00.000Z" }; },
+	});
+	const bound = await orchestrator.bindProject({ agent: current, rawInput: "D:/bound" });
+	assert.equal(bound.kind, "success");
+	assert.deepEqual(bindings[0], { cwd: "D:/project", target: "D:/bound" });
+	await orchestrator.dispatchCommand("blueprint", { agent: current, rawInput: "@feature:search improve errors" });
+	assert.deepEqual(dashboardCalls[0], { cwd: "D:/project", context: { sessionId: "chat-1", dshWorkspacePath: null, dshWorkspaceTitle: null } });
+});
+
 test("completion preserves exact-snapshot verification and durable finalization", async () => {
 	const current = agent(); const calls = []; let stage = "implementing"; let record = { hash: "r".repeat(64) };
 	const dashboard = async () => ({ project: { root: "D:/project", name: "project" }, catalog: { features: [feature(stage, record)] } });
@@ -58,3 +74,5 @@ test("failed requirement-linked verification blocks completion", async () => {
 	assert.equal(result.completed, false);
 	assert.equal(result.stage, "blocked");
 });
+
+

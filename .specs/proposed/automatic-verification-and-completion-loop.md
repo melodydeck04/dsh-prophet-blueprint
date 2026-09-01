@@ -32,6 +32,7 @@ The implementation is an out-of-tree DSH plugin. The repository currently declar
 - allow: `lib/snapshot.js`
 - allow: `lib/config.js`
 - allow: `lib/cli.js`
+- allow: `lib/project-binding.js`
 - allow: `lib/version.js`
 - allow: `tests/**`
 - allow: `.blueprint/features/spec-governance--architecture-design.md`
@@ -65,6 +66,7 @@ The implementation is an out-of-tree DSH plugin. The repository currently declar
 2. Blueprint Web is a system map and document viewer. It does not contain a second assistant, model prompt composer, role selector, Agent controls, approval capability, or client-owned workflow engine.
 3. The ordinary user experience is `requirement → refinement → blocking clarification if needed → implementation → verification → current truth update`. Internal steps are visible as evidence when useful, not as mandatory user-operated stages.
 4. User-visible status is limited to `refining`, `ready`, `implementing`, `verifying`, `blocked`, and `completed`. Detailed tool, retry, snapshot, or DSH diagnostic facts appear only when explaining a failure.
+5. Blueprint follows the current DSH workspace automatically. A developer working in the Web workspace for project A must not need to run a Blueprint-specific project switch before `/blueprint`, ordinary requirement dispatch, `/blueprint-status`, `/blueprint-map`, or dashboard actions use project A.
 
 ### Current truth and active changes
 
@@ -103,10 +105,13 @@ The implementation is an out-of-tree DSH plugin. The repository currently declar
 1. Before implementation, record the exact target DSH profile, resolved package versions, official documentation revision or release, and supported Node version. All DSH peer packages used by Blueprint must resolve to a compatible contract set.
 2. The Host remains a normal Cordis plugin with declared service dependencies. Commands register through the documented command service, model capabilities through the documented tool service, and every listener, registration, timer, or owned resource disposes with its plugin scope.
 3. Host and Client remain separate. The browser obtains repository projections and deterministic actions through the documented typed Host API. UI composition uses the target version's official Client slot or view extension point; it does not patch the shell or call private composer APIs.
-4. Agent, Workflow, Session, goals, or Jobs APIs are used only when documented for the target version and only for their documented ownership and durability semantics. Session titles, prompt markers, latest-message scans, browser storage, and React effects never grant authority.
-5. The package remains an installable DSH bundle declared by `package.json` and `cordis.patch.yml`. A compatibility fixture installs or links the package into the exact target profile, boots the real Host and Web Client, exercises commands/tools/dashboard registration, unloads the plugin, and asserts cleanup.
-6. Latest master documentation may inform migration planning, but implementation follows the exact resolved target contract. If the desired public extension point is unavailable, the Spec returns for revision or the DSH baseline is explicitly upgraded; private API substitution is forbidden.
-
+4. Project resolution is DSH workspace-aware. Given the current `sessionId`, Blueprint first resolves the owning DSH workspace and uses that workspace's path as the project-entry path. Only if DSH exposes no workspace path may Blueprint fall back to Session `cwd`, then plugin/process `cwd`, then an explicit manual fallback.
+5. Manual `/blueprint-use <project-path>` is an escape hatch, not normal project selection. It may help legacy, projectless, or intentionally cross-project Sessions, but it never outranks an active DSH workspace path or a real Blueprint project discovered from Session `cwd`.
+6. The effective project root is computed once per action from current DSH state and then passed to repository operations. Commands, ordinary tool dispatch, dashboard, document reads, approval, preparation, architecture actions, implementation, and verification all share the same resolver so they cannot disagree about the active project.
+7. Blueprint Web shows the three identities separately when available: DSH workspace title/path, Session `cwd`, and effective Blueprint root. If a manual fallback is active, the UI labels it as fallback evidence and offers a clear way to replace or remove it.
+8. Agent, Workflow, Session, goals, or Jobs APIs are used only when documented for the target version and only for their documented ownership and durability semantics. Session titles, prompt markers, latest-message scans, browser storage, and React effects never grant authority.
+9. The package remains an installable DSH bundle declared by `package.json` and `cordis.patch.yml`. A compatibility fixture installs or links the package into the exact target profile, boots the real Host and Web Client, exercises commands/tools/dashboard registration, unloads the plugin, and asserts cleanup.
+10. Latest master documentation may inform migration planning, but implementation follows the exact resolved target contract. If the desired public extension point is unavailable, the Spec returns for revision or the DSH baseline is explicitly upgraded; private API substitution is forbidden.
 ### Migration from the current proposal
 
 1. The prior exact-hash approval and verification attempts belong to the superseded orchestration proposal. Editing this proposed Spec invalidates that approval; AI does not edit the approval record or treat earlier implementation as authorized under the new hash.
@@ -147,6 +152,7 @@ The implementation is an out-of-tree DSH plugin. The repository currently declar
 - AC-SIMPLE-010: User-visible workflow exposes only refining, ready, implementing, verifying, blocked, and completed, with internal DSH diagnostics available on demand rather than required for ordinary use.
 - AC-SIMPLE-011: The plugin resolves and records one exact DSH target contract, uses only its public Host/Client/Cordis extension points, remains an installable bundle, and cleans up every registration on unload.
 - AC-SIMPLE-012: A real target-profile compatibility scenario passes from requirement refinement through implementation, verification, current-truth update, system-map inspection, plugin unload, and restart recovery without DSH core patches or private Client APIs.
+- AC-SIMPLE-013: In DSH Web with multiple workspaces, Blueprint automatically resolves the current interaction's project from the active Session's owning workspace path; `/blueprint-use` is required only when no DSH workspace path or usable Session cwd is available.
 
 ## Verification
 
@@ -162,6 +168,7 @@ The implementation is an out-of-tree DSH plugin. The repository currently declar
 - AC-SIMPLE-010: UI projection tests assert the six public states and verify that attempts, capabilities, Session bindings, and snapshot diagnostics are collapsed unless a failure detail is opened.
 - AC-SIMPLE-011: Contract tests resolve the active profile's exact package graph, validate peer alignment, exercise documented command/tool/API/slot registration, unload the plugin, and reject private or cross-version API use.
 - AC-SIMPLE-012: Run the full Node suite, syntax checks, bilingual documentation checks, working-tree and staged Blueprint scans, then boot the exact DSH target profile and complete one real requirement-to-map scenario across a restart.
+- AC-SIMPLE-013: Workspace fixtures create at least two DSH workspaces with different paths and Session ids, assert command/tool/dashboard actions select by current `sessionId`, assert Session `cwd` remains a fallback only, assert a manual binding never overrides workspace path, and assert restart recovery reuses DSH workspace state without requiring `/blueprint-use`.
 
 ## Risks
 
@@ -170,4 +177,5 @@ The implementation is an out-of-tree DSH plugin. The repository currently declar
 - Treating the Feature brief as current truth requires safe bilingual merge and migration behavior. Historical decisions must not be rewritten to manufacture a clean present.
 - A single Feature hierarchy cannot express every technical relationship. Dependencies and code ownership must remain separate edges, while the primary tree stays understandable to a developer.
 - Removing mandatory independent roles reduces ceremony but can reduce assurance for risky changes. Project policy and explicit risk triggers must retain proportional review and verification.
+- DSH may expose workspace context differently between the local storage file, Client Session projection, and public Host services. The implementation must prefer documented APIs when available, treat direct storage reads as compatibility fallback, and fail visibly rather than selecting the wrong project.
 - The repository currently contains staged implementation from the superseded proposal. It must not be mistaken for implementation authorized by the new Spec hash.

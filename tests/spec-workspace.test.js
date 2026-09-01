@@ -26,7 +26,7 @@ test("Feature details expose current truth, hierarchy, implementation facts, and
 
 test("registered documents use the bounded document action", async () => {
 	const client = await clientSource();
-	assert.match(client, /action:"document",cwd,featureId:feature\.id,file/);
+	assert.match(client, /action:"document",cwd,sessionId,dshWorkspacePath,dshWorkspaceTitle,featureId:feature\.id,file/);
 	assert.match(client, /返回 Feature/);
 	assert.doesNotMatch(client, /readFile|arbitraryPath|exec_command|powershell/);
 });
@@ -45,3 +45,4 @@ test("Feature selection stays dashboard-local while @Feature serializes the stab
 	assert.match(client, /clipboardText:`@feature:\$\{candidate\.value\}`/);
 	assert.match(client, /async serialize\(ref\)\{return`@feature:\$\{ref\}`;\}/);
 });
+

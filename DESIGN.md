@@ -41,8 +41,9 @@ verification.js ----- staged snapshot, evidence, Host gates, completion
 
 ## Host modules
 
+- `lib/project-binding.js` resolves the effective Blueprint project from the current DSH workspace path first, then Session `cwd`, then process `cwd`, and finally a manual fallback binding for legacy or projectless Sessions.
 - `lib/chat-commands.js` resolves one owning Feature and creates the shared `/blueprint` and tool refinement packet. It defines decomposition dimensions, stable requirement/scenario formats, quality gates, the three-question cap, and structural-risk triggers.
-- `lib/orchestration.js` is the single-Chat adapter. It steers the initiating Agent for slash input and exposes one `blueprint_dispatch` tool with `refine`, `begin`, and `complete` actions. It does not create mandatory role Agents.
+- `lib/orchestration.js` is the single-Chat adapter. It steers the initiating Agent for slash input, exposes `/blueprint-use` only as a manual fallback escape hatch, and exposes one `blueprint_dispatch` tool with `refine`, `begin`, and `complete` actions. It does not create mandatory role Agents.
 - `lib/workflow.js` joins proposed Specs, exact approvals, and verification state. Its public projection collapses internal states into six developer-facing stages.
 - `lib/verification.js` binds delivery to an exact staged snapshot, records attempts and evidence, recomputes Host gates, and performs recoverable completion. Optional independent verification can reuse the retained read/test guard without changing the default path.
 - `lib/features.js`, `lib/architecture.js`, and `lib/reconciliation.js` load the developer-owned Feature tree, advanced Component projection, and current coverage findings without inventing product boundaries from directories.
@@ -64,11 +65,11 @@ Internal lifecycle records retain detailed approval, implementation, snapshot, a
 
 Approval binds the exact combined bilingual proposed-Spec hash. AI does not hand-write approval records. Implementation is restricted to the approved machine-readable Scope. Completion prepares an isolated representation of the staged snapshot, authenticates one attempt result, maps evidence to acceptance, reruns current Host gates, and atomically updates lifecycle artifacts. Failure stays durable and actionable; retry does not erase prior evidence.
 
-The normal verifying Agent is the current DSH Agent. High-risk policy may add an independent read-only verifier. Agent identity, Session titles, browser storage, prompt markers, and model prose never replace repository authority or Host checks.
+The normal verifying Agent is the current DSH Agent. High-risk policy may add an independent read-only verifier. Agent identity, Session titles, browser storage, prompt markers, manual fallback bindings, and model prose never replace DSH workspace identity, repository authority, or Host checks.
 
 ## Web client boundary
 
-The Web client is a searchable Feature hierarchy and detail/document viewer. A Feature detail projects current bilingual behavior, parent and children, dependencies, code paths, contracts, tests, documents, active Spec and exact hash, internal diagnostic state, and history available from registered artifacts.
+The Web client is a searchable Feature hierarchy and detail/document viewer. A Feature detail projects current bilingual behavior, parent and children, dependencies, code paths, contracts, tests, documents, active Spec and exact hash, internal diagnostic state, and history available from registered artifacts. When the DSH Session `cwd` is not a Blueprint project, the setup state can bind the current Session to an existing Blueprint root supplied by the developer.
 
 The client cannot execute shell commands, write arbitrary paths, create or resume Agents, submit fabricated verification, or change the Chat target through selection. Exact approval remains a deterministic developer action; after approval the developer continues in the same DSH Chat.
 
@@ -77,3 +78,7 @@ The client cannot execute shell commands, write arbitrary paths, create or resum
 The runtime baseline is DSH `0.1.1-rc.2` at official release revision `b150a55`, Cordis `4.0.1`, and Node.js `22.23.1`. The Host is a Cordis function plugin with declared `commands`, `systemPrompt`, `webServer`, and `tools` dependencies. The rc.2 Client uses `window.__ModuleLoader__.load`, the public `conversation.view` `slots.inject`/`slots.register` composition, Session projection, and input-trigger source contracts.
 
 The current master Client slot API differs and is migration guidance only. Upgrading the DSH baseline requires updating the compatibility record, peer graph, implementation, and real-profile checks together. Private APIs are never used as cross-version substitutes.
+
+
+
+

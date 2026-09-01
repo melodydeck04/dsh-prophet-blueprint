@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 test("manifest and browser bundle expose a dashboard-only Blueprint contract", async () => {
 	const manifest = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 	const client = await readFile(new URL("../lib/client.js", import.meta.url), "utf8");
-	assert.equal(manifest.version, "0.19.0");
+	assert.equal(manifest.version, "0.20.0");
 	assert.equal(manifest.dsh.client.platform, "web");
 	assert.ok(manifest.dsh.client.inject.includes("@deepseek-ai/dsh-client-ui-input-trigger"));
 	assert.equal(manifest.exports["./orchestration"].default, "./lib/orchestration.js");
@@ -20,7 +20,10 @@ test("manifest and browser bundle expose a dashboard-only Blueprint contract", a
 	assert.match(client, /活动变更与历史/);
 	assert.match(client, /action:"document"/);
 	assert.match(client, /MarkdownText/);
-	assert.match(client, /CLIENT_VERSION = "0\.19\.0"/);
+	assert.match(client, /CLIENT_VERSION = "0\.20\.0"/);
+	assert.match(client, /手动兜底项目/);
+	assert.match(client, /action:"bind"/);
+	assert.match(client, /dshWorkspacePath/);
 });
 
 test("Blueprint Web has no second Chat, browser role orchestration, or canned AI follow-up controls", async () => {
@@ -46,3 +49,6 @@ test("Blueprint Web has no second Chat, browser role orchestration, or canned AI
 	assert.match(client, /页面选择仅用于浏览，不会改变 Chat 目标或授予写权限/);
 	assert.match(client, /不会创建第二个助手/);
 });
+
+
+
