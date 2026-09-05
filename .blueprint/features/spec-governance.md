@@ -20,6 +20,7 @@ Keeps project instructions, architecture, public contracts, lifecycle specificat
 - `lib/todo-store.js`
 - `lib/assistant-actions.js`
 - `lib/cli.js`
+- `lib/todo-compact-trigger.js`
 - `tests/**`
 
 ## Documents
@@ -62,9 +63,14 @@ Keeps project instructions, architecture, public contracts, lifecycle specificat
 - required: `tests/todo-store.test.js`
 - required: `tests/cli-todo.test.js`
 - required: `tests/todo-compact-hint.test.js`
+- required: `tests/todo-compact-trigger.test.js`
 - required: `tests/cli-spec-show.test.js`
 - required: `tests/cli-approve-preview.test.js`
 - required: `tests/assistant-actions-decomposition.test.js`
+- required: `lib/todo-compact-trigger.js`
+- required: `docs/user/features/auto-compact-on-unrelated-task-done.md`
+- required: `docs/user/features/auto-compact-on-unrelated-task-done.zh.md`
+- required: `docs/user/features/auto-compact-on-unrelated-task-done.i18n.yaml`
 
 ## Acceptance
 

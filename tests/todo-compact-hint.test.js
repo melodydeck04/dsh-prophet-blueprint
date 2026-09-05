@@ -83,32 +83,32 @@ async function runCli(args, cwd, opts = {}) {
 	return { code: thrown?.code ?? result?.code ?? 0, stdout: result?.stdout ?? thrown?.stdout ?? "", stderr: thrown?.stderr ?? result?.stderr ?? "" };
 }
 
-test("todo mark done emits the compaction hint when bytes exceed 1 MiB", async () => {
-	const { root, specPath } = await fixture({ sessionBytes: 1_500_000, priorDone: false });
+test("todo mark done no longer prints the legacy byte-threshold hint", async () => {
+	const { root } = await fixture({ sessionBytes: 1_500_000, priorDone: false });
 	const r = await runCli(["todo", "mark", "T1", "done", "--spec", ".specs/proposed/foo.md", "--cwd", root], root);
 	assert.equal(r.code, 0);
-	assert.match(r.stdout, /Compaction hint: \d+\.\d+ MiB accumulated since last task\/done\. Type \/compact before continuing\./);
+	assert.doesNotMatch(r.stdout, /Compaction hint: \d+\.\d+ MiB accumulated since last task\/done\. Type \/compact before continuing\./);
+	assert.doesNotMatch(r.stdout, /Type \/compact before continuing/);
 	await rm(root, { recursive: true, force: true });
 });
 
-test("todo mark done does not emit the hint when bytes are under 1 MiB", async () => {
-	const { root, specPath } = await fixture({ sessionBytes: 100_000, priorDone: false });
+test("todo mark done does not print a hint when bytes are under 1 MiB", async () => {
+	const { root } = await fixture({ sessionBytes: 100_000, priorDone: false });
 	const r = await runCli(["todo", "mark", "T1", "done", "--spec", ".specs/proposed/foo.md", "--cwd", root], root);
 	assert.equal(r.code, 0);
 	assert.doesNotMatch(r.stdout, /Compaction hint:/);
 	await rm(root, { recursive: true, force: true });
 });
 
-test("todo mark done emits red verdict when bytes exceed 4 MiB", async () => {
-	const { root, specPath } = await fixture({ sessionBytes: 5_000_000, priorDone: false });
+test("todo mark done no longer prints the legacy red verdict line", async () => {
+	const { root } = await fixture({ sessionBytes: 5_000_000, priorDone: false });
 	const r = await runCli(["todo", "mark", "T1", "done", "--spec", ".specs/proposed/foo.md", "--cwd", root], root);
 	assert.equal(r.code, 0);
-	assert.match(r.stdout, /Compaction hint: \d+\.\d+ MiB/);
-	assert.match(r.stdout, /🟡 Compact now\./);
+	assert.doesNotMatch(r.stdout, /🟡 Compact now\./);
 	await rm(root, { recursive: true, force: true });
 });
 
-test("todo mark done prints 'no session.jsonl' on stderr when no session exists", async () => {
+test("todo mark done prints 'no previous task' on stdout when no session exists", async () => {
 	const root = await mkdtemp(join(tmpdir(), "blueprint-todo-compact-no-session-"));
 	try {
 		await initBlueprint(root);
@@ -136,7 +136,7 @@ test("todo mark done prints 'no session.jsonl' on stderr when no session exists"
 		});
 		const r = await runCli(["todo", "mark", "T1", "done", "--spec", ".specs/proposed/foo.md", "--cwd", root], root);
 		assert.equal(r.code, 0);
-		assert.match(r.stderr, /Compaction hint: skipped \(no session\.jsonl/);
+		assert.match(r.stdout, /Auto-compact: skipped \(no previous task\)\./);
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}
@@ -172,5 +172,6 @@ test("todo mark without --spec exits non-zero and emits no hint", async () => {
 	const r = await runCli(["todo", "mark", "T1", "done"], root);
 	assert.notEqual(r.code, 0);
 	assert.doesNotMatch(r.stdout, /Compaction hint:/);
+	assert.doesNotMatch(r.stdout, /Auto-compact:/);
 	await rm(root, { recursive: true, force: true });
 });

@@ -136,6 +136,8 @@ A new `todo status` action under the `todo` subcommand. It prints a one-screen r
 
 ## Consequences
 
+This byte-threshold hint has been **superseded by** `.specs/implemented/auto-compact-on-unrelated-task-done.md` (Feature: `spec-governance`). The follow-on Spec retires the `Compaction hint: ...` line in favour of real action: `lib/cli.js#runTodoMark` now calls `maybeAutoCompact`, which dispatches DSH's `/compact` slash command when a `task/done` event crosses a Feature boundary with at least 200 KiB accumulated since the previous `task/done`. The new `tests/cli-todo.test.js` cases assert the absence of the legacy hint text. `tests/todo-compact-hint.test.js` and `lib/cli.js#emitCompactHint` itself remain for historical reference only.
+
 Blueprint completed this delivery automatically after requirement-linked verification.
 
 - Verified snapshot: `git-index:e201532cf5487905cf00a9e417e5c11794b6f3d442607e173ac936a2cf9c207a`

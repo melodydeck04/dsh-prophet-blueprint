@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { resolveTodoPath, loadTodosForSpec } from "../lib/spec-todos.js";
+import { resolveTodoPath, loadTodosForSpec, featureIdForSpecPath } from "../lib/spec-todos.js";
 
 const SAMPLE = `version: 1
 spec: .specs/proposed/foo.md
@@ -72,6 +72,41 @@ test("loadTodosForSpec loads the sibling list when present", async () => {
 		assert.ok(list !== null);
 		assert.equal(list.todos.length, 1);
 		assert.equal(list.todos[0].id, "T1");
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
+
+test("featureIdForSpecPath returns the owning Feature id (AC-ACTIVE-001)", async () => {
+	const root = await tempRoot();
+	try {
+		await mkdir(join(root, ".blueprint", "features"), { recursive: true });
+		await writeFile(join(root, ".blueprint", "features", "foo.md"),
+			"# Feature: Foo\n\nId: foo\nStatus: active\n\n## Summary\n\nFoo.\n\n## Scope\n\n- `tests/fixtures/**`\n\n## Documents\n\n- required: `.specs/proposed/foo.md`\n\n## Acceptance\n\n- Foo exists.\n\n## Notes\n\nNone.\n",
+			"utf8");
+		const id = featureIdForSpecPath(".specs/proposed/foo.md", root);
+		assert.equal(id, "foo");
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
+
+test("featureIdForSpecPath returns null for an unknown Spec (AC-ACTIVE-002)", async () => {
+	const root = await tempRoot();
+	try {
+		await mkdir(join(root, ".blueprint", "features"), { recursive: true });
+		const id = featureIdForSpecPath("does-not-exist.md", root);
+		assert.equal(id, null);
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
+
+test("featureIdForSpecPath returns null when no Feature tree exists", async () => {
+	const root = await tempRoot();
+	try {
+		const id = featureIdForSpecPath("any.md", root);
+		assert.equal(id, null);
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}

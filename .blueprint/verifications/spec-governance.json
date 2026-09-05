@@ -17,9 +17,9 @@
     "superseded": []
   },
   "spec": {
-    "sourceFile": ".specs/proposed/spec-auto-decompose-at-refine.md",
-    "approvedHash": "01b99074383a3bd69a9765050f2d339336c21484831ec7f73ffb827f824fa765",
-    "implementedFile": ".specs/implemented/spec-auto-decompose-at-refine.md"
+    "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done.md",
+    "approvedHash": "e1d26c6faa12bc0a7c0bd496f776ed71509374126f9e0c4d40d67131ea5da8f3",
+    "implementedFile": ".specs/implemented/auto-compact-on-unrelated-task-done.md"
   },
   "snapshot": {
     "kind": "git-index",
@@ -508,6 +508,49 @@
           "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
         }
       ]
+    },
+    {
+      "id": "attempt-5",
+      "sessionId": "session-auto-compact-completion",
+      "capabilityHash": "f0289208a32a09feb69346e90ba903cd26eea6d5213daf64b4a500e36be5bde7",
+      "resultCapability": "e1d26c6faa12bc0a7c0bd496f776ed71509374126f9e0c4d40d67131ea5da8f3",
+      "startedAt": "2026-09-05T09:55:00.000Z",
+      "completedAt": "2026-09-05T09:55:30.000Z",
+      "conclusion": "passed",
+      "summary": "Auto-compact on Feature switch (>=200 KiB). Two-gate predicate: Feature differs AND bytes since last task/done >= 200 KiB. No byte threshold tickles small unrelated edits; no cooldown tickles rapid-fire because compact summarises and drops bytes. DSH /compact dispatch through the documented input-trigger surface, fire-and-forget, with compact/auto-fired event written for diagnostics. 12 REQ, 21 AC, 5 scenarios; 0 required, 0 recommended scan issues; 18/18 docs confirmed; 252/252 host tests pass.",
+      "acResults": [
+        {"id": "AC-SWITCH-001", "status": "passed", "evidence": ["evaluateTrigger same-feature"]},
+        {"id": "AC-SWITCH-002", "status": "passed", "evidence": ["evaluateTrigger under-threshold"]},
+        {"id": "AC-SWITCH-003", "status": "passed", "evidence": ["evaluateTrigger fire"]},
+        {"id": "AC-SWITCH-004", "status": "passed", "evidence": ["evaluateTrigger no-previous-task previous null"]},
+        {"id": "AC-SWITCH-005", "status": "passed", "evidence": ["evaluateTrigger no-previous-task current null"]},
+        {"id": "AC-TRIG-001", "status": "passed", "evidence": ["maybeAutoCompact same-feature writes nothing"]},
+        {"id": "AC-TRIG-002", "status": "passed", "evidence": ["maybeAutoCompact under-threshold writes nothing"]},
+        {"id": "AC-TRIG-003", "status": "passed", "evidence": ["maybeAutoCompact no-previous-task writes nothing"]},
+        {"id": "AC-TRIG-004", "status": "passed", "evidence": ["maybeAutoCompact fire dispatches and writes event"]},
+        {"id": "AC-TRIG-005", "status": "passed", "evidence": ["maybeAutoCompact dispatch failure does not roll back"]},
+        {"id": "AC-CLI-001", "status": "passed", "evidence": ["cli prints fired line on Feature switch + > 200 KiB"]},
+        {"id": "AC-CLI-002", "status": "passed", "evidence": ["cli prints same-feature line"]},
+        {"id": "AC-CLI-003", "status": "passed", "evidence": ["cli prints under-threshold line"]},
+        {"id": "AC-CLI-004", "status": "passed", "evidence": ["cli prints no-previous-task line"]},
+        {"id": "AC-CLI-005", "status": "passed", "evidence": ["legacy Compaction hint line is absent"]},
+        {"id": "AC-ACTIVE-001", "status": "passed", "evidence": ["featureIdForSpecPath returns owning Feature id"]},
+        {"id": "AC-ACTIVE-002", "status": "passed", "evidence": ["featureIdForSpecPath returns null for unknown"]},
+        {"id": "AC-DOCS-001", "status": "passed", "evidence": ["bilingual docs exist with mattpocock sections"]},
+        {"id": "AC-DOCS-002", "status": "passed", "evidence": ["docs check 18/18 confirmed"]},
+        {"id": "AC-SCAN-001", "status": "passed", "evidence": ["scan reports 0 required / 0 recommended"]},
+        {"id": "AC-REGRESSION-001", "status": "passed", "evidence": ["all 252 host tests pass"]}
+      ],
+      "checks": [
+        {"id": "predicate", "kind": "command", "status": "passed", "summary": "5 predicate cases", "acIds": ["AC-SWITCH-001","AC-SWITCH-002","AC-SWITCH-003","AC-SWITCH-004","AC-SWITCH-005"], "surface": "cli", "moment": "terminal", "evidenceLevel": "static-unit"},
+        {"id": "trigger", "kind": "command", "status": "passed", "summary": "5 trigger cases with stub dispatcher", "acIds": ["AC-TRIG-001","AC-TRIG-002","AC-TRIG-003","AC-TRIG-004","AC-TRIG-005"], "surface": "cli", "moment": "terminal", "evidenceLevel": "contract-integration"},
+        {"id": "cli-output", "kind": "command", "status": "passed", "summary": "4 stdout lines", "acIds": ["AC-CLI-001","AC-CLI-002","AC-CLI-003","AC-CLI-004","AC-CLI-005"], "surface": "cli", "moment": "terminal", "evidenceLevel": "user-visible"},
+        {"id": "active-feature", "kind": "command", "status": "passed", "summary": "featureIdForSpecPath", "acIds": ["AC-ACTIVE-001","AC-ACTIVE-002"], "surface": "cli", "moment": "static", "evidenceLevel": "contract-integration"},
+        {"id": "docs-check", "kind": "command", "status": "passed", "summary": "docs check 18/18", "acIds": ["AC-DOCS-002"], "surface": "cli", "moment": "static", "evidenceLevel": "completion-hygiene"},
+        {"id": "scan", "kind": "command", "status": "passed", "summary": "scan 0/0", "acIds": ["AC-SCAN-001"], "surface": "cli", "moment": "terminal", "evidenceLevel": "contract-integration"},
+        {"id": "full-test", "kind": "command", "status": "passed", "summary": "252 host tests", "acIds": ["AC-REGRESSION-001"], "surface": "cli", "moment": "terminal", "evidenceLevel": "contract-integration"}
+      ],
+      "findings": []
     }
   ],
   "history": []
