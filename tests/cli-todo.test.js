@@ -360,3 +360,33 @@ test("todo mark done on a different Spec with > 200 KiB bytes reports no-dispatc
 		await rm(root, { recursive: true, force: true });
 	}
 });
+
+test("CLI prints; host-side watcher dispatches via ctx.compaction.compactNow (AC-CLI-006)", async () => {
+	const root = await fixture();
+	try {
+		await writeTodoYaml(root);
+		await writeSecondSpec(root);
+		await addBarToFeatureDocs(root);
+		await writeFile(join(root, "session.jsonl"), "", "utf8");
+		await runCli(["todo", "mark", "T1", "done", "--spec", "tests/fixtures/foo.md", "--session-id", "s-host-1"], root);
+		await padSession(root, 500 * 1024);
+		const cli = await runCli(["todo", "mark", "B1", "done", "--spec", "tests/fixtures/bar.md", "--session-id", "s-host-2"], root);
+		assert.match(cli.stdout, /Auto-compact: skipped \(no DSH slash-command dispatch surface/);
+
+		const { createAutoCompactWatcher } = await import("../lib/auto-compact-watcher.js");
+		const compactNowCalls = [];
+		const ctx = {
+			compaction: { compactNow: async (agent, signal, commandId) => { compactNowCalls.push({ agent, signal, commandId }); return null; } },
+			logger: { info() {}, warn() {} },
+		};
+		const watcher = createAutoCompactWatcher({ ctx, logger: { info() {}, warn() {} } });
+		watcher.captureAgent("s-host-2", { agent: { id: "host-agent" }, signal: undefined, commandId: "blueprint-auto-compact" });
+		const tickResult = await watcher.tick({ cwd: root, sessionId: "s-host-2", nowMs: Date.now() });
+		assert.equal(tickResult.invoked, true);
+		assert.equal(tickResult.reason, "feature-switch");
+		assert.equal(compactNowCalls.length, 1);
+		assert.equal(compactNowCalls[0].commandId, "blueprint-auto-compact");
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});

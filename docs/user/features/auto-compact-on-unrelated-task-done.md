@@ -8,13 +8,13 @@ The framework dispatches DSH's `/compact` slash command on the developer's behal
 
 The 200 KiB byte floor implicitly rate-limits the trigger. A successful compact summarises the conversation and drops the byte count, so the next auto-compact requires another 200 KiB to accumulate, which is the natural minimum cost worth paying.
 
-The dispatch is fire-and-forget through the same documented surface a human operator uses to invoke `/compact`. The framework does not call private composer APIs or write a parallel route.
+The dispatch is fire-and-forget. The CLI subprocess writes the `task/done` event to `session.jsonl`; a host-side watcher (`lib/auto-compact-watcher.js`) installed by the plugin's cordis entry observes the new event on the next `/blueprint` invocation, evaluates the trigger, and calls `ctx.compaction.compactNow(agent, signal, commandId)` — the same API the human `/compact` slash command uses internally. The chat handler does not block on the compact.
 
 ## When to reach for it
 
 You work on multiple Features in a single DSH session and want the context window to reset when you cross a Feature boundary, without typing `/compact` manually each time.
 
-The trigger is event-driven (`task/done`); there is no periodic background sweep and no compact on idle.
+The trigger is event-driven (`task/done`); there is no periodic background sweep and no compact on idle. The watcher's tick is chat-driven: it runs once per `/blueprint` invocation, picking up events the CLI wrote earlier in the same session.
 
 ## Common questions
 
@@ -26,14 +26,17 @@ The trigger is event-driven (`task/done`); there is no periodic background sweep
 
 **What if the prior `task/done` is missing or has no `data.spec`?** The trigger is a no-op. The framework never invents a Feature from absent data.
 
-**What if my DSH profile does not expose a slash-command dispatch surface?** The framework logs a one-time warning at boot and reduces to a no-op for the rest of the session. The developer must upgrade the DSH baseline or pin a known-good version before this Feature can ship.
+**How is `/compact` actually invoked?** The plugin's host-side watcher calls `ctx.compaction.compactNow(agent, signal, commandId)` — the same API the human `/compact` slash command uses internally. There is no manual `/compact` step for the developer.
+
+**What if my DSH profile does not expose `ctx.compaction`?** The host-side watcher logs a one-time `info` message at boot and reduces to a no-op. The CLI's `todo mark done` then prints `Auto-compact: skipped (no DSH slash-command dispatch surface; manual /compact required).` so the developer can fall back to typing `/compact` manually. The developer must upgrade the DSH baseline or pin a known-good version before this Feature can ship in full.
 
 ## It's working if
 
-- `design-blueprint todo mark <id> --spec <path> done` on a Feature switch with > 200 KiB accumulated prints `Auto-compact: fired (feature-switch: <from> -> <to>, <n.n> MiB accumulated).` to stdout.
-- The same command on the same Spec prints `Auto-compact: skipped (same feature as previous: <featureId>).`.
-- The same command on a Feature switch with < 200 KiB accumulated prints `Auto-compact: skipped (under threshold: <n> bytes < 200 KiB).`.
+- `design-blueprint todo mark <id> --spec <path> done` on a Feature switch with > 200 KiB accumulated prints `Auto-compact: skipped (no DSH slash-command dispatch surface; manual /compact required).` from the CLI's local run, and the next `/blueprint ...` invocation triggers the host-side watcher, which calls `ctx.compaction.compactNow` against the active session's agent.
+- The same CLI command on the same Spec prints `Auto-compact: skipped (same feature as previous: <featureId>).`.
+- The same CLI command on a Feature switch with < 200 KiB accumulated prints `Auto-compact: skipped (under threshold: <n> bytes < 200 KiB).`.
 - The first `task/done` in a fresh `session.jsonl` prints `Auto-compact: skipped (no previous task).`.
+- After a successful fire, DSH's `/compact` slash command resolves the same way it does when typed manually — the context window shortens, a `compaction/start` and `compaction/end` event pair land in `session.jsonl`, and the framework's `compact/auto-fired` event is appended right after the `compaction/end` event with `previousFeatureId` / `currentFeatureId` / `bytesSincePreviousTaskDone`.
 - A `compact/auto-fired` event appears in `session.jsonl` after a successful fire, with `{ reason: "feature-switch", previousFeatureId, currentFeatureId, bytesSincePreviousTaskDone }`.
 - The dispatch failure path prints `Auto-compact: failed (<message>).` to stdout and the `task/done` event remains in `session.jsonl`.
 - The legacy `Compaction hint: <n> MiB accumulated ...` line is no longer emitted by `todo mark done`.
