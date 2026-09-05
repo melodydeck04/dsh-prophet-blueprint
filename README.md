@@ -15,17 +15,21 @@ The developer stays in DSH's normal Chat. Blueprint grounds a request in reposit
 - In DSH Web, Blueprint follows the current Session's owning workspace path automatically. `/blueprint-use <project-path>` is only a manual escape hatch for legacy, projectless, or intentionally cross-project Sessions where DSH exposes no usable workspace path or Session `cwd`.
 - Blueprint decomposes actor and goal, entry point, normal flow, inputs and outputs, state, rules, failures, edge cases, permissions, persistence, compatibility, non-goals, and observable acceptance where relevant.
 - Requirements use stable `REQ-*` ids and concrete Given/When/Then scenarios. A requirements checklist and cross-artifact analysis run before implementation.
+- One schema-validated Change Package connects requirements, impact and proportional design, tasks, Scope, acceptance evidence, lifecycle state, and the Feature truth to publish.
 - One refinement round asks at most three questions whose answers materially change behavior, data, compatibility, risk, or scope. Other uncertainty is recorded as an assumption.
 - The current DSH Agent implements ordinary bounded work. A technical design or independent verifier is added only when risk justifies it.
+- Every acceptance criterion has a delivery surface, observation moment, and minimum evidence level. Web UI claims require real-browser evidence; progressive behavior must be observed before and after its terminal event.
 - Public progress is limited to `refining`, `ready`, `implementing`, `verifying`, `blocked`, and `completed`.
 
-`/blueprint-status` returns the current Feature stages. `/blueprint-map` returns the Feature hierarchy. The Blueprint Web view adds search, stage filters, Feature details, bilingual current briefs, hierarchy, dependencies, code paths, contracts, tests, active Spec state, and safe links to registered documents. Dashboard selection is view state only: it cannot authorize a write or silently retarget Chat.
+`/blueprint-status` returns the current Feature stages. `/blueprint-map` returns the Feature hierarchy. The Blueprint Web view adds search, stage filters, Feature details, bilingual current briefs, hierarchy, dependencies, code paths, contracts, tests, the active Change Package traceability/evidence plan, actionable status, and safe links to registered documents. Dashboard selection is view state only: it cannot authorize a write or silently retarget Chat.
 
 ## Current truth and changes
 
 `.blueprint/features/*.md` owns stable Feature identity and product containment. Each Feature's bilingual brief under `docs/user/features/` describes current user-visible behavior. A Feature-linked proposed Spec describes only the active delta. Implemented and rejected Specs are immutable history.
 
-The repository, not assistant prose or browser state, is durable authority. Exact developer approval is bound to the combined bilingual proposed-Spec hash. Verification is bound to the staged Git snapshot. Completion additionally requires scope, documentation, architecture, and scan gates to pass.
+The repository, not assistant prose or browser state, is durable authority. Exact developer approval is bound to the combined bilingual proposed-Spec hash. Verification is bound to the staged Git snapshot. Completion additionally requires scope, documentation, architecture, completion-hygiene, and scan gates to pass. Completion hygiene checks newly staged secret-like material and undeclared temporary/debug artifacts; explicit exceptions live in `completionHygiene.secretAllow` and `completionHygiene.temporaryAllow`.
+
+`verifying` means a declared attempt is running or automatically collectible evidence remains with no known failed gate. A known failure becomes `blocked` and exposes a stable reason code, owning layer, concise evidence, and one recommended next action. Retry appends a new attempt instead of replacing prior evidence.
 
 Feature parentage expresses product containment. Component ownership, contracts, deployment, and dependencies remain an advanced technical projection and do not form a second user-operated product hierarchy.
 
@@ -76,7 +80,6 @@ For every non-trivial change:
 Blueprint does not guarantee that an underspecified sentence has one correct interpretation. It exposes material ambiguity and assumptions. It does not infer Feature hierarchy from source directories, replace DSH Chat or permissions, execute arbitrary repository commands from the dashboard, treat manual fallbacks as stronger than DSH workspace or cwd discovery, or treat a passing model statement as completion authority.
 
 This repository is private package source and requires Node.js `>=22.19`.
-
 
 
 

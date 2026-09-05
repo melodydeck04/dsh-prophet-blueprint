@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "featureId": "blueprint-session-diagnostics",
+  "stage": "completed",
+  "cycle": {
+    "id": "cycle-9cb629a9-82d8-412b-8c21-0b9795bfae2a",
+    "intent": "natural",
+    "requestSessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+    "roles": {
+      "coordinator": {
+        "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+        "boundAt": "2026-09-03T10:59:18.965Z"
+      },
+      "architecture": null,
+      "implementer": null
+    },
+    "superseded": []
+  },
+  "spec": {
+    "sourceFile": ".specs/proposed/compact-at-checkpoint.md",
+    "approvedHash": "fb69198f6e4570044b75afc13042ba1e46bc73f1ded94daef4fcb5c3df379084",
+    "implementedFile": ".specs/implemented/compact-at-checkpoint.md"
+  },
+  "snapshot": {
+    "kind": "git-index",
+    "digest": "cb927223fd3086a7516a383e27bb1603bfb849eb98630c8dcb1a2ac9f5fb86e3"
+  },
+  "requestedAt": "2026-09-03T11:02:14.823Z",
+  "updatedAt": "2026-09-03T11:03:06.398Z",
+  "completedAt": "2026-09-03T11:03:06.398Z",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "01b74235b7f375717c08a85ce40f11de95e9e3dfbf75989123f72328f6972c19",
+      "resultCapability": "38fb7ae5987efcdb84706bef3124996de4f88808fa456f77cfa6f0fcfc899d73",
+      "startedAt": "2026-09-03T10:59:49.550Z",
+      "completedAt": "2026-09-03T11:00:46.816Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+      "acResults": [],
+      "checks": [
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+        }
+      ]
+    },
+    {
+      "id": "attempt-2",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "17c509d06a3949d31096ddd6d22e35b6dd86769da7bed9806799d0212bb345bc",
+      "resultCapability": "317b08ba2e0911a4438529a0d128cec6aaceb7a4d08408be71f3ab2482187af8",
+      "startedAt": "2026-09-03T11:01:40.017Z",
+      "completedAt": "2026-09-03T11:02:06.864Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+      "acResults": [],
+      "checks": [
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+        }
+      ]
+    },
+    {
+      "id": "attempt-3",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "beae3e45750fdce69dfb2862cb3d05050ffe13bdb24677ccd1bab7e0f5b73e98",
+      "resultCapability": "3cf51288cc88bb457f28fd4dd350be6e1455cfbec5351d92bc9afd2401d73f38",
+      "startedAt": "2026-09-03T11:02:37.563Z",
+      "completedAt": "2026-09-03T11:02:47.054Z",
+      "conclusion": "passed",
+      "summary": "Phase 3 (compact-at-checkpoint) implementation complete. blueprint-diagnostics/lib/audit.js now walks task/done events and populates report.compactBoundaries; thresholds.js gains the compact-boundaries-missed block (1 MiB yellow, 4 MiB red); report.js renders the new ## Compact boundaries section (omitted entirely when no task/done events are present); compare.js adds a compact boundaries missed row. 5 new tests pass; docs/diagnostics/README.{md,zh.md} pair documented.",
+      "acResults": [
+        {
+          "id": "AC-COMPACT-001",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/tests/compact-boundaries.test.js sample-session.jsonl renders ## Compact boundaries section with three rows"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-002",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/tests/compact-boundaries.test.js no-task-done-session.jsonl renders section as (no task/done events in this session; nothing to bound)"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-003",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/tests/compact-boundaries.test.js audit returns compactBoundaries.boundaries array with seq/time/todoId/spec/req/ac/title/sessionId/segmentBytes/segmentDurationMs"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-004",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/tests/compact-boundaries.test.js totalMissedSavingsBytes = sum of segmentBytes across all boundaries; verdict follows compact-boundaries-missed threshold"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-005",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/lib/thresholds.js compact-boundaries-missed block uses yellowAt 1 MiB, redAt 4 MiB"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-006",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/tests/compact-boundaries.test.js compare adds compact boundaries missed row when both reports carry compactBoundaries"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-007",
+          "status": "passed",
+          "evidence": [
+            "26/26 diagnostics tests + 128/128 host tests pass via test-tmp-bootstrap"
+          ]
+        },
+        {
+          "id": "AC-COMPACT-008",
+          "status": "passed",
+          "evidence": [
+            "blueprint-diagnostics/docs/diagnostics/README.{md,zh.md} updated with the Compact boundaries section"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "compact-boundaries-unit",
+          "kind": "command",
+          "status": "passed",
+          "summary": "compact-boundaries unit tests",
+          "acIds": [
+            "AC-COMPACT-001",
+            "AC-COMPACT-002",
+            "AC-COMPACT-003",
+            "AC-COMPACT-004",
+            "AC-COMPACT-006"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test blueprint-diagnostics/tests/compact-boundaries.test.js",
+          "oracle": "5 unit tests pass",
+          "actual": "5 unit tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "thresholds-loaded",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "compact-boundaries-missed threshold block in lib/thresholds.js",
+          "acIds": [
+            "AC-COMPACT-005"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --check blueprint-diagnostics/lib/thresholds.js",
+          "oracle": "compact-boundaries-missed block with yellowAt 1 MiB and redAt 4 MiB present",
+          "actual": "present",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "full-suite",
+          "kind": "command",
+          "status": "passed",
+          "summary": "full suite via test-tmp-bootstrap",
+          "acIds": [
+            "AC-COMPACT-007"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\" \"blueprint-diagnostics/tests/*.test.js\"",
+          "oracle": "128/128 host + 26/26 diagnostics tests pass",
+          "actual": "all tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "docs",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "docs/diagnostics/README.md and README.zh.md updated",
+          "acIds": [
+            "AC-COMPACT-008"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "completion-hygiene",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "grep -n Compact boundaries blueprint-diagnostics/docs/diagnostics/README.md",
+          "oracle": "section present in both languages",
+          "actual": "present",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "phase-3-clean",
+          "domain": "development",
+          "severity": "advisory",
+          "message": "Implementation matches Spec. Compact boundaries section rendered correctly with thresholds in place. No regressions."
+        }
+      ]
+    }
+  ],
+  "history": []
+}

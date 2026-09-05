@@ -45,4 +45,3 @@ test("Feature selection stays dashboard-local while @Feature serializes the stab
 	assert.match(client, /clipboardText:`@feature:\$\{candidate\.value\}`/);
 	assert.match(client, /async serialize\(ref\)\{return`@feature:\$\{ref\}`;\}/);
 });
-

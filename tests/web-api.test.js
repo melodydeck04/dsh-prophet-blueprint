@@ -253,6 +253,11 @@ test("Web approval binds the exact visible proposed spec", async () => {
 	assert.equal(search.brief.zh.file, "docs/user/features/search.zh.md");
 	assert.equal(search.workflow.spec.languages.zh.file, ".specs/proposed/search.zh.md");
 	assert.match(search.workflow.spec.hash, /^[a-f0-9]{64}$/);
+	assert.equal(search.workflow.spec.changePackage.identity.owningFeature, "search");
+	assert.equal(search.workflow.spec.changePackage.verification.targets[0].id, "AC-1");
+	assert.equal(search.workflow.status.publicState, "ready");
+	assert.equal(search.workflow.status.reasonCode, "approval-required");
+	assert.match(search.workflow.status.nextAction, /approve/i);
 	await assert.rejects(handleBlueprintAction({ action: "approve", cwd: root, featureId: "search", expectedSpecHash: search.workflow.spec.hash }), /requires at least one valid non-deprecated Component owner/);
 	await mkdir(join(root, ".blueprint", "architecture", "components"), { recursive: true });
 	await writeFile(join(root, ".blueprint", "architecture", "components", "search-service.md"), serializeComponent({
@@ -269,6 +274,8 @@ test("Web approval binds the exact visible proposed spec", async () => {
 	assert.equal(search.workflow.stage, "ready");
 	assert.equal(search.workflow.internalStage, "approved");
 	assert.equal(search.workflow.spec.content, FEATURE_SPEC);
+	assert.equal(search.workflow.status.reasonCode, "implementation-ready");
+	assert.match(search.workflow.status.nextAction, /Begin implementation/);
 });
 
 test("Web document reads only files registered to the selected Feature", async () => {

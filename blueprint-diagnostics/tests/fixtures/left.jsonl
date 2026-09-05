@@ -1,0 +1,4 @@
+{"type":"session","version":0,"id":"left"}
+{"type":"turn/start","seq":1,"time":1,"data":{"turn":1}}
+{"type":"assistant/message","seq":2,"time":2,"data":{"role":"assistant","content":[{"type":"text","text":"x"}]}}
+{"type":"turn/end","seq":3,"time":3,"data":{"turn":1}}

@@ -11,6 +11,18 @@ test("default config exposes architecture and Host verification roots outside im
 	assert.equal(DEFAULT_CONFIG.features.verificationsRoot, ".blueprint/verifications");
 	assert.ok(DEFAULT_CONFIG.changePolicy.allowWithoutSpec.includes(".blueprint/architecture/**"));
 	assert.ok(DEFAULT_CONFIG.changePolicy.allowWithoutSpec.includes(".blueprint/verifications/**"));
+	assert.deepEqual(DEFAULT_CONFIG.completionHygiene, { secretAllow: [], temporaryAllow: [] });
+});
+
+test("loadConfig validates explicit completion hygiene policy exceptions", async () => {
+	const root = await mkdtemp(join(tmpdir(), "blueprint-config-hygiene-"));
+	const config = structuredClone(DEFAULT_CONFIG);
+	config.completionHygiene = { secretAllow: ["fixtures/secrets/**"], temporaryAllow: ["tests/fixtures/*.out"] };
+	await writeFile(join(root, "design-blueprint.json"), JSON.stringify(config, null, 2) + "\n", "utf8");
+	const result = await loadConfig(await workingTreeSnapshot(root));
+	assert.deepEqual(result.issues, []);
+	assert.deepEqual(result.config.completionHygiene.secretAllow, ["fixtures/secrets/**"]);
+	assert.deepEqual(result.config.completionHygiene.temporaryAllow, ["tests/fixtures/*.out"]);
 });
 
 test("loadConfig fills the architecture root when omitted and reports invalid paths", async () => {

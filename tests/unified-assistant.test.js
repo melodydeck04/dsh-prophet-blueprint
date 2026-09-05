@@ -45,4 +45,13 @@ test("refinement requires traceable requirements and limits material questions",
 	]);
 	assert.equal(packet.planning.designRequired, true);
 	assert.equal(packet.planning.defaultExecution, "current-dsh-agent");
+	assert.equal(packet.version, 3);
+	assert.deepEqual(packet.refinement.internalPasses, ["ground", "decompose", "decide", "design-and-plan", "analyze"]);
+	assert.match(packet.changePackage.traceability, /REQ -> scenario/);
+	assert.ok(packet.verificationPlan.deliverySurfaces.includes("web-ui"));
+	assert.ok(packet.verificationPlan.observationMoments.includes("progressive"));
+	assert.ok(packet.verificationPlan.evidenceLevels.includes("user-visible"));
+	assert.match(packet.verificationPlan.progressiveRule, /before the terminal event/);
+	assert.ok(packet.completionHygiene.includes("new-secret-like-material"));
+	assert.match(packet.stateSemantics.blocked, /reason code/);
 });

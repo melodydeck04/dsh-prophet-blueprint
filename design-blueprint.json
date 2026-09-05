@@ -33,6 +33,15 @@
   "architecture": {
     "root": ".blueprint/architecture"
   },
+  "completionHygiene": {
+    "secretAllow": [],
+    "temporaryAllow": []
+  },
+  "decomposition": {
+    "maxReq": 40,
+    "maxScopePaths": 10,
+    "maxLines": 2500
+  },
   "documentation": {
     "standards": [
       "docs/AGENTS.md"

@@ -1,0 +1,514 @@
+{
+  "version": 1,
+  "featureId": "spec-governance",
+  "stage": "completed",
+  "cycle": {
+    "id": "cycle-f513ea13-b7b6-46ea-89bb-0a9bc2aec33e",
+    "intent": "natural",
+    "requestSessionId": "session-test",
+    "roles": {
+      "coordinator": {
+        "sessionId": "session-test",
+        "boundAt": "2026-09-03T14:10:54.981Z"
+      },
+      "architecture": null,
+      "implementer": null
+    },
+    "superseded": []
+  },
+  "spec": {
+    "sourceFile": ".specs/proposed/spec-auto-decompose-at-refine.md",
+    "approvedHash": "01b99074383a3bd69a9765050f2d339336c21484831ec7f73ffb827f824fa765",
+    "implementedFile": ".specs/implemented/spec-auto-decompose-at-refine.md"
+  },
+  "snapshot": {
+    "kind": "git-index",
+    "digest": "a3cf6dc85884216f70e0f275812decb877d6a553a185394d99d16a6476b91c0b"
+  },
+  "requestedAt": "2026-09-03T14:35:19.878Z",
+  "updatedAt": "2026-09-03T14:36:21.102Z",
+  "completedAt": "2026-09-03T14:36:21.102Z",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "e7d477582de8c26c8e32a217d1580ad7a5f3541f2c532cb86dd04a0f98626e88",
+      "resultCapability": "18559e7092269dd16134e9da30563aa36cc2c8942acef2226ff73b6a76686c95",
+      "startedAt": "2026-09-03T14:11:45.586Z",
+      "completedAt": "2026-09-03T14:12:05.828Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+      "acResults": [],
+      "checks": [
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+        }
+      ]
+    },
+    {
+      "id": "attempt-2",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "4299181dc173a994bbab92fd079488ccbaae046714b9e3d89e4f7b46774db286",
+      "resultCapability": "4cb1de6df64493458594e8ded9c70bdb532ac48119039c11caab0c9ba2cb6396",
+      "startedAt": "2026-09-03T14:12:46.446Z",
+      "completedAt": "2026-09-03T14:12:58.571Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
+      "acResults": [
+        {
+          "id": "AC-AR-001",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+          ]
+        },
+        {
+          "id": "AC-AR-002",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+          ]
+        },
+        {
+          "id": "AC-AR-003",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+          ]
+        },
+        {
+          "id": "AC-AR-004",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+          ]
+        },
+        {
+          "id": "AC-AR-005",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+          ]
+        },
+        {
+          "id": "AC-AR-006",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+          ]
+        },
+        {
+          "id": "AC-AR-007",
+          "status": "passed",
+          "evidence": [
+            "151/151 host tests pass via test-tmp-bootstrap"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "decomposition-gate-unit-api",
+          "kind": "command",
+          "status": "passed",
+          "summary": "assistant-actions decomposition gate unit tests (api)",
+          "acIds": [
+            "AC-AR-001",
+            "AC-AR-002",
+            "AC-AR-003",
+            "AC-AR-004",
+            "AC-AR-006"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+          "oracle": "5 unit tests pass",
+          "actual": "5 unit tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "threshold-override-static",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "threshold override from design-blueprint.json",
+          "acIds": [
+            "AC-AR-005"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+          "oracle": "threshold override test passes",
+          "actual": "test passes",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "full-suite",
+          "kind": "command",
+          "status": "passed",
+          "summary": "full suite via test-tmp-bootstrap",
+          "acIds": [
+            "AC-AR-007"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
+          "oracle": "151/151 tests pass",
+          "actual": "151/151 tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "phase-6-clean",
+          "domain": "development",
+          "severity": "advisory",
+          "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+        },
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception"
+        }
+      ]
+    },
+    {
+      "id": "attempt-3",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "aba2f9e2c25e3cc11b68e90416d0efc6ea3dc3bd2e02a245e01dc84f30592927",
+      "resultCapability": "7d2ac417df64082a4c9954581bcc99d1c857a552e4c1609593f07f80720ad2a0",
+      "startedAt": "2026-09-03T14:13:51.744Z",
+      "completedAt": "2026-09-03T14:14:03.953Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+      "acResults": [
+        {
+          "id": "AC-AR-001",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+          ]
+        },
+        {
+          "id": "AC-AR-002",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+          ]
+        },
+        {
+          "id": "AC-AR-003",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+          ]
+        },
+        {
+          "id": "AC-AR-004",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+          ]
+        },
+        {
+          "id": "AC-AR-005",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+          ]
+        },
+        {
+          "id": "AC-AR-006",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+          ]
+        },
+        {
+          "id": "AC-AR-007",
+          "status": "passed",
+          "evidence": [
+            "151/151 host tests pass via test-tmp-bootstrap"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "decomposition-gate-unit-api",
+          "kind": "command",
+          "status": "passed",
+          "summary": "assistant-actions decomposition gate unit tests (api)",
+          "acIds": [
+            "AC-AR-001",
+            "AC-AR-002",
+            "AC-AR-003",
+            "AC-AR-004",
+            "AC-AR-006"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+          "oracle": "5 unit tests pass",
+          "actual": "5 unit tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "threshold-override-static",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "threshold override from design-blueprint.json",
+          "acIds": [
+            "AC-AR-005"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+          "oracle": "threshold override test passes",
+          "actual": "test passes",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "full-suite",
+          "kind": "command",
+          "status": "passed",
+          "summary": "full suite via test-tmp-bootstrap",
+          "acIds": [
+            "AC-AR-007"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
+          "oracle": "151/151 tests pass",
+          "actual": "151/151 tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "phase-6-clean",
+          "domain": "development",
+          "severity": "advisory",
+          "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+        },
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md"
+        }
+      ]
+    },
+    {
+      "id": "attempt-4",
+      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+      "capabilityHash": "9f24f2039d26215a6a0c4c365753da4a31e493060ee10a2ce86ba2994c723bf1",
+      "resultCapability": "10413d3255792bcb4071887d0679d041dd3c0ef5e46d65da18ad3044887d6a37",
+      "startedAt": "2026-09-03T14:35:45.773Z",
+      "completedAt": "2026-09-03T14:35:56.549Z",
+      "conclusion": "passed",
+      "summary": "Phase 6 (spec-auto-decompose-at-refine) implementation complete. lib/assistant-actions.js adds runDecompositionGate helper called from patchFacts. previewAssistantSpecPatch and applyAssistantSpecPatch now reject oversized proposed Specs with structured SPEC_TOO_BIG_FOR_REFINEMENT error before any filesystem write. 6 new tests pass; bilingual docs pair confirmed. Architectural-drift blocker resolved by adding the two missing .specs/proposed/automatic-verification-and-completion-loop placeholder files and narrowing the diagnostics Component document list to only docs that compact-at-checkpoint actually created.",
+      "acResults": [
+        {
+          "id": "AC-AR-001",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+          ]
+        },
+        {
+          "id": "AC-AR-002",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+          ]
+        },
+        {
+          "id": "AC-AR-003",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+          ]
+        },
+        {
+          "id": "AC-AR-004",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+          ]
+        },
+        {
+          "id": "AC-AR-005",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+          ]
+        },
+        {
+          "id": "AC-AR-006",
+          "status": "passed",
+          "evidence": [
+            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+          ]
+        },
+        {
+          "id": "AC-AR-007",
+          "status": "passed",
+          "evidence": [
+            "154/154 host tests pass via test-tmp-bootstrap"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "decomposition-gate-unit-api",
+          "kind": "command",
+          "status": "passed",
+          "summary": "assistant-actions decomposition gate unit tests (api)",
+          "acIds": [
+            "AC-AR-001",
+            "AC-AR-002",
+            "AC-AR-003",
+            "AC-AR-004",
+            "AC-AR-006"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+          "oracle": "5 unit tests pass",
+          "actual": "5 unit tests pass",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "threshold-override-static",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "threshold override from design-blueprint.json",
+          "acIds": [
+            "AC-AR-005"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+          "oracle": "threshold override test passes",
+          "actual": "test passes",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "full-suite",
+          "kind": "command",
+          "status": "passed",
+          "summary": "full suite via test-tmp-bootstrap",
+          "acIds": [
+            "AC-AR-007"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
+          "oracle": "154/154 tests pass",
+          "actual": "154/154 tests pass",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "phase-6-clean",
+          "domain": "development",
+          "severity": "advisory",
+          "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+        }
+      ]
+    }
+  ],
+  "history": []
+}

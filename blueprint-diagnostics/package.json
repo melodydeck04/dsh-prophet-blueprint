@@ -1,0 +1,33 @@
+{
+  "name": "@dsh-plugins/design-blueprint-diagnostics",
+  "version": "0.1.0",
+  "description": "Offline diagnostics for DSH session.jsonl exports: token, retry, compaction, and tool-result bloat surfaced as one Markdown report and a two-session diff.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "blueprint-diagnostics": "./bin/blueprint-diagnostics.js"
+  },
+  "main": "./lib/audit.js",
+  "exports": {
+    ".": "./lib/audit.js",
+    "./stream": "./lib/stream.js",
+    "./thresholds": "./lib/thresholds.js",
+    "./report": "./lib/report.js",
+    "./compare": "./lib/compare.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "docs/",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=22.19"
+  },
+  "scripts": {
+    "test": "node --experimental-test-isolation=none --test tests/",
+    "audit": "node ./bin/blueprint-diagnostics.js audit"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

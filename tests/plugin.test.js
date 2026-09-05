@@ -32,7 +32,7 @@ test("DSH plugin registers native main-Chat commands, one dispatch tool, and das
 	};
 	apply(ctx);
 	assert.equal(name, "design-blueprint");
-	assert.deepEqual(inject, ["commands", "systemPrompt", "webServer", "tools"]);
+	assert.deepEqual(inject, ["commands", "systemPrompt", "webServer", "tools", "skills"]);
 	assert.equal(section.name, "design-blueprint:spec-driven-development");
 	assert.equal(section.text, MODEL_GUIDANCE);
 	assert.equal(tool.name, "blueprint_dispatch");

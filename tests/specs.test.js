@@ -43,6 +43,44 @@ test("proposed specs expose scope and paired acceptance evidence", () => {
 	assert.deepEqual(result.spec.scope, { allow: ["lib/**"], deny: ["lib/generated/**"] });
 	assert.equal(result.spec.acceptance.get("AC-1"), "The behavior is observable.");
 	assert.equal(result.spec.verification.get("AC-1"), "test: `tests/feature.test.js`");
+	assert.equal(result.spec.changePackage.version, 1);
+	assert.equal(result.spec.changePackage.verification.targets[0].surface, "repository");
+	assert.equal(result.spec.changePackage.verification.targets[0].declared, false);
+});
+
+test("canonical Change Package parses structural design, traceability, and declared progressive Web evidence", () => {
+	const text = VALID_PROPOSED
+		.replace("Implement the bounded change.", [
+			"- REQ-STREAM-1: Stream results into the real Web UI.",
+			"- Given a delayed response When the first chunk arrives Then the page updates before completion.",
+			"- TASK-STREAM-1: Implement the API stream and browser adapter for REQ-STREAM-1.",
+			"",
+			"## Technical design",
+			"",
+			"The asynchronous API contract crosses a component boundary and owns retry behavior.",
+		].join("\n"))
+		.replace("- AC-1: The behavior is observable.", "- AC-1: REQ-STREAM-1 updates the Web UI before the final result.")
+		.replace("- AC-1: test: `tests/feature.test.js`", "- AC-1: [surface=web-ui; moment=progressive; evidence=user-visible] real browser scenario");
+	const { spec, issues } = parseSpec(".specs/proposed/stream.md", text, ".specs");
+	assert.deepEqual(issues, []);
+	assert.equal(spec.changePackage.design.required, true);
+	assert.equal(spec.changePackage.design.present, true);
+	assert.ok(spec.changePackage.impact.structuralRisk.includes("public-contract"));
+	assert.deepEqual(spec.changePackage.intent.requirements.map((entry) => entry.id), ["REQ-STREAM-1"]);
+	assert.deepEqual(spec.changePackage.execution.tasks[0].requirementIds, ["REQ-STREAM-1"]);
+	assert.deepEqual(spec.changePackage.traceability.rows[0].requirementIds, ["REQ-STREAM-1"]);
+	assert.deepEqual(spec.changePackage.verification.targets[0], {
+		id: "AC-1",
+		requirementIds: ["REQ-STREAM-1"],
+		surface: "web-ui",
+		moment: "progressive",
+		minimumEvidence: "user-visible",
+		declared: true,
+		entryPoint: null,
+		trigger: null,
+		oracle: "REQ-STREAM-1 updates the Web UI before the final result.",
+		procedure: "[surface=web-ui; moment=progressive; evidence=user-visible] real browser scenario",
+	});
 });
 
 test("lifecycle directory and Status must agree", () => {

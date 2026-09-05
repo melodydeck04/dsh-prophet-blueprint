@@ -2,6 +2,6 @@
   "version": 1,
   "featureId": "spec-governance--architecture-design",
   "spec": ".specs/proposed/automatic-verification-and-completion-loop.md",
-  "specHash": "ae0085b5c1866f12e95e7e60c5fedfad984862286af59e8a09028a503f7636fa",
-  "approvedAt": "2026-09-01T02:06:16.244Z"
+  "specHash": "7a44dec84fbfbfd5fa95c85b32886f38dde0ac074dfdd0f7fb8e60cb59aa5a4e",
+  "approvedAt": "2026-09-04T07:20:09.563Z"
 }

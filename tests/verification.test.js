@@ -11,11 +11,12 @@ import { serializePairRecord } from "../lib/docs.js";
 import { serializeFeature } from "../lib/features.js";
 import { initBlueprint } from "../lib/init.js";
 import { scan } from "../lib/scan.js";
-import { workingTreeSnapshot } from "../lib/snapshot.js";
-import { loadSpecs } from "../lib/specs.js";
+import { gitIndexSnapshot, workingTreeSnapshot } from "../lib/snapshot.js";
+import { loadSpecs, parseSpec } from "../lib/specs.js";
 import {
 	beginFeatureImplementation,
 	bindFeatureCycleRole,
+	completionHygieneFindings,
 	completeVerifiedFeature,
 	failFeatureVerificationOrchestration,
 	loadVerificationCatalog,
@@ -26,6 +27,7 @@ import {
 	requestLegacyFeatureVerification,
 	startFeatureVerification,
 	submitFeatureVerificationResult,
+	validateVerificationEvidence,
 	verificationRepairPrompt,
 } from "../lib/verification.js";
 import { approveFeatureProposal, loadFeatureWorkflow } from "../lib/workflow.js";
@@ -247,6 +249,10 @@ test("approved delivery fails once, retains evidence, and completes automaticall
 	assert.equal(failed.record.stage, "needs_changes");
 	assert.equal(failed.record.attempts.length, 1);
 	assert.equal(failed.record.attempts[0].findings[0].domain, "development");
+	assert.equal(failed.record.status.publicState, "blocked");
+	assert.equal(failed.record.status.reasonCode, "account-result");
+	assert.equal(failed.record.status.owner, "implementation");
+	assert.match(failed.record.status.nextAction, /Repair/);
 
 	await writeFile(join(root, "lib", "accounts", "index.js"), "export const account = true;\n", "utf8");
 	await git(root, "add", "lib/accounts/index.js");
@@ -428,6 +434,53 @@ test("verification schemas reject unknown, duplicate, unsafe, and incomplete evi
 		history: [],
 	};
 	assert.throws(() => parseVerificationRecord(".blueprint/verifications/accounts.json", JSON.stringify(unsafe)), /relative path|outside|\.\./i);
+});
+
+test("progressive Web acceptance requires linked real-browser intermediate and terminal observations", () => {
+	const progressive = spec().replace("- AC-1: Account behavior is observable.", "- AC-1: REQ-STREAM-1 updates the Web UI before completion.")
+		.replace("- AC-1: command: `node --test`", "- AC-1: [surface=web-ui; moment=progressive; evidence=user-visible] real browser scenario");
+	const parsed = parseSpec(".specs/proposed/accounts.md", progressive, ".specs").spec;
+	const command = { id: "node-test", kind: "command", status: "passed", summary: "Tests passed.", acIds: [] };
+	const browser = {
+		id: "browser-stream",
+		kind: "browser",
+		status: "passed",
+		summary: "The real page updated before completion.",
+		acIds: ["AC-1"],
+		surface: "web-ui",
+		moment: "progressive",
+		evidenceLevel: "user-visible",
+		environment: "Chromium",
+		entryPoint: "http://127.0.0.1/judgment",
+		action: "Submit one delayed judgment.",
+		oracle: "Visible output changes before the terminal result.",
+		actual: "One intermediate update and the final result were visible.",
+		observations: [
+			{ phase: "intermediate", order: 1, observedAt: null, value: "answer length became greater than zero" },
+			{ phase: "terminal", order: 2, observedAt: null, value: "final status became complete" },
+		],
+		artifacts: ["browser-trace.zip"],
+	};
+	const result = { conclusion: "passed", summary: "Progressive behavior passed.", acResults: [{ id: "AC-1", status: "passed", evidence: ["browser-stream"] }], checks: [command, browser], findings: [] };
+	assert.equal(validateVerificationEvidence(parsed, result).checks[1].moment, "progressive");
+	assert.throws(() => validateVerificationEvidence(parsed, { ...result, checks: [command, { ...browser, kind: "inspection" }] }), /web-ui\/progressive\/user-visible/);
+	assert.throws(() => validateVerificationEvidence(parsed, { ...result, checks: [command, { ...browser, observations: browser.observations.slice(1) }] }), /web-ui\/progressive\/user-visible/);
+});
+
+test("completion hygiene identifies exact staged secret-like and temporary paths", async () => {
+	const root = await createGitFixture();
+	const secretPath = join(root, "lib", "accounts", "credential.js");
+	const temporaryPath = join(root, "_diag.out");
+	const fakeSecret = "api_" + "key = \"" + "A".repeat(24) + "\";\n";
+	await writeFile(secretPath, fakeSecret, "utf8");
+	await writeFile(temporaryPath, "diagnostic output\n", "utf8");
+	await git(root, "add", "lib/accounts/credential.js", "_diag.out");
+	const snapshot = await gitIndexSnapshot(root);
+	const { config } = await loadConfig(snapshot);
+	const findings = await completionHygieneFindings({ root, snapshot, config });
+	assert.deepEqual(findings.map((entry) => entry.id).sort(), ["completion-secret-like-material", "completion-temporary-artifact"]);
+	assert.ok(findings.some((entry) => entry.path === "lib/accounts/credential.js"));
+	assert.ok(findings.some((entry) => entry.path === "_diag.out"));
 });
 
 test("failed findings produce deterministic development, Spec, architecture, and mixed repair routes", () => {

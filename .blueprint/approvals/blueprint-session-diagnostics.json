@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "featureId": "blueprint-session-diagnostics",
+  "spec": ".specs/proposed/compact-at-checkpoint.md",
+  "specHash": "fb69198f6e4570044b75afc13042ba1e46bc73f1ded94daef4fcb5c3df379084",
+  "approvedAt": "2026-09-03T11:00:39.613Z"
+}

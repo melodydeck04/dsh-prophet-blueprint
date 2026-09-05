@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "featureId": "agent-interface--skills-layer",
+  "spec": ".specs/proposed/agent-interface--skills-design-time.md",
+  "specHash": "91b54ced6861f653e78035e88ed8cc2497194475459ba8aa55660864972d65d2",
+  "approvedAt": "2026-09-05T05:11:17.070Z"
+}
