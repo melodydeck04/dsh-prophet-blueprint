@@ -32,7 +32,7 @@ test("DSH plugin registers native main-Chat commands, one dispatch tool, and das
 	};
 	apply(ctx);
 	assert.equal(name, "design-blueprint");
-	assert.deepEqual(inject, ["commands", "systemPrompt", "webServer", "tools", "skills", "compaction"]);
+	assert.deepEqual(inject, ["commands", "systemPrompt", "webServer", "tools", "skills", "agentPresets"]);
 	assert.equal(section.name, "design-blueprint:spec-driven-development");
 	assert.equal(section.text, MODEL_GUIDANCE);
 	assert.equal(tool.name, "blueprint_dispatch");
@@ -68,17 +68,24 @@ test("DSH plugin still exports canonical architecture contracts", () => {
 	assert.ok(COMPONENT_RELATION_TYPES.has("depends_on"));
 });
 
-test("plugin entry declares compaction in inject (AC-INDEX-001)", () => {
-	assert.ok(inject.includes("compaction"), `inject must include 'compaction', got ${JSON.stringify(inject)}`);
+test("plugin entry declares agentPresets in inject (AC-INDEX-100)", () => {
+	assert.ok(inject.includes("agentPresets"), `inject must include 'agentPresets', got ${JSON.stringify(inject)}`);
+	assert.ok(!inject.includes("compaction"), `inject must NOT include 'compaction' (would block loading on web profile), got ${JSON.stringify(inject)}`);
 });
 
-test("plugin entry registers auto-compact watcher inside the effect block when ctx.compaction.compactNow is exposed (AC-INDEX-002)", async () => {
+test("plugin entry registers auto-compact watcher inside the effect block when ctx.agentPresets.serviceFor is exposed (AC-INDEX-101)", async () => {
 	const { createAutoCompactWatcher } = await import("../lib/auto-compact-watcher.js");
 	const { mkdtemp, rm } = await import("node:fs/promises");
 	const { tmpdir } = await import("node:os");
-	const compactNowCalls = [];
+	const serviceForCalls = [];
+	const compactIfNeededCalls = [];
 	const ctx = {
-		compaction: { compactNow: async (...args) => { compactNowCalls.push(args); return null; } },
+		agentPresets: {
+			serviceFor(agent, name) {
+				serviceForCalls.push({ agent, name });
+				return { compactIfNeeded: async (...args) => { compactIfNeededCalls.push(args); return null; } };
+			},
+		},
 		logger: { info() {}, warn() {} },
 		effect(generatorFactory) {
 			for (const step of generatorFactory()) {
@@ -100,13 +107,13 @@ test("plugin entry registers auto-compact watcher inside the effect block when c
 	try {
 		const result = await watcher.tick({ cwd: emptyDir, sessionId: "s-x", nowMs: Date.now() });
 		assert.equal(result.skipped, "no-session-file");
-		assert.ok(compactNowCalls.length === 0, "no compaction call without a session.jsonl");
+		assert.ok(compactIfNeededCalls.length === 0, "no compaction call without a session.jsonl");
 	} finally {
 		await rm(emptyDir, { recursive: true, force: true });
 	}
 });
 
-test("plugin entry logs and degrades when ctx.compaction.compactNow is missing (AC-INDEX-002 fallback)", async () => {
+test("plugin entry logs and degrades when ctx.agentPresets.serviceFor is missing (AC-INDEX-101 fallback)", async () => {
 	const { createAutoCompactWatcher } = await import("../lib/auto-compact-watcher.js");
 	const infoMessages = [];
 	const ctx = {
@@ -120,14 +127,14 @@ test("plugin entry logs and degrades when ctx.compaction.compactNow is missing (
 	const watcher = createAutoCompactWatcher({ ctx, logger: { info: (m) => infoMessages.push(m), warn() {} } });
 	watcher.captureAgent("s-x", { agent: { id: "fake" }, signal: undefined, commandId: "blueprint-auto-compact" });
 	const result = await watcher.tick({ cwd: process.cwd(), sessionId: "s-x", nowMs: Date.now() });
-	assert.equal(result.skipped, "no-compaction-service");
+	assert.equal(result.skipped, "no-preset-compaction");
 	assert.ok(infoMessages.length >= 1, "info log emitted exactly once at boot");
 });
 
 test("plugin entry registers watcher.dispose as a cordis disposer (AC-INDEX-003)", () => {
 	const disposers = [];
 	const ctx = {
-		compaction: { compactNow: async () => null },
+		agentPresets: { serviceFor: () => ({ compactIfNeeded: async () => null }) },
 		effect(generatorFactory) { for (const step of generatorFactory()) { if (typeof step === "function") disposers.push(step); } },
 		systemPrompt: { section() { return () => {}; } },
 		commands: { register() { return () => {}; } },

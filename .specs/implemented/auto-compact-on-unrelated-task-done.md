@@ -30,7 +30,6 @@ A first-cut refinement also proposed a 5-minute cooldown to prevent rapid-fire a
 - allow: `lib/todo-events.js`
 - allow: `lib/cli.js`
 - allow: `tests/todo-compact-trigger.test.js`
-- allow: `tests/cli-todo.test.js`
 - allow: `tests/spec-todos.test.js`
 - allow: `docs/user/features/auto-compact-on-unrelated-task-done.{md,zh.md,i18n.yaml}`
 - allow: `.blueprint/features/spec-governance.md`
@@ -340,3 +339,7 @@ Blueprint completed this delivery automatically after requirement-linked verific
 ### Follow-up: DSH dispatch wired (`.specs/implemented/auto-compact-on-unrelated-task-done--dsh-dispatch-wired.md`)
 
 The `## Unresolved decisions` caveat above — "the DSH dispatch surface is not wired in this build" — is resolved by the follow-up Spec that ships alongside this one. The follow-up introduces a host-side session-file watcher (`lib/auto-compact-watcher.js`) registered in the plugin entry with `compaction` in `inject`. The watcher calls `ctx.compaction.compactNow(agent, signal, commandId)` directly — the same API `@deepseek-ai/dsh-command-compact` uses internally — when the Feature-switch + 200 KiB predicate fires. The CLI's `lib/cli.js#emitAutoCompact` still passes `dispatch: null` (it cannot hold the host's cordis `ctx`), but its printed outcome lines stay valid for human feedback while the host watcher is the authoritative dispatcher. The CLI's `no-dispatch-surface` line now only appears when the resolved DSH profile has no `ctx.compaction` at all (CI / lint runs).
+
+### Follow-up: DSH dispatch routed through `agentPresets.serviceFor` (`.specs/implemented/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md`)
+
+The first dispatch-wired follow-up kept `"compaction"` in the plugin's `inject` array, which on the shipped `web` profile (`@deepseek-ai/dsh-web-app/cordis.patch.yml:387-391` disables both `- id: compaction-basic` and `- id: command-compact`) caused Cordis Loader's `assertEntriesActivated` to leave the fiber in `FIBER_PENDING` and refuse to boot the plugin with `pending (waiting for service: compaction)`. The companion Spec rewrites the watcher to resolve the compaction engine through `ctx.agentPresets.serviceFor(agent, 'compaction').compactIfNeeded(agent, 'context-overflow', signal)` and moves the inject dependency from `"compaction"` to `"agentPresets"` (a host-plane service every shipped profile mounts). The standard preset's `cordis:group` already mounts `compaction-basic` behind an `isolate` realm, and `serviceForAgent` is the documented accessor for reading services from inside that realm. The trigger predicate and CLI behavior remain unchanged; the plugin now loads cleanly on every shipped DSH profile (web included) and the Feature-switch + 200 KiB auto-compact fires through the preset-scoped `BasicCompactionEngine` when the active session's preset mounts one.

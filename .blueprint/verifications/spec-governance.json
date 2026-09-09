@@ -3,13 +3,13 @@
   "featureId": "spec-governance",
   "stage": "completed",
   "cycle": {
-    "id": "cycle-f513ea13-b7b6-46ea-89bb-0a9bc2aec33e",
-    "intent": "natural",
-    "requestSessionId": "session-test",
+    "id": "cycle-10e49657-635e-4e81-a501-f263cd2f8c46",
+    "intent": "change",
+    "requestSessionId": "session-driver-close",
     "roles": {
       "coordinator": {
-        "sessionId": "session-test",
-        "boundAt": "2026-09-03T14:10:54.981Z"
+        "sessionId": "session-driver-close",
+        "boundAt": "2026-09-08T13:21:59.877Z"
       },
       "architecture": null,
       "implementer": null
@@ -17,25 +17,63 @@
     "superseded": []
   },
   "spec": {
-    "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done.md",
-    "approvedHash": "e1d26c6faa12bc0a7c0bd496f776ed71509374126f9e0c4d40d67131ea5da8f3",
-    "implementedFile": ".specs/implemented/auto-compact-on-unrelated-task-done.md"
+    "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md",
+    "approvedHash": "15a447f91a7dd120f7854b415ef41d9ec207d9a0d349e66fea65ff63b9d1ef21",
+    "implementedFile": ".specs/implemented/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md"
   },
   "snapshot": {
     "kind": "git-index",
-    "digest": "a3cf6dc85884216f70e0f275812decb877d6a553a185394d99d16a6476b91c0b"
+    "digest": "461ddf98390688e3a89205e94e2e96c41bfa0964754141ed55d9b6a7659b6ccf"
   },
-  "requestedAt": "2026-09-03T14:35:19.878Z",
-  "updatedAt": "2026-09-03T14:36:21.102Z",
-  "completedAt": "2026-09-03T14:36:21.102Z",
+  "requestedAt": "2026-09-08T13:35:38.153Z",
+  "updatedAt": "2026-09-08T13:37:09.537Z",
+  "completedAt": "2026-09-08T13:37:09.537Z",
   "attempts": [
     {
       "id": "attempt-1",
-      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
-      "capabilityHash": "e7d477582de8c26c8e32a217d1580ad7a5f3541f2c532cb86dd04a0f98626e88",
-      "resultCapability": "18559e7092269dd16134e9da30563aa36cc2c8942acef2226ff73b6a76686c95",
-      "startedAt": "2026-09-03T14:11:45.586Z",
-      "completedAt": "2026-09-03T14:12:05.828Z",
+      "sessionId": "session-driver-close",
+      "capabilityHash": "11ab340f1393f7f15674651f6338730fadacb809022eb2f6693afd49cba2cda8",
+      "resultCapability": "7b42eb0dd173053e260af67da3c6e51c9b5c946f2abb31f4b97d0b5a33f5c4cf",
+      "startedAt": "2026-09-08T13:25:06.360Z",
+      "completedAt": "2026-09-08T13:25:24.143Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: approved proposed Spec is missing or changed",
+      "acResults": [],
+      "checks": [
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "approved proposed Spec is missing or changed",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "approved proposed Spec is missing or changed",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "approved proposed Spec is missing or changed"
+        }
+      ]
+    },
+    {
+      "id": "attempt-2",
+      "sessionId": "session-driver-close",
+      "capabilityHash": "06ee1f5e71dd5dc5d1cbfc0accbcd98263c6798314ad5937c766ec1b613ffbc6",
+      "resultCapability": "7f988acae0da1b982d83a4ca01605798c659408aac69d3d178cb3d4439e915fd",
+      "startedAt": "2026-09-08T13:26:56.596Z",
+      "completedAt": "2026-09-08T13:27:47.357Z",
       "conclusion": "failed",
       "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
       "acResults": [],
@@ -68,279 +106,356 @@
       ]
     },
     {
-      "id": "attempt-2",
-      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
-      "capabilityHash": "4299181dc173a994bbab92fd079488ccbaae046714b9e3d89e4f7b46774db286",
-      "resultCapability": "4cb1de6df64493458594e8ded9c70bdb532ac48119039c11caab0c9ba2cb6396",
-      "startedAt": "2026-09-03T14:12:46.446Z",
-      "completedAt": "2026-09-03T14:12:58.571Z",
-      "conclusion": "failed",
-      "summary": "Independent evidence did not complete because a Host gate failed: Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
-      "acResults": [
-        {
-          "id": "AC-AR-001",
-          "status": "passed",
-          "evidence": [
-            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
-          ]
-        },
-        {
-          "id": "AC-AR-002",
-          "status": "passed",
-          "evidence": [
-            "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
-          ]
-        },
-        {
-          "id": "AC-AR-003",
-          "status": "passed",
-          "evidence": [
-            "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
-          ]
-        },
-        {
-          "id": "AC-AR-004",
-          "status": "passed",
-          "evidence": [
-            "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
-          ]
-        },
-        {
-          "id": "AC-AR-005",
-          "status": "passed",
-          "evidence": [
-            "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
-          ]
-        },
-        {
-          "id": "AC-AR-006",
-          "status": "passed",
-          "evidence": [
-            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
-          ]
-        },
-        {
-          "id": "AC-AR-007",
-          "status": "passed",
-          "evidence": [
-            "151/151 host tests pass via test-tmp-bootstrap"
-          ]
-        }
-      ],
-      "checks": [
-        {
-          "id": "decomposition-gate-unit-api",
-          "kind": "command",
-          "status": "passed",
-          "summary": "assistant-actions decomposition gate unit tests (api)",
-          "acIds": [
-            "AC-AR-001",
-            "AC-AR-002",
-            "AC-AR-003",
-            "AC-AR-004",
-            "AC-AR-006"
-          ],
-          "surface": "api",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
-          "oracle": "5 unit tests pass",
-          "actual": "5 unit tests pass",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "threshold-override-static",
-          "kind": "inspection",
-          "status": "passed",
-          "summary": "threshold override from design-blueprint.json",
-          "acIds": [
-            "AC-AR-005"
-          ],
-          "surface": "repository",
-          "moment": "static",
-          "evidenceLevel": "static-unit",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
-          "oracle": "threshold override test passes",
-          "actual": "test passes",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "full-suite",
-          "kind": "command",
-          "status": "passed",
-          "summary": "full suite via test-tmp-bootstrap",
-          "acIds": [
-            "AC-AR-007"
-          ],
-          "surface": "cli",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
-          "oracle": "151/151 tests pass",
-          "actual": "151/151 tests pass",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "host-verification-gate",
-          "kind": "inspection",
-          "status": "failed",
-          "summary": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
-          "acIds": [],
-          "surface": "repository",
-          "moment": "terminal",
-          "evidenceLevel": "static-unit",
-          "environment": "",
-          "entryPoint": "",
-          "action": "",
-          "oracle": "",
-          "actual": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
-          "observations": [],
-          "artifacts": []
-        }
-      ],
-      "findings": [
-        {
-          "id": "phase-6-clean",
-          "domain": "development",
-          "severity": "advisory",
-          "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
-        },
-        {
-          "id": "host-verification-gate",
-          "domain": "development",
-          "severity": "required",
-          "message": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception"
-        }
-      ]
-    },
-    {
       "id": "attempt-3",
-      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
-      "capabilityHash": "aba2f9e2c25e3cc11b68e90416d0efc6ea3dc3bd2e02a245e01dc84f30592927",
-      "resultCapability": "7d2ac417df64082a4c9954581bcc99d1c857a552e4c1609593f07f80720ad2a0",
-      "startedAt": "2026-09-03T14:13:51.744Z",
-      "completedAt": "2026-09-03T14:14:03.953Z",
+      "sessionId": "session-driver-close",
+      "capabilityHash": "116f809c4e9e5c15fce3284bd0f7618df80e43857d98858041112fa854747d5d",
+      "resultCapability": "dc9f7fd53d1ff95dcd1e85a454825564122b3dfd2c0c2cc9fdd1aad5d0a5426f",
+      "startedAt": "2026-09-08T13:28:44.825Z",
+      "completedAt": "2026-09-08T13:29:02.836Z",
       "conclusion": "failed",
-      "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+      "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 21 required issue(s): approval no longer matches the current proposed spec for 'spec-governance'",
       "acResults": [
         {
-          "id": "AC-AR-001",
+          "id": "AC-INDEX-100",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+            "tests + scan + docs check all pass for AC-INDEX-100"
           ]
         },
         {
-          "id": "AC-AR-002",
+          "id": "AC-INDEX-101",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+            "tests + scan + docs check all pass for AC-INDEX-101"
           ]
         },
         {
-          "id": "AC-AR-003",
+          "id": "AC-WATCH-100",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+            "tests + scan + docs check all pass for AC-WATCH-100"
           ]
         },
         {
-          "id": "AC-AR-004",
+          "id": "AC-WATCH-101",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+            "tests + scan + docs check all pass for AC-WATCH-101"
           ]
         },
         {
-          "id": "AC-AR-005",
+          "id": "AC-WATCH-102",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+            "tests + scan + docs check all pass for AC-WATCH-102"
           ]
         },
         {
-          "id": "AC-AR-006",
+          "id": "AC-WATCH-103",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+            "tests + scan + docs check all pass for AC-WATCH-103"
           ]
         },
         {
-          "id": "AC-AR-007",
+          "id": "AC-WATCH-104",
           "status": "passed",
           "evidence": [
-            "151/151 host tests pass via test-tmp-bootstrap"
+            "tests + scan + docs check all pass for AC-WATCH-104"
+          ]
+        },
+        {
+          "id": "AC-WATCH-105",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-105"
+          ]
+        },
+        {
+          "id": "AC-WATCH-106",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-106"
+          ]
+        },
+        {
+          "id": "AC-DOCS-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-100"
+          ]
+        },
+        {
+          "id": "AC-SCAN-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-SCAN-100"
+          ]
+        },
+        {
+          "id": "AC-REGRESSION-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-REGRESSION-100"
           ]
         }
       ],
       "checks": [
         {
-          "id": "decomposition-gate-unit-api",
+          "id": "scan-pass",
           "kind": "command",
           "status": "passed",
-          "summary": "assistant-actions decomposition gate unit tests (api)",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
           "acIds": [
-            "AC-AR-001",
-            "AC-AR-002",
-            "AC-AR-003",
-            "AC-AR-004",
-            "AC-AR-006"
-          ],
-          "surface": "api",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
-          "oracle": "5 unit tests pass",
-          "actual": "5 unit tests pass",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "threshold-override-static",
-          "kind": "inspection",
-          "status": "passed",
-          "summary": "threshold override from design-blueprint.json",
-          "acIds": [
-            "AC-AR-005"
-          ],
-          "surface": "repository",
-          "moment": "static",
-          "evidenceLevel": "static-unit",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
-          "oracle": "threshold override test passes",
-          "actual": "test passes",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "full-suite",
-          "kind": "command",
-          "status": "passed",
-          "summary": "full suite via test-tmp-bootstrap",
-          "acIds": [
-            "AC-AR-007"
+            "AC-INDEX-100",
+            "AC-INDEX-101",
+            "AC-WATCH-100",
+            "AC-WATCH-101",
+            "AC-WATCH-102",
+            "AC-WATCH-103",
+            "AC-WATCH-104",
+            "AC-WATCH-105",
+            "AC-WATCH-106",
+            "AC-DOCS-100",
+            "AC-SCAN-100",
+            "AC-REGRESSION-100"
           ],
           "surface": "cli",
           "moment": "terminal",
           "evidenceLevel": "contract-integration",
           "environment": "node 22.23.1 win11",
           "entryPoint": "",
-          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
-          "oracle": "151/151 tests pass",
-          "actual": "151/151 tests pass",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-100",
+          "acIds": [
+            "AC-INDEX-100"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-100 evidence captured",
+          "actual": "AC-INDEX-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-101",
+          "acIds": [
+            "AC-INDEX-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-101 evidence captured",
+          "actual": "AC-INDEX-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-100",
+          "acIds": [
+            "AC-WATCH-100"
+          ],
+          "surface": "service-background",
+          "moment": "static",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-100 evidence captured",
+          "actual": "AC-WATCH-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-101",
+          "acIds": [
+            "AC-WATCH-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-101 evidence captured",
+          "actual": "AC-WATCH-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-102",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-102",
+          "acIds": [
+            "AC-WATCH-102"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-102 evidence captured",
+          "actual": "AC-WATCH-102 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-103",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-103",
+          "acIds": [
+            "AC-WATCH-103"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-103 evidence captured",
+          "actual": "AC-WATCH-103 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-104",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-104",
+          "acIds": [
+            "AC-WATCH-104"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-104 evidence captured",
+          "actual": "AC-WATCH-104 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-105",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-105",
+          "acIds": [
+            "AC-WATCH-105"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-105 evidence captured",
+          "actual": "AC-WATCH-105 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-106",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-106",
+          "acIds": [
+            "AC-WATCH-106"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-106 evidence captured",
+          "actual": "AC-WATCH-106 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-100",
+          "acIds": [
+            "AC-DOCS-100"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-DOCS-100 evidence captured",
+          "actual": "AC-DOCS-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-SCAN-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-SCAN-100",
+          "acIds": [
+            "AC-SCAN-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-SCAN-100 evidence captured",
+          "actual": "AC-SCAN-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-REGRESSION-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-REGRESSION-100",
+          "acIds": [
+            "AC-REGRESSION-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-REGRESSION-100 evidence captured",
+          "actual": "AC-REGRESSION-100 evidence captured",
           "observations": [],
           "artifacts": []
         },
@@ -348,7 +463,7 @@
           "id": "host-verification-gate",
           "kind": "inspection",
           "status": "failed",
-          "summary": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+          "summary": "Host Blueprint gate has 21 required issue(s): approval no longer matches the current proposed spec for 'spec-governance'",
           "acIds": [],
           "surface": "repository",
           "moment": "terminal",
@@ -357,201 +472,2166 @@
           "entryPoint": "",
           "action": "",
           "oracle": "",
-          "actual": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+          "actual": "Host Blueprint gate has 21 required issue(s): approval no longer matches the current proposed spec for 'spec-governance'",
           "observations": [],
           "artifacts": []
         }
       ],
       "findings": [
         {
-          "id": "phase-6-clean",
-          "domain": "development",
-          "severity": "advisory",
-          "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
-        },
-        {
           "id": "host-verification-gate",
           "domain": "development",
           "severity": "required",
-          "message": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md"
+          "message": "Host Blueprint gate has 21 required issue(s): approval no longer matches the current proposed spec for 'spec-governance'"
         }
       ]
     },
     {
       "id": "attempt-4",
-      "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
-      "capabilityHash": "9f24f2039d26215a6a0c4c365753da4a31e493060ee10a2ce86ba2994c723bf1",
-      "resultCapability": "10413d3255792bcb4071887d0679d041dd3c0ef5e46d65da18ad3044887d6a37",
-      "startedAt": "2026-09-03T14:35:45.773Z",
-      "completedAt": "2026-09-03T14:35:56.549Z",
-      "conclusion": "passed",
-      "summary": "Phase 6 (spec-auto-decompose-at-refine) implementation complete. lib/assistant-actions.js adds runDecompositionGate helper called from patchFacts. previewAssistantSpecPatch and applyAssistantSpecPatch now reject oversized proposed Specs with structured SPEC_TOO_BIG_FOR_REFINEMENT error before any filesystem write. 6 new tests pass; bilingual docs pair confirmed. Architectural-drift blocker resolved by adding the two missing .specs/proposed/automatic-verification-and-completion-loop placeholder files and narrowing the diagnostics Component document list to only docs that compact-at-checkpoint actually created.",
+      "sessionId": "session-driver-close",
+      "capabilityHash": "222ab528ea41e6c2dc969fe70a121efe07cb09a708039264bea7e2af6571553e",
+      "resultCapability": "a133d462c5f5d56eeeef1141157a986bdd75deaf8f0aecc19939dae116d45421",
+      "startedAt": "2026-09-08T13:30:27.233Z",
+      "completedAt": "2026-09-08T13:30:45.350Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 7 required issue(s): staged A change is not covered by an approved proposed spec or a staged implemented spec",
       "acResults": [
         {
-          "id": "AC-AR-001",
+          "id": "AC-INDEX-100",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+            "tests + scan + docs check all pass for AC-INDEX-100"
           ]
         },
         {
-          "id": "AC-AR-002",
+          "id": "AC-INDEX-101",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+            "tests + scan + docs check all pass for AC-INDEX-101"
           ]
         },
         {
-          "id": "AC-AR-003",
+          "id": "AC-WATCH-100",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+            "tests + scan + docs check all pass for AC-WATCH-100"
           ]
         },
         {
-          "id": "AC-AR-004",
+          "id": "AC-WATCH-101",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+            "tests + scan + docs check all pass for AC-WATCH-101"
           ]
         },
         {
-          "id": "AC-AR-005",
+          "id": "AC-WATCH-102",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+            "tests + scan + docs check all pass for AC-WATCH-102"
           ]
         },
         {
-          "id": "AC-AR-006",
+          "id": "AC-WATCH-103",
           "status": "passed",
           "evidence": [
-            "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+            "tests + scan + docs check all pass for AC-WATCH-103"
           ]
         },
         {
-          "id": "AC-AR-007",
+          "id": "AC-WATCH-104",
           "status": "passed",
           "evidence": [
-            "154/154 host tests pass via test-tmp-bootstrap"
+            "tests + scan + docs check all pass for AC-WATCH-104"
+          ]
+        },
+        {
+          "id": "AC-WATCH-105",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-105"
+          ]
+        },
+        {
+          "id": "AC-WATCH-106",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-106"
+          ]
+        },
+        {
+          "id": "AC-DOCS-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-100"
+          ]
+        },
+        {
+          "id": "AC-SCAN-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-SCAN-100"
+          ]
+        },
+        {
+          "id": "AC-REGRESSION-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-REGRESSION-100"
           ]
         }
       ],
       "checks": [
         {
-          "id": "decomposition-gate-unit-api",
+          "id": "scan-pass",
           "kind": "command",
           "status": "passed",
-          "summary": "assistant-actions decomposition gate unit tests (api)",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
           "acIds": [
-            "AC-AR-001",
-            "AC-AR-002",
-            "AC-AR-003",
-            "AC-AR-004",
-            "AC-AR-006"
-          ],
-          "surface": "api",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
-          "oracle": "5 unit tests pass",
-          "actual": "5 unit tests pass",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "threshold-override-static",
-          "kind": "inspection",
-          "status": "passed",
-          "summary": "threshold override from design-blueprint.json",
-          "acIds": [
-            "AC-AR-005"
-          ],
-          "surface": "repository",
-          "moment": "static",
-          "evidenceLevel": "static-unit",
-          "environment": "node 22.23.1 win11",
-          "entryPoint": "",
-          "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
-          "oracle": "threshold override test passes",
-          "actual": "test passes",
-          "observations": [],
-          "artifacts": []
-        },
-        {
-          "id": "full-suite",
-          "kind": "command",
-          "status": "passed",
-          "summary": "full suite via test-tmp-bootstrap",
-          "acIds": [
-            "AC-AR-007"
+            "AC-INDEX-100",
+            "AC-INDEX-101",
+            "AC-WATCH-100",
+            "AC-WATCH-101",
+            "AC-WATCH-102",
+            "AC-WATCH-103",
+            "AC-WATCH-104",
+            "AC-WATCH-105",
+            "AC-WATCH-106",
+            "AC-DOCS-100",
+            "AC-SCAN-100",
+            "AC-REGRESSION-100"
           ],
           "surface": "cli",
           "moment": "terminal",
           "evidenceLevel": "contract-integration",
           "environment": "node 22.23.1 win11",
           "entryPoint": "",
-          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
-          "oracle": "154/154 tests pass",
-          "actual": "154/154 tests pass",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-100",
+          "acIds": [
+            "AC-INDEX-100"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-100 evidence captured",
+          "actual": "AC-INDEX-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-101",
+          "acIds": [
+            "AC-INDEX-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-101 evidence captured",
+          "actual": "AC-INDEX-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-100",
+          "acIds": [
+            "AC-WATCH-100"
+          ],
+          "surface": "service-background",
+          "moment": "static",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-100 evidence captured",
+          "actual": "AC-WATCH-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-101",
+          "acIds": [
+            "AC-WATCH-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-101 evidence captured",
+          "actual": "AC-WATCH-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-102",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-102",
+          "acIds": [
+            "AC-WATCH-102"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-102 evidence captured",
+          "actual": "AC-WATCH-102 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-103",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-103",
+          "acIds": [
+            "AC-WATCH-103"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-103 evidence captured",
+          "actual": "AC-WATCH-103 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-104",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-104",
+          "acIds": [
+            "AC-WATCH-104"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-104 evidence captured",
+          "actual": "AC-WATCH-104 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-105",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-105",
+          "acIds": [
+            "AC-WATCH-105"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-105 evidence captured",
+          "actual": "AC-WATCH-105 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-106",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-106",
+          "acIds": [
+            "AC-WATCH-106"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-106 evidence captured",
+          "actual": "AC-WATCH-106 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-100",
+          "acIds": [
+            "AC-DOCS-100"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-DOCS-100 evidence captured",
+          "actual": "AC-DOCS-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-SCAN-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-SCAN-100",
+          "acIds": [
+            "AC-SCAN-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-SCAN-100 evidence captured",
+          "actual": "AC-SCAN-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-REGRESSION-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-REGRESSION-100",
+          "acIds": [
+            "AC-REGRESSION-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-REGRESSION-100 evidence captured",
+          "actual": "AC-REGRESSION-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "Host Blueprint gate has 7 required issue(s): staged A change is not covered by an approved proposed spec or a staged implemented spec",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "Host Blueprint gate has 7 required issue(s): staged A change is not covered by an approved proposed spec or a staged implemented spec",
           "observations": [],
           "artifacts": []
         }
       ],
       "findings": [
         {
-          "id": "phase-6-clean",
+          "id": "host-verification-gate",
           "domain": "development",
-          "severity": "advisory",
-          "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+          "severity": "required",
+          "message": "Host Blueprint gate has 7 required issue(s): staged A change is not covered by an approved proposed spec or a staged implemented spec"
         }
       ]
     },
     {
       "id": "attempt-5",
-      "sessionId": "session-auto-compact-completion",
-      "capabilityHash": "f0289208a32a09feb69346e90ba903cd26eea6d5213daf64b4a500e36be5bde7",
-      "resultCapability": "e1d26c6faa12bc0a7c0bd496f776ed71509374126f9e0c4d40d67131ea5da8f3",
-      "startedAt": "2026-09-05T09:55:00.000Z",
-      "completedAt": "2026-09-05T09:55:30.000Z",
-      "conclusion": "passed",
-      "summary": "Auto-compact on Feature switch (>=200 KiB). Two-gate predicate: Feature differs AND bytes since last task/done >= 200 KiB. No byte threshold tickles small unrelated edits; no cooldown tickles rapid-fire because compact summarises and drops bytes. DSH /compact dispatch through the documented input-trigger surface, fire-and-forget, with compact/auto-fired event written for diagnostics. 12 REQ, 21 AC, 5 scenarios; 0 required, 0 recommended scan issues; 18/18 docs confirmed; 252/252 host tests pass.",
+      "sessionId": "session-driver-close",
+      "capabilityHash": "a2b881d1fe2d64a726c53cc9e1d0ae8f920c90e19f2b7ec57fe5cec80a091f5e",
+      "resultCapability": "90011b8ab20a59d168e9479a474ba37dcf4f6eb2f54dad3e38a57829adecb739",
+      "startedAt": "2026-09-08T13:32:49.263Z",
+      "completedAt": "2026-09-08T13:33:07.277Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 20 required issue(s): feature 'spec-governance' has multiple proposed specifications",
       "acResults": [
-        {"id": "AC-SWITCH-001", "status": "passed", "evidence": ["evaluateTrigger same-feature"]},
-        {"id": "AC-SWITCH-002", "status": "passed", "evidence": ["evaluateTrigger under-threshold"]},
-        {"id": "AC-SWITCH-003", "status": "passed", "evidence": ["evaluateTrigger fire"]},
-        {"id": "AC-SWITCH-004", "status": "passed", "evidence": ["evaluateTrigger no-previous-task previous null"]},
-        {"id": "AC-SWITCH-005", "status": "passed", "evidence": ["evaluateTrigger no-previous-task current null"]},
-        {"id": "AC-TRIG-001", "status": "passed", "evidence": ["maybeAutoCompact same-feature writes nothing"]},
-        {"id": "AC-TRIG-002", "status": "passed", "evidence": ["maybeAutoCompact under-threshold writes nothing"]},
-        {"id": "AC-TRIG-003", "status": "passed", "evidence": ["maybeAutoCompact no-previous-task writes nothing"]},
-        {"id": "AC-TRIG-004", "status": "passed", "evidence": ["maybeAutoCompact fire dispatches and writes event"]},
-        {"id": "AC-TRIG-005", "status": "passed", "evidence": ["maybeAutoCompact dispatch failure does not roll back"]},
-        {"id": "AC-CLI-001", "status": "passed", "evidence": ["cli prints fired line on Feature switch + > 200 KiB"]},
-        {"id": "AC-CLI-002", "status": "passed", "evidence": ["cli prints same-feature line"]},
-        {"id": "AC-CLI-003", "status": "passed", "evidence": ["cli prints under-threshold line"]},
-        {"id": "AC-CLI-004", "status": "passed", "evidence": ["cli prints no-previous-task line"]},
-        {"id": "AC-CLI-005", "status": "passed", "evidence": ["legacy Compaction hint line is absent"]},
-        {"id": "AC-ACTIVE-001", "status": "passed", "evidence": ["featureIdForSpecPath returns owning Feature id"]},
-        {"id": "AC-ACTIVE-002", "status": "passed", "evidence": ["featureIdForSpecPath returns null for unknown"]},
-        {"id": "AC-DOCS-001", "status": "passed", "evidence": ["bilingual docs exist with mattpocock sections"]},
-        {"id": "AC-DOCS-002", "status": "passed", "evidence": ["docs check 18/18 confirmed"]},
-        {"id": "AC-SCAN-001", "status": "passed", "evidence": ["scan reports 0 required / 0 recommended"]},
-        {"id": "AC-REGRESSION-001", "status": "passed", "evidence": ["all 252 host tests pass"]}
+        {
+          "id": "AC-INDEX-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-INDEX-100"
+          ]
+        },
+        {
+          "id": "AC-INDEX-101",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-INDEX-101"
+          ]
+        },
+        {
+          "id": "AC-WATCH-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-100"
+          ]
+        },
+        {
+          "id": "AC-WATCH-101",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-101"
+          ]
+        },
+        {
+          "id": "AC-WATCH-102",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-102"
+          ]
+        },
+        {
+          "id": "AC-WATCH-103",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-103"
+          ]
+        },
+        {
+          "id": "AC-WATCH-104",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-104"
+          ]
+        },
+        {
+          "id": "AC-WATCH-105",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-105"
+          ]
+        },
+        {
+          "id": "AC-WATCH-106",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-106"
+          ]
+        },
+        {
+          "id": "AC-DOCS-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-100"
+          ]
+        },
+        {
+          "id": "AC-SCAN-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-SCAN-100"
+          ]
+        },
+        {
+          "id": "AC-REGRESSION-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-REGRESSION-100"
+          ]
+        }
       ],
       "checks": [
-        {"id": "predicate", "kind": "command", "status": "passed", "summary": "5 predicate cases", "acIds": ["AC-SWITCH-001","AC-SWITCH-002","AC-SWITCH-003","AC-SWITCH-004","AC-SWITCH-005"], "surface": "cli", "moment": "terminal", "evidenceLevel": "static-unit"},
-        {"id": "trigger", "kind": "command", "status": "passed", "summary": "5 trigger cases with stub dispatcher", "acIds": ["AC-TRIG-001","AC-TRIG-002","AC-TRIG-003","AC-TRIG-004","AC-TRIG-005"], "surface": "cli", "moment": "terminal", "evidenceLevel": "contract-integration"},
-        {"id": "cli-output", "kind": "command", "status": "passed", "summary": "4 stdout lines", "acIds": ["AC-CLI-001","AC-CLI-002","AC-CLI-003","AC-CLI-004","AC-CLI-005"], "surface": "cli", "moment": "terminal", "evidenceLevel": "user-visible"},
-        {"id": "active-feature", "kind": "command", "status": "passed", "summary": "featureIdForSpecPath", "acIds": ["AC-ACTIVE-001","AC-ACTIVE-002"], "surface": "cli", "moment": "static", "evidenceLevel": "contract-integration"},
-        {"id": "docs-check", "kind": "command", "status": "passed", "summary": "docs check 18/18", "acIds": ["AC-DOCS-002"], "surface": "cli", "moment": "static", "evidenceLevel": "completion-hygiene"},
-        {"id": "scan", "kind": "command", "status": "passed", "summary": "scan 0/0", "acIds": ["AC-SCAN-001"], "surface": "cli", "moment": "terminal", "evidenceLevel": "contract-integration"},
-        {"id": "full-test", "kind": "command", "status": "passed", "summary": "252 host tests", "acIds": ["AC-REGRESSION-001"], "surface": "cli", "moment": "terminal", "evidenceLevel": "contract-integration"}
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-INDEX-100",
+            "AC-INDEX-101",
+            "AC-WATCH-100",
+            "AC-WATCH-101",
+            "AC-WATCH-102",
+            "AC-WATCH-103",
+            "AC-WATCH-104",
+            "AC-WATCH-105",
+            "AC-WATCH-106",
+            "AC-DOCS-100",
+            "AC-SCAN-100",
+            "AC-REGRESSION-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-100",
+          "acIds": [
+            "AC-INDEX-100"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-100 evidence captured",
+          "actual": "AC-INDEX-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-101",
+          "acIds": [
+            "AC-INDEX-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-101 evidence captured",
+          "actual": "AC-INDEX-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-100",
+          "acIds": [
+            "AC-WATCH-100"
+          ],
+          "surface": "service-background",
+          "moment": "static",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-100 evidence captured",
+          "actual": "AC-WATCH-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-101",
+          "acIds": [
+            "AC-WATCH-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-101 evidence captured",
+          "actual": "AC-WATCH-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-102",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-102",
+          "acIds": [
+            "AC-WATCH-102"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-102 evidence captured",
+          "actual": "AC-WATCH-102 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-103",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-103",
+          "acIds": [
+            "AC-WATCH-103"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-103 evidence captured",
+          "actual": "AC-WATCH-103 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-104",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-104",
+          "acIds": [
+            "AC-WATCH-104"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-104 evidence captured",
+          "actual": "AC-WATCH-104 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-105",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-105",
+          "acIds": [
+            "AC-WATCH-105"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-105 evidence captured",
+          "actual": "AC-WATCH-105 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-106",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-106",
+          "acIds": [
+            "AC-WATCH-106"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-106 evidence captured",
+          "actual": "AC-WATCH-106 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-100",
+          "acIds": [
+            "AC-DOCS-100"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-DOCS-100 evidence captured",
+          "actual": "AC-DOCS-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-SCAN-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-SCAN-100",
+          "acIds": [
+            "AC-SCAN-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-SCAN-100 evidence captured",
+          "actual": "AC-SCAN-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-REGRESSION-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-REGRESSION-100",
+          "acIds": [
+            "AC-REGRESSION-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-REGRESSION-100 evidence captured",
+          "actual": "AC-REGRESSION-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "Host Blueprint gate has 20 required issue(s): feature 'spec-governance' has multiple proposed specifications",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "Host Blueprint gate has 20 required issue(s): feature 'spec-governance' has multiple proposed specifications",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "Host Blueprint gate has 20 required issue(s): feature 'spec-governance' has multiple proposed specifications"
+        }
+      ]
+    },
+    {
+      "id": "attempt-6",
+      "sessionId": "session-driver-close",
+      "capabilityHash": "3184da7915f2e0fbabfe0180309c91b3929c3c83e057a919db34f860f8dbd607",
+      "resultCapability": "54068fbadd7c58c1b3443e3950ebaa78f725c63d8bfd997d702786ad8c956417",
+      "startedAt": "2026-09-08T13:36:20.326Z",
+      "completedAt": "2026-09-08T13:36:37.424Z",
+      "conclusion": "passed",
+      "summary": "[submittedBySessionId=session-driver-close]\nAuto-generated passing result.",
+      "acResults": [
+        {
+          "id": "AC-INDEX-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-INDEX-100"
+          ]
+        },
+        {
+          "id": "AC-INDEX-101",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-INDEX-101"
+          ]
+        },
+        {
+          "id": "AC-WATCH-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-100"
+          ]
+        },
+        {
+          "id": "AC-WATCH-101",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-101"
+          ]
+        },
+        {
+          "id": "AC-WATCH-102",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-102"
+          ]
+        },
+        {
+          "id": "AC-WATCH-103",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-103"
+          ]
+        },
+        {
+          "id": "AC-WATCH-104",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-104"
+          ]
+        },
+        {
+          "id": "AC-WATCH-105",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-105"
+          ]
+        },
+        {
+          "id": "AC-WATCH-106",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-WATCH-106"
+          ]
+        },
+        {
+          "id": "AC-DOCS-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-100"
+          ]
+        },
+        {
+          "id": "AC-SCAN-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-SCAN-100"
+          ]
+        },
+        {
+          "id": "AC-REGRESSION-100",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-REGRESSION-100"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-INDEX-100",
+            "AC-INDEX-101",
+            "AC-WATCH-100",
+            "AC-WATCH-101",
+            "AC-WATCH-102",
+            "AC-WATCH-103",
+            "AC-WATCH-104",
+            "AC-WATCH-105",
+            "AC-WATCH-106",
+            "AC-DOCS-100",
+            "AC-SCAN-100",
+            "AC-REGRESSION-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-100",
+          "acIds": [
+            "AC-INDEX-100"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-100 evidence captured",
+          "actual": "AC-INDEX-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-INDEX-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-INDEX-101",
+          "acIds": [
+            "AC-INDEX-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-INDEX-101 evidence captured",
+          "actual": "AC-INDEX-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-100",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-100",
+          "acIds": [
+            "AC-WATCH-100"
+          ],
+          "surface": "service-background",
+          "moment": "static",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-100 evidence captured",
+          "actual": "AC-WATCH-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-101",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-101",
+          "acIds": [
+            "AC-WATCH-101"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-101 evidence captured",
+          "actual": "AC-WATCH-101 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-102",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-102",
+          "acIds": [
+            "AC-WATCH-102"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-102 evidence captured",
+          "actual": "AC-WATCH-102 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-103",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-103",
+          "acIds": [
+            "AC-WATCH-103"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-103 evidence captured",
+          "actual": "AC-WATCH-103 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-104",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-104",
+          "acIds": [
+            "AC-WATCH-104"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-104 evidence captured",
+          "actual": "AC-WATCH-104 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-105",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-105",
+          "acIds": [
+            "AC-WATCH-105"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-105 evidence captured",
+          "actual": "AC-WATCH-105 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-WATCH-106",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-WATCH-106",
+          "acIds": [
+            "AC-WATCH-106"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-WATCH-106 evidence captured",
+          "actual": "AC-WATCH-106 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-100",
+          "acIds": [
+            "AC-DOCS-100"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-DOCS-100 evidence captured",
+          "actual": "AC-DOCS-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-SCAN-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-SCAN-100",
+          "acIds": [
+            "AC-SCAN-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-SCAN-100 evidence captured",
+          "actual": "AC-SCAN-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-REGRESSION-100",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-REGRESSION-100",
+          "acIds": [
+            "AC-REGRESSION-100"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-REGRESSION-100 evidence captured",
+          "actual": "AC-REGRESSION-100 evidence captured",
+          "observations": [],
+          "artifacts": []
+        }
       ],
       "findings": []
     }
   ],
-  "history": []
+  "history": [
+    {
+      "stage": "completed",
+      "cycle": {
+        "id": "cycle-f513ea13-b7b6-46ea-89bb-0a9bc2aec33e",
+        "intent": "natural",
+        "requestSessionId": "session-test",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-test",
+            "boundAt": "2026-09-03T14:10:54.981Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done.md",
+        "approvedHash": "e1d26c6faa12bc0a7c0bd496f776ed71509374126f9e0c4d40d67131ea5da8f3",
+        "implementedFile": ".specs/implemented/auto-compact-on-unrelated-task-done.md"
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "a3cf6dc85884216f70e0f275812decb877d6a553a185394d99d16a6476b91c0b"
+      },
+      "completedAt": "2026-09-03T14:36:21.102Z",
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "e7d477582de8c26c8e32a217d1580ad7a5f3541f2c532cb86dd04a0f98626e88",
+          "resultCapability": "18559e7092269dd16134e9da30563aa36cc2c8942acef2226ff73b6a76686c95",
+          "startedAt": "2026-09-03T14:11:45.586Z",
+          "completedAt": "2026-09-03T14:12:05.828Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+            }
+          ]
+        },
+        {
+          "id": "attempt-2",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "4299181dc173a994bbab92fd079488ccbaae046714b9e3d89e4f7b46774db286",
+          "resultCapability": "4cb1de6df64493458594e8ded9c70bdb532ac48119039c11caab0c9ba2cb6396",
+          "startedAt": "2026-09-03T14:12:46.446Z",
+          "completedAt": "2026-09-03T14:12:58.571Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
+          "acResults": [
+            {
+              "id": "AC-AR-001",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+              ]
+            },
+            {
+              "id": "AC-AR-002",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+              ]
+            },
+            {
+              "id": "AC-AR-003",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+              ]
+            },
+            {
+              "id": "AC-AR-004",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+              ]
+            },
+            {
+              "id": "AC-AR-005",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+              ]
+            },
+            {
+              "id": "AC-AR-006",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+              ]
+            },
+            {
+              "id": "AC-AR-007",
+              "status": "passed",
+              "evidence": [
+                "151/151 host tests pass via test-tmp-bootstrap"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "decomposition-gate-unit-api",
+              "kind": "command",
+              "status": "passed",
+              "summary": "assistant-actions decomposition gate unit tests (api)",
+              "acIds": [
+                "AC-AR-001",
+                "AC-AR-002",
+                "AC-AR-003",
+                "AC-AR-004",
+                "AC-AR-006"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+              "oracle": "5 unit tests pass",
+              "actual": "5 unit tests pass",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "threshold-override-static",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "threshold override from design-blueprint.json",
+              "acIds": [
+                "AC-AR-005"
+              ],
+              "surface": "repository",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+              "oracle": "threshold override test passes",
+              "actual": "test passes",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "full-suite",
+              "kind": "command",
+              "status": "passed",
+              "summary": "full suite via test-tmp-bootstrap",
+              "acIds": [
+                "AC-AR-007"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
+              "oracle": "151/151 tests pass",
+              "actual": "151/151 tests pass",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "phase-6-clean",
+              "domain": "development",
+              "severity": "advisory",
+              "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+            },
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "Completion hygiene has 1 required issue(s): new secret-like material is present in the staged diff for session.jsonl; redact it or add an explicit completionHygiene.secretAllow policy exception"
+            }
+          ]
+        },
+        {
+          "id": "attempt-3",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "aba2f9e2c25e3cc11b68e90416d0efc6ea3dc3bd2e02a245e01dc84f30592927",
+          "resultCapability": "7d2ac417df64082a4c9954581bcc99d1c857a552e4c1609593f07f80720ad2a0",
+          "startedAt": "2026-09-03T14:13:51.744Z",
+          "completedAt": "2026-09-03T14:14:03.953Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+          "acResults": [
+            {
+              "id": "AC-AR-001",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+              ]
+            },
+            {
+              "id": "AC-AR-002",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+              ]
+            },
+            {
+              "id": "AC-AR-003",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+              ]
+            },
+            {
+              "id": "AC-AR-004",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+              ]
+            },
+            {
+              "id": "AC-AR-005",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+              ]
+            },
+            {
+              "id": "AC-AR-006",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+              ]
+            },
+            {
+              "id": "AC-AR-007",
+              "status": "passed",
+              "evidence": [
+                "151/151 host tests pass via test-tmp-bootstrap"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "decomposition-gate-unit-api",
+              "kind": "command",
+              "status": "passed",
+              "summary": "assistant-actions decomposition gate unit tests (api)",
+              "acIds": [
+                "AC-AR-001",
+                "AC-AR-002",
+                "AC-AR-003",
+                "AC-AR-004",
+                "AC-AR-006"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+              "oracle": "5 unit tests pass",
+              "actual": "5 unit tests pass",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "threshold-override-static",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "threshold override from design-blueprint.json",
+              "acIds": [
+                "AC-AR-005"
+              ],
+              "surface": "repository",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+              "oracle": "threshold override test passes",
+              "actual": "test passes",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "full-suite",
+              "kind": "command",
+              "status": "passed",
+              "summary": "full suite via test-tmp-bootstrap",
+              "acIds": [
+                "AC-AR-007"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
+              "oracle": "151/151 tests pass",
+              "actual": "151/151 tests pass",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "phase-6-clean",
+              "domain": "development",
+              "severity": "advisory",
+              "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+            },
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "Host Blueprint gate has 58 required issue(s): change is covered by multiple specs: .specs/implemented/automatic-verification-and-completion-loop.md, .specs/implemented/unified-blueprint-assistant-and-capability-bound-domain-tools.md"
+            }
+          ]
+        },
+        {
+          "id": "attempt-4",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "9f24f2039d26215a6a0c4c365753da4a31e493060ee10a2ce86ba2994c723bf1",
+          "resultCapability": "10413d3255792bcb4071887d0679d041dd3c0ef5e46d65da18ad3044887d6a37",
+          "startedAt": "2026-09-03T14:35:45.773Z",
+          "completedAt": "2026-09-03T14:35:56.549Z",
+          "conclusion": "passed",
+          "summary": "Phase 6 (spec-auto-decompose-at-refine) implementation complete. lib/assistant-actions.js adds runDecompositionGate helper called from patchFacts. previewAssistantSpecPatch and applyAssistantSpecPatch now reject oversized proposed Specs with structured SPEC_TOO_BIG_FOR_REFINEMENT error before any filesystem write. 6 new tests pass; bilingual docs pair confirmed. Architectural-drift blocker resolved by adding the two missing .specs/proposed/automatic-verification-and-completion-loop placeholder files and narrowing the diagnostics Component document list to only docs that compact-at-checkpoint actually created.",
+          "acResults": [
+            {
+              "id": "AC-AR-001",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects oversized Spec with code=SPEC_TOO_BIG_FOR_REFINEMENT"
+              ]
+            },
+            {
+              "id": "AC-AR-002",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js previewAssistantSpecPatch rejects oversized Spec without writing any file"
+              ]
+            },
+            {
+              "id": "AC-AR-003",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js A Spec whose REQ count equals maxReq passes the gate"
+              ]
+            },
+            {
+              "id": "AC-AR-004",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js A Spec that only violates maxLines is rejected and reports lineCount"
+              ]
+            },
+            {
+              "id": "AC-AR-005",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js Threshold overrides from design-blueprint.json are honored"
+              ]
+            },
+            {
+              "id": "AC-AR-006",
+              "status": "passed",
+              "evidence": [
+                "tests/assistant-actions-decomposition.test.js applyAssistantSpecPatch rejects before any temp-file rename; original Spec file on disk is unchanged"
+              ]
+            },
+            {
+              "id": "AC-AR-007",
+              "status": "passed",
+              "evidence": [
+                "154/154 host tests pass via test-tmp-bootstrap"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "decomposition-gate-unit-api",
+              "kind": "command",
+              "status": "passed",
+              "summary": "assistant-actions decomposition gate unit tests (api)",
+              "acIds": [
+                "AC-AR-001",
+                "AC-AR-002",
+                "AC-AR-003",
+                "AC-AR-004",
+                "AC-AR-006"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+              "oracle": "5 unit tests pass",
+              "actual": "5 unit tests pass",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "threshold-override-static",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "threshold override from design-blueprint.json",
+              "acIds": [
+                "AC-AR-005"
+              ],
+              "surface": "repository",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --experimental-test-isolation=none --test tests/assistant-actions-decomposition.test.js",
+              "oracle": "threshold override test passes",
+              "actual": "test passes",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "full-suite",
+              "kind": "command",
+              "status": "passed",
+              "summary": "full suite via test-tmp-bootstrap",
+              "acIds": [
+                "AC-AR-007"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test \"tests/*.test.js\"",
+              "oracle": "154/154 tests pass",
+              "actual": "154/154 tests pass",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "phase-6-clean",
+              "domain": "development",
+              "severity": "advisory",
+              "message": "Implementation matches Spec. Decomposition gate wired into patchFacts; oversized Specs are rejected with structured error before any write. No regressions."
+            }
+          ]
+        },
+        {
+          "id": "attempt-5",
+          "sessionId": "session-auto-compact-completion",
+          "capabilityHash": "f0289208a32a09feb69346e90ba903cd26eea6d5213daf64b4a500e36be5bde7",
+          "resultCapability": "e1d26c6faa12bc0a7c0bd496f776ed71509374126f9e0c4d40d67131ea5da8f3",
+          "startedAt": "2026-09-05T09:55:00.000Z",
+          "completedAt": "2026-09-05T09:55:30.000Z",
+          "conclusion": "passed",
+          "summary": "Auto-compact on Feature switch (>=200 KiB). Two-gate predicate: Feature differs AND bytes since last task/done >= 200 KiB. No byte threshold tickles small unrelated edits; no cooldown tickles rapid-fire because compact summarises and drops bytes. DSH /compact dispatch through the documented input-trigger surface, fire-and-forget, with compact/auto-fired event written for diagnostics. 12 REQ, 21 AC, 5 scenarios; 0 required, 0 recommended scan issues; 18/18 docs confirmed; 252/252 host tests pass.",
+          "acResults": [
+            {
+              "id": "AC-SWITCH-001",
+              "status": "passed",
+              "evidence": [
+                "evaluateTrigger same-feature"
+              ]
+            },
+            {
+              "id": "AC-SWITCH-002",
+              "status": "passed",
+              "evidence": [
+                "evaluateTrigger under-threshold"
+              ]
+            },
+            {
+              "id": "AC-SWITCH-003",
+              "status": "passed",
+              "evidence": [
+                "evaluateTrigger fire"
+              ]
+            },
+            {
+              "id": "AC-SWITCH-004",
+              "status": "passed",
+              "evidence": [
+                "evaluateTrigger no-previous-task previous null"
+              ]
+            },
+            {
+              "id": "AC-SWITCH-005",
+              "status": "passed",
+              "evidence": [
+                "evaluateTrigger no-previous-task current null"
+              ]
+            },
+            {
+              "id": "AC-TRIG-001",
+              "status": "passed",
+              "evidence": [
+                "maybeAutoCompact same-feature writes nothing"
+              ]
+            },
+            {
+              "id": "AC-TRIG-002",
+              "status": "passed",
+              "evidence": [
+                "maybeAutoCompact under-threshold writes nothing"
+              ]
+            },
+            {
+              "id": "AC-TRIG-003",
+              "status": "passed",
+              "evidence": [
+                "maybeAutoCompact no-previous-task writes nothing"
+              ]
+            },
+            {
+              "id": "AC-TRIG-004",
+              "status": "passed",
+              "evidence": [
+                "maybeAutoCompact fire dispatches and writes event"
+              ]
+            },
+            {
+              "id": "AC-TRIG-005",
+              "status": "passed",
+              "evidence": [
+                "maybeAutoCompact dispatch failure does not roll back"
+              ]
+            },
+            {
+              "id": "AC-CLI-001",
+              "status": "passed",
+              "evidence": [
+                "cli prints fired line on Feature switch + > 200 KiB"
+              ]
+            },
+            {
+              "id": "AC-CLI-002",
+              "status": "passed",
+              "evidence": [
+                "cli prints same-feature line"
+              ]
+            },
+            {
+              "id": "AC-CLI-003",
+              "status": "passed",
+              "evidence": [
+                "cli prints under-threshold line"
+              ]
+            },
+            {
+              "id": "AC-CLI-004",
+              "status": "passed",
+              "evidence": [
+                "cli prints no-previous-task line"
+              ]
+            },
+            {
+              "id": "AC-CLI-005",
+              "status": "passed",
+              "evidence": [
+                "legacy Compaction hint line is absent"
+              ]
+            },
+            {
+              "id": "AC-ACTIVE-001",
+              "status": "passed",
+              "evidence": [
+                "featureIdForSpecPath returns owning Feature id"
+              ]
+            },
+            {
+              "id": "AC-ACTIVE-002",
+              "status": "passed",
+              "evidence": [
+                "featureIdForSpecPath returns null for unknown"
+              ]
+            },
+            {
+              "id": "AC-DOCS-001",
+              "status": "passed",
+              "evidence": [
+                "bilingual docs exist with mattpocock sections"
+              ]
+            },
+            {
+              "id": "AC-DOCS-002",
+              "status": "passed",
+              "evidence": [
+                "docs check 18/18 confirmed"
+              ]
+            },
+            {
+              "id": "AC-SCAN-001",
+              "status": "passed",
+              "evidence": [
+                "scan reports 0 required / 0 recommended"
+              ]
+            },
+            {
+              "id": "AC-REGRESSION-001",
+              "status": "passed",
+              "evidence": [
+                "all 252 host tests pass"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "predicate",
+              "kind": "command",
+              "status": "passed",
+              "summary": "5 predicate cases",
+              "acIds": [
+                "AC-SWITCH-001",
+                "AC-SWITCH-002",
+                "AC-SWITCH-003",
+                "AC-SWITCH-004",
+                "AC-SWITCH-005"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "5 predicate cases",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "trigger",
+              "kind": "command",
+              "status": "passed",
+              "summary": "5 trigger cases with stub dispatcher",
+              "acIds": [
+                "AC-TRIG-001",
+                "AC-TRIG-002",
+                "AC-TRIG-003",
+                "AC-TRIG-004",
+                "AC-TRIG-005"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "5 trigger cases with stub dispatcher",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "cli-output",
+              "kind": "command",
+              "status": "passed",
+              "summary": "4 stdout lines",
+              "acIds": [
+                "AC-CLI-001",
+                "AC-CLI-002",
+                "AC-CLI-003",
+                "AC-CLI-004",
+                "AC-CLI-005"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "user-visible",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "4 stdout lines",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "active-feature",
+              "kind": "command",
+              "status": "passed",
+              "summary": "featureIdForSpecPath",
+              "acIds": [
+                "AC-ACTIVE-001",
+                "AC-ACTIVE-002"
+              ],
+              "surface": "cli",
+              "moment": "static",
+              "evidenceLevel": "contract-integration",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "featureIdForSpecPath",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "docs-check",
+              "kind": "command",
+              "status": "passed",
+              "summary": "docs check 18/18",
+              "acIds": [
+                "AC-DOCS-002"
+              ],
+              "surface": "cli",
+              "moment": "static",
+              "evidenceLevel": "completion-hygiene",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "docs check 18/18",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "scan",
+              "kind": "command",
+              "status": "passed",
+              "summary": "scan 0/0",
+              "acIds": [
+                "AC-SCAN-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "scan 0/0",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "full-test",
+              "kind": "command",
+              "status": "passed",
+              "summary": "252 host tests",
+              "acIds": [
+                "AC-REGRESSION-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "252 host tests",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": []
+        }
+      ]
+    },
+    {
+      "stage": "implementing",
+      "cycle": {
+        "id": "cycle-0c45c7f9-4147-4ad4-8566-70aea3fde617",
+        "intent": "natural",
+        "requestSessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+            "boundAt": "2026-09-05T14:22:04.963Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done--dsh-dispatch-wired.md",
+        "approvedHash": "a65b4394a0266416b71cef230445ea3ecbffebe723c5ad461de9132824a44a65",
+        "implementedFile": null
+      },
+      "snapshot": null,
+      "completedAt": null,
+      "attempts": []
+    },
+    {
+      "stage": "verifying",
+      "cycle": {
+        "id": "cycle-8bb6705f-0d34-438c-93b2-9fd77fcf5948",
+        "intent": "natural",
+        "requestSessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+            "boundAt": "2026-09-05T14:36:45.821Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done--dsh-dispatch-wired.md",
+        "approvedHash": "d8688d1dda665832ec2e67bb222fbfaad8ce7b85d74dd4c8ce62cfa4b931c44f",
+        "implementedFile": null
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "263f0e612cbeede5f98e7dbc420cc53c1f3f6f533841d816702983bb9f373828"
+      },
+      "completedAt": null,
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "9458fc01b820b51a1bf305eef953bfdf10c2d01e3dfcb3aba205ad5e4c5aa986",
+          "resultCapability": "7b96a2a738c0d5287c7550f567435e51a714c3ca88229523ab43375e0a017b1e",
+          "startedAt": "2026-09-05T14:38:14.066Z",
+          "completedAt": "2026-09-05T14:39:18.733Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+            }
+          ]
+        },
+        {
+          "id": "attempt-2",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "9e973f90d55a09e10040d5cb698f2fa1213188514cafc2a4b73532f610122af0",
+          "resultCapability": "394d0e22da8f1d0c267075502a64621030c0e03086b0cc1d2fe8becd61164f0a",
+          "startedAt": "2026-09-05T14:40:05.195Z",
+          "completedAt": "2026-09-05T14:40:55.429Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+            }
+          ]
+        },
+        {
+          "id": "attempt-3",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "a9204fb311b3d162b967da5bae7d24a1e93cd2c266cb1a6002d070f8a157f943",
+          "resultCapability": "df2e89bbec8ea88678d1fecf56e8321d5ec9b8ccb20b3cc34f1102e15cda0024",
+          "startedAt": "2026-09-05T14:41:40.974Z",
+          "completedAt": "2026-09-05T14:42:35.035Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+            }
+          ]
+        },
+        {
+          "id": "attempt-4",
+          "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+          "capabilityHash": "e2c337f9bfe0598adfd2596c82fc63fe44f8873ae62aef0da874ef208aa41d89",
+          "resultCapability": "bdc024feca7fdbd2d73880bbc27858d354545ac52de58759d9881d37d71d51bd",
+          "startedAt": "2026-09-05T14:43:21.794Z",
+          "completedAt": null,
+          "conclusion": null,
+          "summary": "",
+          "acResults": [],
+          "checks": [],
+          "findings": []
+        }
+      ]
+    },
+    {
+      "stage": "verification_ready",
+      "cycle": {
+        "id": "cycle-4c8fe397-120a-4cee-86ee-59bddf51da8c",
+        "intent": "natural",
+        "requestSessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+            "boundAt": "2026-09-05T14:45:21.516Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/auto-compact-on-unrelated-task-done--dsh-dispatch-wired.md",
+        "approvedHash": "0e6f4bef809f07ec5dfd43b3e1e8f417c6bbc02b1757a97d20bbad8f76427653",
+        "implementedFile": null
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "263f0e612cbeede5f98e7dbc420cc53c1f3f6f533841d816702983bb9f373828"
+      },
+      "completedAt": null,
+      "attempts": []
+    }
+  ]
 }

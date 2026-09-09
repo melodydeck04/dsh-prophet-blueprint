@@ -124,8 +124,29 @@ async function padSession(root, targetBytes, lastTime) {
 	await appendFile(join(root, "session.jsonl"), lines.join(""), "utf8");
 }
 
-function makeStubCtx(compactNow) {
-	return { compaction: { compactNow } };
+/**
+ * Build a stub ctx with an `agentPresets.serviceFor` that records its calls.
+ * `engineImpl` is the function body of the stub engine's `compactIfNeeded` —
+ * it receives `(agent, trigger, signal)` and may throw / return a value.
+ * Pass `undefined` for `engineImpl` to make `serviceFor` return `undefined`
+ * (simulates a preset that does not mount `compaction-basic`).
+ */
+function makeStubCtx(engineImpl) {
+	const calls = { serviceFor: [], compactIfNeeded: [] };
+	const ctx = {
+		agentPresets: {
+			serviceFor(agent, name) {
+				calls.serviceFor.push({ agent, name });
+				if (engineImpl === "missing") return undefined;
+				if (engineImpl === undefined || engineImpl === null) {
+					return { compactIfNeeded: async (...args) => { calls.compactIfNeeded.push(args); return null; } };
+				}
+				return { compactIfNeeded: async (...args) => { calls.compactIfNeeded.push(args); return engineImpl(...args); } };
+			},
+		},
+		_ctxCalls: calls,
+	};
+	return ctx;
 }
 
 function makeStubLogger() {
@@ -138,7 +159,7 @@ function makeStubLogger() {
 }
 
 test("createAutoCompactWatcher: factory returns captureAgent/tick/dispose (AC-WATCH-001 shape)", () => {
-	const ctx = makeStubCtx(async () => null);
+	const ctx = makeStubCtx();
 	const watcher = createAutoCompactWatcher({ ctx });
 	assert.equal(typeof watcher.captureAgent, "function");
 	assert.equal(typeof watcher.tick, "function");
@@ -150,26 +171,24 @@ test("createAutoCompactWatcher: tick before captureAgent is no-op (AC-WATCH-001)
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
-		const ctx = makeStubCtx(async () => null);
+		const ctx = makeStubCtx();
 		const watcher = createAutoCompactWatcher({ ctx });
 		const result = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 2000 });
 		assert.deepEqual(result, { skipped: "no-agent" });
+		assert.equal(ctx._ctxCalls.serviceFor.length, 0, "serviceFor not consulted without an agent stash");
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}
 });
 
-test("createAutoCompactWatcher: fires compactNow on Feature switch + >= 200 KiB (AC-WATCH-002)", async () => {
+test("createAutoCompactWatcher: fires compactIfNeeded on Feature switch + >= 200 KiB (AC-WATCH-002)", async () => {
 	const root = await makeProject();
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
 		await padSession(root, 500 * 1024, 1000);
 		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 9_999_999_999, seq: 2 });
-		const calls = [];
-		const ctx = makeStubCtx(async (agent, signal, commandId) => {
-			calls.push({ agent, signal, commandId });
-		});
+		const ctx = makeStubCtx(() => null);
 		const logger = makeStubLogger();
 		const watcher = createAutoCompactWatcher({ ctx, logger });
 		const fakeAgent = { id: "fake-agent" };
@@ -179,10 +198,12 @@ test("createAutoCompactWatcher: fires compactNow on Feature switch + >= 200 KiB 
 		assert.equal(result.invoked, true, JSON.stringify(result));
 		assert.equal(result.reason, "feature-switch");
 		assert.equal(result.previousFeatureId, "foo");
-		assert.equal(calls.length, 1);
-		assert.equal(calls[0].agent, fakeAgent);
-		assert.equal(calls[0].signal, fakeSignal);
-		assert.equal(calls[0].commandId, "blueprint-auto-compact");
+		assert.equal(ctx._ctxCalls.serviceFor.length, 1);
+		assert.deepEqual(ctx._ctxCalls.serviceFor[0], { agent: fakeAgent, name: "compaction" });
+		assert.equal(ctx._ctxCalls.compactIfNeeded.length, 1);
+		assert.equal(ctx._ctxCalls.compactIfNeeded[0][0], fakeAgent);
+		assert.equal(ctx._ctxCalls.compactIfNeeded[0][1], "context-overflow");
+		assert.equal(ctx._ctxCalls.compactIfNeeded[0][2], fakeSignal);
 		const session = await readFile(join(root, "session.jsonl"), "utf8");
 		assert.match(session, /"type":"compact\/auto-fired"/);
 		assert.match(session, /"previousFeatureId":"foo"/);
@@ -198,14 +219,14 @@ test("createAutoCompactWatcher: skips on same-feature (AC-WATCH-003)", async () 
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 2000, seq: 2 });
-		const calls = [];
-		const ctx = makeStubCtx(async () => { calls.push("fired"); });
+		const ctx = makeStubCtx(() => { ctx._ctxCalls.compactIfNeeded.push("fired"); });
 		const watcher = createAutoCompactWatcher({ ctx, logger: makeStubLogger() });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
 		const result = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 2000 });
 		assert.equal(result.invoked, false);
 		assert.equal(result.reason, "same-feature");
-		assert.equal(calls.length, 0);
+		assert.equal(ctx._ctxCalls.serviceFor.length, 0, "serviceFor not consulted on same-feature");
+		assert.equal(ctx._ctxCalls.compactIfNeeded.length, 0);
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}
@@ -217,14 +238,13 @@ test("createAutoCompactWatcher: skips on under-threshold (AC-WATCH-003)", async 
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
 		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 2000, seq: 2 });
-		const calls = [];
-		const ctx = makeStubCtx(async () => { calls.push("fired"); });
+		const ctx = makeStubCtx(() => { ctx._ctxCalls.compactIfNeeded.push("fired"); });
 		const watcher = createAutoCompactWatcher({ ctx, logger: makeStubLogger() });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
 		const result = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 2000 });
 		assert.equal(result.invoked, false);
 		assert.equal(result.reason, "under-threshold");
-		assert.equal(calls.length, 0);
+		assert.equal(ctx._ctxCalls.serviceFor.length, 0);
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}
@@ -235,48 +255,47 @@ test("createAutoCompactWatcher: skips on no-prior-task (AC-WATCH-003)", async ()
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 1000, seq: 1 });
-		const calls = [];
-		const ctx = makeStubCtx(async () => { calls.push("fired"); });
+		const ctx = makeStubCtx(() => { ctx._ctxCalls.compactIfNeeded.push("fired"); });
 		const watcher = createAutoCompactWatcher({ ctx, logger: makeStubLogger() });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
 		const result = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 1000 });
 		assert.equal(result.invoked, false);
 		assert.equal(result.reason, "no-previous-task");
-		assert.equal(calls.length, 0);
+		assert.equal(ctx._ctxCalls.serviceFor.length, 0);
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}
 });
 
-test("createAutoCompactWatcher: dedups replays (AC-WATCH-004)", async () => {
+test("createAutoCompactWatcher: dedups replays (AC-WATCH-005)", async () => {
 	const root = await makeProject();
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
 		await padSession(root, 500 * 1024, 1000);
 		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 9_999_999_999, seq: 2 });
-		const calls = [];
-		const ctx = makeStubCtx(async () => { calls.push("fired"); });
+		const ctx = makeStubCtx(() => null);
 		const watcher = createAutoCompactWatcher({ ctx, logger: makeStubLogger() });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
 		const first = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 9_999_999_999 });
 		assert.equal(first.invoked, true);
 		const second = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 9_999_999_999 });
 		assert.equal(second.skipped, "already-processed");
-		assert.equal(calls.length, 1, "compactNow called once across two ticks");
+		assert.equal(ctx._ctxCalls.serviceFor.length, 1, "serviceFor consulted once across two ticks");
+		assert.equal(ctx._ctxCalls.compactIfNeeded.length, 1, "compactIfNeeded called once across two ticks");
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}
 });
 
-test("createAutoCompactWatcher: catches compactNow errors and returns dispatch-failed (AC-WATCH-005)", async () => {
+test("createAutoCompactWatcher: catches compactIfNeeded errors and returns dispatch-failed (AC-WATCH-103)", async () => {
 	const root = await makeProject();
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
 		await padSession(root, 500 * 1024, 1000);
 		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 9_999_999_999, seq: 2 });
-		const ctx = makeStubCtx(async () => { throw new Error("DSH compaction busy"); });
+		const ctx = makeStubCtx(() => { throw new Error("DSH compaction busy"); });
 		const logger = makeStubLogger();
 		const watcher = createAutoCompactWatcher({ ctx, logger });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
@@ -298,7 +317,7 @@ test("createAutoCompactWatcher: dispose clears agent stash (AC-WATCH-006)", asyn
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
 		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 1000, seq: 1 });
-		const ctx = makeStubCtx(async () => null);
+		const ctx = makeStubCtx();
 		const watcher = createAutoCompactWatcher({ ctx, logger: makeStubLogger() });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
 		watcher.dispose();
@@ -309,7 +328,7 @@ test("createAutoCompactWatcher: dispose clears agent stash (AC-WATCH-006)", asyn
 	}
 });
 
-test("createAutoCompactWatcher: returns skipped='no-compaction-service' when ctx.compaction absent", async () => {
+test("createAutoCompactWatcher: returns skipped='no-preset-compaction' when ctx.agentPresets absent (AC-WATCH-104)", async () => {
 	const root = await makeProject();
 	try {
 		await writeFile(join(root, "session.jsonl"), "", "utf8");
@@ -318,8 +337,28 @@ test("createAutoCompactWatcher: returns skipped='no-compaction-service' when ctx
 		const watcher = createAutoCompactWatcher({ ctx: {}, logger });
 		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
 		const result = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 2000 });
-		assert.equal(result.skipped, "no-compaction-service");
+		assert.equal(result.skipped, "no-preset-compaction");
 		assert.ok(logger.entries.info.length >= 1, "info log emitted exactly once at boot");
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
+
+test("createAutoCompactWatcher: returns skipped='no-preset-compaction' when serviceFor returns undefined (AC-WATCH-104)", async () => {
+	const root = await makeProject();
+	try {
+		await writeFile(join(root, "session.jsonl"), "", "utf8");
+		await writeTaskDone(root, { spec: "tests/fixtures/foo.md", time: 1000, seq: 1 });
+		await padSession(root, 500 * 1024, 1000);
+		await writeTaskDone(root, { spec: "tests/fixtures/bar.md", time: 9_999_999_999, seq: 2 });
+		const ctx = makeStubCtx("missing");
+		const logger = makeStubLogger();
+		const watcher = createAutoCompactWatcher({ ctx, logger });
+		watcher.captureAgent("s1", { agent: { id: "a" }, signal: undefined, commandId: "x" });
+		const result = await watcher.tick({ cwd: root, sessionId: "s1", nowMs: 9_999_999_999 });
+		assert.equal(result.skipped, "no-preset-compaction");
+		assert.notEqual(result.invoked, true, "result must not report invoked=true");
+		assert.equal(ctx._ctxCalls.compactIfNeeded.length, 0, "compactIfNeeded never called");
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}

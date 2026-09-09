@@ -1,7 +1,7 @@
 {
   "version": 1,
   "featureId": "spec-governance--architecture-design",
-  "spec": ".specs/proposed/automatic-verification-and-completion-loop.md",
-  "specHash": "7a44dec84fbfbfd5fa95c85b32886f38dde0ac074dfdd0f7fb8e60cb59aa5a4e",
-  "approvedAt": "2026-09-04T07:20:09.563Z"
+  "spec": ".specs/proposed/dsh-native-skill-routing-and-minimax.md",
+  "specHash": "724c0ab928c4bbb2d289903474f19be9307f3a758f1f4e88aadd342d579d8da3",
+  "approvedAt": "2026-09-08T15:45:19.188Z"
 }

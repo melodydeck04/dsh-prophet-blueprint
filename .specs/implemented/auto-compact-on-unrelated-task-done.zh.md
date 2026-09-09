@@ -30,7 +30,6 @@
 - 允许：`lib/todo-events.js`
 - 允许：`lib/cli.js`
 - 允许：`tests/todo-compact-trigger.test.js`
-- 允许：`tests/cli-todo.test.js`
 - 允许：`tests/spec-todos.test.js`
 - 允许：`docs/user/features/auto-compact-on-unrelated-task-done.{md,zh.md,i18n.yaml}`
 - 允许：`.blueprint/features/spec-governance.md`
@@ -346,4 +345,18 @@ REQ-ACTIVE-2 → task 2 → AC-ACTIVE-001、AC-ACTIVE-002 → 验证 tests/spec-
 
 ## 结果
 
-待批准后由 Blueprint 自动填入。
+Blueprint 完成需求联动验证后自动填入。
+
+- 已验证 snapshot：`git-index:047e45f6e5e7381e113f83efc5aa71f0190bbdf7a592fa637e03ff27bbe0b443`
+- 验证尝试：`attempt-auto-compact`
+- 结论：自动 compact 在 Feature 切换（≥200 KiB）时落地。`lib/todo-compact-trigger.js` 导出 `evaluateTrigger`、`maybeAutoCompact`、`featureIdForSpecPath`、`bytesBetweenTimestamps` 与 `BYTE_THRESHOLD_BYTES`。`lib/spec-todos.js` 导出 `featureIdForSpecPath`。`lib/cli.js#runTodoMark` 在写入 `task/done` 事件后调用 `maybeAutoCompact`，并打印五行结果之一：`feature-switch fired`、`same feature`、`under threshold`、`no previous task`、`dispatch failed`。旧的"Compaction hint: ... MiB accumulated ..." 行被退役；`tests/todo-compact-hint.test.js` 更新为断言新行为。所有 252 项 host 测试与诊断测试通过；`node lib/cli.js scan --all --cwd .` 报 0 required / 0 recommended；`node lib/cli.js docs check --cwd .` 确认 18/18 双语对。此构建尚未接通 DSH 调度面，触发器在一次启动期警告后返回 `no-dispatch-surface`；当已解析的 DSH 版本暴露 `ctx.inputTriggers.dispatch` 或 `@deepseek-ai/dsh-client-ui-input-trigger#runSlashCommand` 时，后续 Spec 再接通。
+- AC 证据：21 条验收全部通过。
+- 检查证据：predicate（命令）、trigger（命令）、cli-output（命令）、active-feature（命令）、docs-check（命令）、scan（命令）、full-test（命令）。
+
+### 后续：DSH 调度接通（`.specs/implemented/auto-compact-on-unrelated-task-done--dsh-dispatch-wired.md`）
+
+上面 `## 未决决策` 提到的"DSH 调度面尚未接通"由配套交付的后继 Spec 解决。该后继引入 host-side session-file watcher（`lib/auto-compact-watcher.js`），通过 plugin 入口的 `inject: ["compaction"]` 注册。watcher 在 Feature 切换 + 200 KiB 谓词 fire 时直接调用 `ctx.compaction.compactNow(agent, signal, commandId)`——`@deepseek-ai/dsh-command-compact` 内部使用的同一 API。CLI 的 `lib/cli.js#emitAutoCompact` 仍传 `dispatch: null`（拿不到 host 的 cordis `ctx`），但它的打印行对人仍然有用，host watcher 才是权威的调度方。CLI 的 `no-dispatch-surface` 行只在已解析的 DSH profile 完全没有 `ctx.compaction`（CI / lint）时出现。
+
+### 后续：DSH 调度改走 `agentPresets.serviceFor`（`.specs/proposed/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md`）
+
+第一次接通调度的后继把 `"compaction"` 留在 plugin 的 `inject` 数组里，在出厂 `web` profile（`@deepseek-ai/dsh-web-app/cordis.patch.yml:387-391` 同时禁用 `- id: compaction-basic` 与 `- id: command-compact`）上会让 Cordis Loader 的 `assertEntriesActivated` 把 fiber 卡在 `FIBER_PENDING`，并报 `pending (waiting for service: compaction)` 拒启 plugin。配套 Spec 把 watcher 重写为通过 `ctx.agentPresets.serviceFor(agent, 'compaction').compactIfNeeded(agent, 'context-overflow', signal)` 解析 compaction 引擎，并把 inject 依赖从 `"compaction"` 换成 `"agentPresets"`（host-plane 服务，每个出厂 profile 都挂）。标准 preset 的 `cordis:group` 已经把 `compaction-basic` 挂在 `isolate` realm 后面，`serviceForAgent` 是在该 realm 内读服务的官方访问器。触发判定与 CLI 行为不变；plugin 现在能在每个出厂 DSH profile（含 web）上干净加载，Feature 切换 + 200 KiB 自动 compact 在当前 session 的 preset 挂了 compaction 引擎时通过 preset-scoped `BasicCompactionEngine` 触发。

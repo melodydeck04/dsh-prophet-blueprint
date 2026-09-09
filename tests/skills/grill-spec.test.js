@@ -25,9 +25,9 @@ test("grill-spec frontmatter is user-invocable and kebab-case named", async () =
 	assert.doesNotMatch(text, /^disable-model-invocation: true\b/m);
 });
 
-test("grill-spec description contains auto-fire phrase and the four-gate interview keywords", async () => {
+test("grill-spec description supports model selection and the five review dimensions", async () => {
 	const text = await readFile(SKILL_PATH, "utf8");
-	assert.match(text, /^description:[^\n]*auto-fire[^\n]*\n/m);
+	assert.match(text, /^description:[^\n]*model selection[^\n]*\n/m);
 	assert.match(text, /\bdefaults\b/);
 	assert.match(text, /\bpersistence\b/);
 	assert.match(text, /\bsurface\b/);

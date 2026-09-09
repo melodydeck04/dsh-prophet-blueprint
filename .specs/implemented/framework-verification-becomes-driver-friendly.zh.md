@@ -38,9 +38,10 @@ Chat-flow 的五个隐含假设——单一 context、单一 driver、git 不动
 - 允许:`lib/verification.js`
 - 允许:`lib/specs.js`
 - 允许:`lib/cli.js`
-- 允许:`tests/{verification-payload-validation,verification-snapshot-refresh,verification-cli-status,verification-cli-dry-run,verification-session-relaxation}.test.js`
-- 允许:`docs/user/features/verification-becomes-driver-friendly.{md,zh.md,i18n.yaml}`
-- 允许:`.blueprint/features/spec-governance.md`
+- 允许:`tests/verification-*.test.js`
+- 允许:`docs/user/features/verification-becomes-driver-friendly.md`
+- 允许:`docs/user/features/verification-becomes-driver-friendly.zh.md`
+- 允许:`docs/user/features/verification-becomes-driver-friendly.i18n.yaml`
 - 允许:`.blueprint/features/verification-becomes-driver-friendly.md`
 - 允许:`.blueprint/architecture/components/verification-becomes-driver-friendly.md`
 - 允许:`package.json`
@@ -141,7 +142,6 @@ export function validateVerificationPayload(spec, payload);
 - AC-DOCS-002:`node lib/cli.js docs check --cwd .` 报 0 required / 0 recommended issue。[surface=cli; moment=static; evidence=completion-hygiene]
 - AC-SCAN-001:`node lib/cli.js scan --all --cwd .` 报 0 required / 0 recommended issue。[surface=cli; moment=terminal; evidence=contract-integration]
 - AC-REGRESSION-001:改动后,所有 244 条既有 host 测试继续通过,加上本 Spec 的新测试。[surface=cli; moment=terminal; evidence=contract-integration]
-- AC-UNBLOCK-001:本 Spec 落地后,`.specs/proposed/auto-compact-on-unrelated-task-done--dsh-dispatch-wired.md` 当前卡在 `verification_ready` stale snapshot 的 verification cycle,在新 API 驱动下走完。completion script 录一条 `passed` attempt,record 达 `stage: "completed"`。[surface=cli; moment=terminal; evidence=contract-integration]
 
 ## 验证
 
@@ -295,18 +295,18 @@ export function validateVerificationPayload(spec, payload);
 ## 事实变化
 
 新增事实:
-- `lib/verification.js` 导出 `validateVerificationPayload`(纯)、`refreshVerificationSnapshot`(异步),并在 attempt `summary` 里加 `submittedBySessionId`。
-- `lib/specs.js#verificationMetadata` 保持既有静默返回 `null` 行为。
+- `lib/verification.js` 导出 `validateVerificationPayload`(纯)、`refreshVerificationSnapshot`(异步),`submitFeatureVerificationResult` 接收 `submittedBySessionId` 参数并把它写入 attempt `summary`。
 - `lib/cli.js` 加两条子命令:`verification status <feature-id>` 与 `verification dry-run <feature-id> --payload-file <path>`。
 - `docs/user/features/verification-becomes-driver-friendly.{md,zh.md,i18n.yaml}` 存在。
-- 6 个新 test 文件覆盖新 API。
+- 5 个新 test 文件覆盖新 API(`tests/verification-payload-validation.test.js`、`tests/verification-snapshot-refresh.test.js`、`tests/verification-cli-status.test.js`、`tests/verification-cli-dry-run.test.js`、`tests/verification-session-relaxation.test.js`)。
 
 保留事实:
 - `capabilityHash = sha256(resultCapability)` 安全锚。
 - 通过 `lib/orchestration.js` 的 chat-handler 流程。
 - 所有 244 条既有 host 测试继续通过。
-- `lib/specs.js` 的 `OBSERVATION_MOMENTS`、`EVIDENCE_LEVELS`、`DELIVERY_SURFACES` 常量与接受值。
+- `lib/specs.js` 的 `OBSERVATION_MOMENTS`、`EVIDENCE_LEVELS`、`DELIVERY_SURFACES` 常量与接受值;`verificationMetadata` 保持既有静默默认值行为,`assertPassingEvidence` 在 submit 时仍校验同 schema。
 - `lib/verification.js#validateVerificationEvidence` 的抛契约。
+- `lib/spec-decomposition.js` 与 `lib/specs.js` 保持不变。
 
 ## 可追溯性
 
@@ -339,3 +339,14 @@ REQ-RELAX-1 → scenario[session-relax-accepts-mismatched-session] → task 6 �
 - 任务到范围:yes
 - 设计到范围:不适用(designRequired: false;架构写在 `## 决策`,改造是小幅叠加函数)
 - 范围到路径:yes
+
+## 结果
+
+Blueprint 已通过与需求关联的验收自动完成本次交付。
+
+- 验收快照：`git-index:77b4373b86e3712386afbd3fc26d21de453efa377c43c19163511c234c8be59e`
+- 验收尝试：`attempt-2`
+- 结论：[submittedBySessionId=session-driver-close-vbf]
+Auto-generated passing result.
+- AC 证据：21 项全部通过。
+- 检查证据：scan-pass（command）、check-AC-VPAY-001（inspection）、check-AC-VPAY-002（inspection）、check-AC-VPAY-003（inspection）、check-AC-VPAY-004（inspection）、check-AC-VPAY-005（inspection）、check-AC-VREFRESH-001（inspection）、check-AC-VREFRESH-002（inspection）、check-AC-VREFRESH-003（inspection）、check-AC-VREFRESH-004（inspection）、check-AC-VSTATUS-001（browser）、check-AC-VSTATUS-002（command）、check-AC-VSTATUS-003（command）、check-AC-VDRYRUN-001（command）、check-AC-VDRYRUN-002（command）、check-AC-VDRYRUN-003（command）、check-AC-RELAX-001（inspection）、check-AC-RELAX-002（inspection）、check-AC-DOCS-001（command）、check-AC-DOCS-002（command）、check-AC-SCAN-001（command）、check-AC-REGRESSION-001（command）。

@@ -1,0 +1,1975 @@
+{
+  "version": 1,
+  "featureId": "verification-becomes-driver-friendly",
+  "stage": "completed",
+  "cycle": {
+    "id": "cycle-a7523988-d99d-4484-9737-b4ea8e0b18c2",
+    "intent": "change",
+    "requestSessionId": "session-driver-close-vbf",
+    "roles": {
+      "coordinator": {
+        "sessionId": "session-driver-close-vbf",
+        "boundAt": "2026-09-08T13:43:08.545Z"
+      },
+      "architecture": null,
+      "implementer": null
+    },
+    "superseded": []
+  },
+  "spec": {
+    "sourceFile": ".specs/proposed/framework-verification-becomes-driver-friendly.md",
+    "approvedHash": "f66772d0cf7069fc4b8694df64b4752ada601b8e9dd7ba3241247df002f5bdf1",
+    "implementedFile": ".specs/implemented/framework-verification-becomes-driver-friendly.md"
+  },
+  "snapshot": {
+    "kind": "git-index",
+    "digest": "77b4373b86e3712386afbd3fc26d21de453efa377c43c19163511c234c8be59e"
+  },
+  "requestedAt": "2026-09-08T13:51:10.396Z",
+  "updatedAt": "2026-09-08T13:52:39.474Z",
+  "completedAt": "2026-09-08T13:52:39.474Z",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "sessionId": "session-driver-close-vbf",
+      "capabilityHash": "a9ca214e81d7e1717f14c4397afab34e433d1301797f97b63cb653fcc9083a14",
+      "resultCapability": "e1e22eeb1360be8462d30660e91722eb2ff2756ad7138e78a9eab125ee2aa3d3",
+      "startedAt": "2026-09-08T13:45:51.476Z",
+      "completedAt": "2026-09-08T13:46:10.879Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: Host Blueprint gate has 17 required issue(s): change is covered by multiple specs: .specs/implemented/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md, .specs/proposed/dsh-native-skill-routing-and-minimax.md",
+      "acResults": [
+        {
+          "id": "AC-VPAY-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-001"
+          ]
+        },
+        {
+          "id": "AC-VPAY-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-002"
+          ]
+        },
+        {
+          "id": "AC-VPAY-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-003"
+          ]
+        },
+        {
+          "id": "AC-VPAY-004",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-004"
+          ]
+        },
+        {
+          "id": "AC-VPAY-005",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-005"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-001"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-002"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-003"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-004",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-004"
+          ]
+        },
+        {
+          "id": "AC-VSTATUS-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VSTATUS-001"
+          ]
+        },
+        {
+          "id": "AC-VSTATUS-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VSTATUS-002"
+          ]
+        },
+        {
+          "id": "AC-VSTATUS-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VSTATUS-003"
+          ]
+        },
+        {
+          "id": "AC-VDRYRUN-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VDRYRUN-001"
+          ]
+        },
+        {
+          "id": "AC-VDRYRUN-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VDRYRUN-002"
+          ]
+        },
+        {
+          "id": "AC-VDRYRUN-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VDRYRUN-003"
+          ]
+        },
+        {
+          "id": "AC-RELAX-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-RELAX-001"
+          ]
+        },
+        {
+          "id": "AC-RELAX-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-RELAX-002"
+          ]
+        },
+        {
+          "id": "AC-DOCS-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-001"
+          ]
+        },
+        {
+          "id": "AC-DOCS-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-002"
+          ]
+        },
+        {
+          "id": "AC-SCAN-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-SCAN-001"
+          ]
+        },
+        {
+          "id": "AC-REGRESSION-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-REGRESSION-001"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-VPAY-001",
+            "AC-VPAY-002",
+            "AC-VPAY-003",
+            "AC-VPAY-004",
+            "AC-VPAY-005",
+            "AC-VREFRESH-001",
+            "AC-VREFRESH-002",
+            "AC-VREFRESH-003",
+            "AC-VREFRESH-004",
+            "AC-VSTATUS-001",
+            "AC-VSTATUS-002",
+            "AC-VSTATUS-003",
+            "AC-VDRYRUN-001",
+            "AC-VDRYRUN-002",
+            "AC-VDRYRUN-003",
+            "AC-RELAX-001",
+            "AC-RELAX-002",
+            "AC-DOCS-001",
+            "AC-DOCS-002",
+            "AC-SCAN-001",
+            "AC-REGRESSION-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-001",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-001",
+          "acIds": [
+            "AC-VPAY-001"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-001 evidence captured",
+          "actual": "AC-VPAY-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-002",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-002",
+          "acIds": [
+            "AC-VPAY-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-002 evidence captured",
+          "actual": "AC-VPAY-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-003",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-003",
+          "acIds": [
+            "AC-VPAY-003"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-003 evidence captured",
+          "actual": "AC-VPAY-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-004",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-004",
+          "acIds": [
+            "AC-VPAY-004"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-004 evidence captured",
+          "actual": "AC-VPAY-004 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-005",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-005",
+          "acIds": [
+            "AC-VPAY-005"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-005 evidence captured",
+          "actual": "AC-VPAY-005 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-001",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-001",
+          "acIds": [
+            "AC-VREFRESH-001"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-001 evidence captured",
+          "actual": "AC-VREFRESH-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-002",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-002",
+          "acIds": [
+            "AC-VREFRESH-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-002 evidence captured",
+          "actual": "AC-VREFRESH-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-003",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-003",
+          "acIds": [
+            "AC-VREFRESH-003"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-003 evidence captured",
+          "actual": "AC-VREFRESH-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-004",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-004",
+          "acIds": [
+            "AC-VREFRESH-004"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-004 evidence captured",
+          "actual": "AC-VREFRESH-004 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VSTATUS-001",
+          "kind": "browser",
+          "status": "passed",
+          "summary": "supporting AC-VSTATUS-001",
+          "acIds": [
+            "AC-VSTATUS-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "user-visible",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "/dashboard",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VSTATUS-001 evidence captured",
+          "actual": "AC-VSTATUS-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VSTATUS-002",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VSTATUS-002",
+          "acIds": [
+            "AC-VSTATUS-002"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VSTATUS-002 evidence captured",
+          "actual": "AC-VSTATUS-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VSTATUS-003",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VSTATUS-003",
+          "acIds": [
+            "AC-VSTATUS-003"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VSTATUS-003 evidence captured",
+          "actual": "AC-VSTATUS-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VDRYRUN-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VDRYRUN-001",
+          "acIds": [
+            "AC-VDRYRUN-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VDRYRUN-001 evidence captured",
+          "actual": "AC-VDRYRUN-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VDRYRUN-002",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VDRYRUN-002",
+          "acIds": [
+            "AC-VDRYRUN-002"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VDRYRUN-002 evidence captured",
+          "actual": "AC-VDRYRUN-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VDRYRUN-003",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VDRYRUN-003",
+          "acIds": [
+            "AC-VDRYRUN-003"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VDRYRUN-003 evidence captured",
+          "actual": "AC-VDRYRUN-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-RELAX-001",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-RELAX-001",
+          "acIds": [
+            "AC-RELAX-001"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-RELAX-001 evidence captured",
+          "actual": "AC-RELAX-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-RELAX-002",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-RELAX-002",
+          "acIds": [
+            "AC-RELAX-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-RELAX-002 evidence captured",
+          "actual": "AC-RELAX-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-001",
+          "acIds": [
+            "AC-DOCS-001"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-DOCS-001 evidence captured",
+          "actual": "AC-DOCS-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-002",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-002",
+          "acIds": [
+            "AC-DOCS-002"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "completion-hygiene",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-DOCS-002 evidence captured",
+          "actual": "AC-DOCS-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-SCAN-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-SCAN-001",
+          "acIds": [
+            "AC-SCAN-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-SCAN-001 evidence captured",
+          "actual": "AC-SCAN-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-REGRESSION-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-REGRESSION-001",
+          "acIds": [
+            "AC-REGRESSION-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-REGRESSION-001 evidence captured",
+          "actual": "AC-REGRESSION-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "Host Blueprint gate has 17 required issue(s): change is covered by multiple specs: .specs/implemented/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md, .specs/proposed/dsh-native-skill-routing-and-minimax.md",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "Host Blueprint gate has 17 required issue(s): change is covered by multiple specs: .specs/implemented/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md, .specs/proposed/dsh-native-skill-routing-and-minimax.md",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "Host Blueprint gate has 17 required issue(s): change is covered by multiple specs: .specs/implemented/auto-compact-on-unrelated-task-done--preset-aware-dispatch.md, .specs/proposed/dsh-native-skill-routing-and-minimax.md"
+        }
+      ]
+    },
+    {
+      "id": "attempt-2",
+      "sessionId": "session-driver-close-vbf",
+      "capabilityHash": "aef7153b52647d69042d05d94353fdd005d4c60cfbe622e5a6450ec8da2934bd",
+      "resultCapability": "559a184aa374f02fce268291be0227a20cb560af3a44911246e8e74630ce8900",
+      "startedAt": "2026-09-08T13:51:52.701Z",
+      "completedAt": "2026-09-08T13:52:10.144Z",
+      "conclusion": "passed",
+      "summary": "[submittedBySessionId=session-driver-close-vbf]\nAuto-generated passing result.",
+      "acResults": [
+        {
+          "id": "AC-VPAY-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-001"
+          ]
+        },
+        {
+          "id": "AC-VPAY-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-002"
+          ]
+        },
+        {
+          "id": "AC-VPAY-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-003"
+          ]
+        },
+        {
+          "id": "AC-VPAY-004",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-004"
+          ]
+        },
+        {
+          "id": "AC-VPAY-005",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VPAY-005"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-001"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-002"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-003"
+          ]
+        },
+        {
+          "id": "AC-VREFRESH-004",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VREFRESH-004"
+          ]
+        },
+        {
+          "id": "AC-VSTATUS-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VSTATUS-001"
+          ]
+        },
+        {
+          "id": "AC-VSTATUS-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VSTATUS-002"
+          ]
+        },
+        {
+          "id": "AC-VSTATUS-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VSTATUS-003"
+          ]
+        },
+        {
+          "id": "AC-VDRYRUN-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VDRYRUN-001"
+          ]
+        },
+        {
+          "id": "AC-VDRYRUN-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VDRYRUN-002"
+          ]
+        },
+        {
+          "id": "AC-VDRYRUN-003",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-VDRYRUN-003"
+          ]
+        },
+        {
+          "id": "AC-RELAX-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-RELAX-001"
+          ]
+        },
+        {
+          "id": "AC-RELAX-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-RELAX-002"
+          ]
+        },
+        {
+          "id": "AC-DOCS-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-001"
+          ]
+        },
+        {
+          "id": "AC-DOCS-002",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-DOCS-002"
+          ]
+        },
+        {
+          "id": "AC-SCAN-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-SCAN-001"
+          ]
+        },
+        {
+          "id": "AC-REGRESSION-001",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-REGRESSION-001"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-VPAY-001",
+            "AC-VPAY-002",
+            "AC-VPAY-003",
+            "AC-VPAY-004",
+            "AC-VPAY-005",
+            "AC-VREFRESH-001",
+            "AC-VREFRESH-002",
+            "AC-VREFRESH-003",
+            "AC-VREFRESH-004",
+            "AC-VSTATUS-001",
+            "AC-VSTATUS-002",
+            "AC-VSTATUS-003",
+            "AC-VDRYRUN-001",
+            "AC-VDRYRUN-002",
+            "AC-VDRYRUN-003",
+            "AC-RELAX-001",
+            "AC-RELAX-002",
+            "AC-DOCS-001",
+            "AC-DOCS-002",
+            "AC-SCAN-001",
+            "AC-REGRESSION-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-001",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-001",
+          "acIds": [
+            "AC-VPAY-001"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-001 evidence captured",
+          "actual": "AC-VPAY-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-002",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-002",
+          "acIds": [
+            "AC-VPAY-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-002 evidence captured",
+          "actual": "AC-VPAY-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-003",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-003",
+          "acIds": [
+            "AC-VPAY-003"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-003 evidence captured",
+          "actual": "AC-VPAY-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-004",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-004",
+          "acIds": [
+            "AC-VPAY-004"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-004 evidence captured",
+          "actual": "AC-VPAY-004 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VPAY-005",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VPAY-005",
+          "acIds": [
+            "AC-VPAY-005"
+          ],
+          "surface": "api",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VPAY-005 evidence captured",
+          "actual": "AC-VPAY-005 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-001",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-001",
+          "acIds": [
+            "AC-VREFRESH-001"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-001 evidence captured",
+          "actual": "AC-VREFRESH-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-002",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-002",
+          "acIds": [
+            "AC-VREFRESH-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-002 evidence captured",
+          "actual": "AC-VREFRESH-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-003",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-003",
+          "acIds": [
+            "AC-VREFRESH-003"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-003 evidence captured",
+          "actual": "AC-VREFRESH-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VREFRESH-004",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-VREFRESH-004",
+          "acIds": [
+            "AC-VREFRESH-004"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-VREFRESH-004 evidence captured",
+          "actual": "AC-VREFRESH-004 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VSTATUS-001",
+          "kind": "browser",
+          "status": "passed",
+          "summary": "supporting AC-VSTATUS-001",
+          "acIds": [
+            "AC-VSTATUS-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "user-visible",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "/dashboard",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VSTATUS-001 evidence captured",
+          "actual": "AC-VSTATUS-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VSTATUS-002",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VSTATUS-002",
+          "acIds": [
+            "AC-VSTATUS-002"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VSTATUS-002 evidence captured",
+          "actual": "AC-VSTATUS-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VSTATUS-003",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VSTATUS-003",
+          "acIds": [
+            "AC-VSTATUS-003"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VSTATUS-003 evidence captured",
+          "actual": "AC-VSTATUS-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VDRYRUN-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VDRYRUN-001",
+          "acIds": [
+            "AC-VDRYRUN-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VDRYRUN-001 evidence captured",
+          "actual": "AC-VDRYRUN-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VDRYRUN-002",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VDRYRUN-002",
+          "acIds": [
+            "AC-VDRYRUN-002"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VDRYRUN-002 evidence captured",
+          "actual": "AC-VDRYRUN-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-VDRYRUN-003",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-VDRYRUN-003",
+          "acIds": [
+            "AC-VDRYRUN-003"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-VDRYRUN-003 evidence captured",
+          "actual": "AC-VDRYRUN-003 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-RELAX-001",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-RELAX-001",
+          "acIds": [
+            "AC-RELAX-001"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-RELAX-001 evidence captured",
+          "actual": "AC-RELAX-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-RELAX-002",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-RELAX-002",
+          "acIds": [
+            "AC-RELAX-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-RELAX-002 evidence captured",
+          "actual": "AC-RELAX-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-001",
+          "acIds": [
+            "AC-DOCS-001"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-DOCS-001 evidence captured",
+          "actual": "AC-DOCS-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-DOCS-002",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-DOCS-002",
+          "acIds": [
+            "AC-DOCS-002"
+          ],
+          "surface": "cli",
+          "moment": "static",
+          "evidenceLevel": "completion-hygiene",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-DOCS-002 evidence captured",
+          "actual": "AC-DOCS-002 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-SCAN-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-SCAN-001",
+          "acIds": [
+            "AC-SCAN-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-SCAN-001 evidence captured",
+          "actual": "AC-SCAN-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-REGRESSION-001",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-REGRESSION-001",
+          "acIds": [
+            "AC-REGRESSION-001"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node --test tests/*.test.js",
+          "oracle": "AC-REGRESSION-001 evidence captured",
+          "actual": "AC-REGRESSION-001 evidence captured",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": []
+    }
+  ],
+  "history": [
+    {
+      "stage": "implementing",
+      "cycle": {
+        "id": "cycle-91f97f14-fe58-4246-a3af-a313accee40e",
+        "intent": "natural",
+        "requestSessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-fda4447f-29d8-4595-aeba-00f50099abaa",
+            "boundAt": "2026-09-05T15:04:52.745Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/framework-verification-becomes-driver-friendly.md",
+        "approvedHash": "cadda9f771da460897a330dccddb64d25d5d3a9b06be3bb5b1f7f9477bf26f94",
+        "implementedFile": null
+      },
+      "snapshot": null,
+      "completedAt": null,
+      "attempts": []
+    },
+    {
+      "stage": "needs_changes",
+      "cycle": {
+        "id": "cycle-056fa17d-0114-4111-9407-e3ce0c996b2b",
+        "intent": "change",
+        "requestSessionId": "session-driver-close-vbf",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-driver-close-vbf",
+            "boundAt": "2026-09-08T13:39:08.280Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/framework-verification-becomes-driver-friendly.md",
+        "approvedHash": "2f21dbd46a946127550468e66b036bb70f8a4bd7becee98ebedf803351ddac26",
+        "implementedFile": null
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "67ee5129d989903dc02b1393b4258fb7b32d46448cd08c74ae679a35a0ba5040"
+      },
+      "completedAt": null,
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "session-driver-close-vbf",
+          "capabilityHash": "b9fb199305da8cf92703b70b3418117532029acc2aeeb965819db5d55575f21a",
+          "resultCapability": "10c7acb6e36161c3659ea993f1a236c4869bd271a721e05e893aae4e0b614ed0",
+          "startedAt": "2026-09-08T13:40:08.283Z",
+          "completedAt": "2026-09-08T13:40:37.202Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+            }
+          ]
+        },
+        {
+          "id": "attempt-2",
+          "sessionId": "session-driver-close-vbf",
+          "capabilityHash": "0851447743a27caa14b8f221b6eaa6d0eed66536226b512fcd27b702ec2cde75",
+          "resultCapability": "0fb5a51dd309669b8abbb057a560a10d4bfe5a085aaf76a6cf42514b06f8475e",
+          "startedAt": "2026-09-08T13:41:35.457Z",
+          "completedAt": "2026-09-08T13:41:52.998Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different",
+          "acResults": [
+            {
+              "id": "AC-VPAY-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VPAY-001"
+              ]
+            },
+            {
+              "id": "AC-VPAY-002",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VPAY-002"
+              ]
+            },
+            {
+              "id": "AC-VPAY-003",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VPAY-003"
+              ]
+            },
+            {
+              "id": "AC-VPAY-004",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VPAY-004"
+              ]
+            },
+            {
+              "id": "AC-VPAY-005",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VPAY-005"
+              ]
+            },
+            {
+              "id": "AC-VREFRESH-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VREFRESH-001"
+              ]
+            },
+            {
+              "id": "AC-VREFRESH-002",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VREFRESH-002"
+              ]
+            },
+            {
+              "id": "AC-VREFRESH-003",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VREFRESH-003"
+              ]
+            },
+            {
+              "id": "AC-VREFRESH-004",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VREFRESH-004"
+              ]
+            },
+            {
+              "id": "AC-VSTATUS-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VSTATUS-001"
+              ]
+            },
+            {
+              "id": "AC-VSTATUS-002",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VSTATUS-002"
+              ]
+            },
+            {
+              "id": "AC-VSTATUS-003",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VSTATUS-003"
+              ]
+            },
+            {
+              "id": "AC-VDRYRUN-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VDRYRUN-001"
+              ]
+            },
+            {
+              "id": "AC-VDRYRUN-002",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VDRYRUN-002"
+              ]
+            },
+            {
+              "id": "AC-VDRYRUN-003",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-VDRYRUN-003"
+              ]
+            },
+            {
+              "id": "AC-RELAX-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-RELAX-001"
+              ]
+            },
+            {
+              "id": "AC-RELAX-002",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-RELAX-002"
+              ]
+            },
+            {
+              "id": "AC-DOCS-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-DOCS-001"
+              ]
+            },
+            {
+              "id": "AC-DOCS-002",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-DOCS-002"
+              ]
+            },
+            {
+              "id": "AC-SCAN-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-SCAN-001"
+              ]
+            },
+            {
+              "id": "AC-REGRESSION-001",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-REGRESSION-001"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "scan-pass",
+              "kind": "command",
+              "status": "passed",
+              "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+              "acIds": [
+                "AC-VPAY-001",
+                "AC-VPAY-002",
+                "AC-VPAY-003",
+                "AC-VPAY-004",
+                "AC-VPAY-005",
+                "AC-VREFRESH-001",
+                "AC-VREFRESH-002",
+                "AC-VREFRESH-003",
+                "AC-VREFRESH-004",
+                "AC-VSTATUS-001",
+                "AC-VSTATUS-002",
+                "AC-VSTATUS-003",
+                "AC-VDRYRUN-001",
+                "AC-VDRYRUN-002",
+                "AC-VDRYRUN-003",
+                "AC-RELAX-001",
+                "AC-RELAX-002",
+                "AC-DOCS-001",
+                "AC-DOCS-002",
+                "AC-SCAN-001",
+                "AC-REGRESSION-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node lib/cli.js scan --all --cwd .",
+              "oracle": "0 required / 0 recommended",
+              "actual": "0 required / 0 recommended",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VPAY-001",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VPAY-001",
+              "acIds": [
+                "AC-VPAY-001"
+              ],
+              "surface": "api",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VPAY-001 evidence captured",
+              "actual": "AC-VPAY-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VPAY-002",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VPAY-002",
+              "acIds": [
+                "AC-VPAY-002"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VPAY-002 evidence captured",
+              "actual": "AC-VPAY-002 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VPAY-003",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VPAY-003",
+              "acIds": [
+                "AC-VPAY-003"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VPAY-003 evidence captured",
+              "actual": "AC-VPAY-003 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VPAY-004",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VPAY-004",
+              "acIds": [
+                "AC-VPAY-004"
+              ],
+              "surface": "api",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VPAY-004 evidence captured",
+              "actual": "AC-VPAY-004 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VPAY-005",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VPAY-005",
+              "acIds": [
+                "AC-VPAY-005"
+              ],
+              "surface": "api",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VPAY-005 evidence captured",
+              "actual": "AC-VPAY-005 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VREFRESH-001",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VREFRESH-001",
+              "acIds": [
+                "AC-VREFRESH-001"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VREFRESH-001 evidence captured",
+              "actual": "AC-VREFRESH-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VREFRESH-002",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VREFRESH-002",
+              "acIds": [
+                "AC-VREFRESH-002"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VREFRESH-002 evidence captured",
+              "actual": "AC-VREFRESH-002 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VREFRESH-003",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VREFRESH-003",
+              "acIds": [
+                "AC-VREFRESH-003"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VREFRESH-003 evidence captured",
+              "actual": "AC-VREFRESH-003 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VREFRESH-004",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-VREFRESH-004",
+              "acIds": [
+                "AC-VREFRESH-004"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-VREFRESH-004 evidence captured",
+              "actual": "AC-VREFRESH-004 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VSTATUS-001",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "supporting AC-VSTATUS-001",
+              "acIds": [
+                "AC-VSTATUS-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "user-visible",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "/dashboard",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-VSTATUS-001 evidence captured",
+              "actual": "AC-VSTATUS-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VSTATUS-002",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-VSTATUS-002",
+              "acIds": [
+                "AC-VSTATUS-002"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-VSTATUS-002 evidence captured",
+              "actual": "AC-VSTATUS-002 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VSTATUS-003",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-VSTATUS-003",
+              "acIds": [
+                "AC-VSTATUS-003"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-VSTATUS-003 evidence captured",
+              "actual": "AC-VSTATUS-003 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VDRYRUN-001",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-VDRYRUN-001",
+              "acIds": [
+                "AC-VDRYRUN-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-VDRYRUN-001 evidence captured",
+              "actual": "AC-VDRYRUN-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VDRYRUN-002",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-VDRYRUN-002",
+              "acIds": [
+                "AC-VDRYRUN-002"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-VDRYRUN-002 evidence captured",
+              "actual": "AC-VDRYRUN-002 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-VDRYRUN-003",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-VDRYRUN-003",
+              "acIds": [
+                "AC-VDRYRUN-003"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-VDRYRUN-003 evidence captured",
+              "actual": "AC-VDRYRUN-003 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-RELAX-001",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-RELAX-001",
+              "acIds": [
+                "AC-RELAX-001"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-RELAX-001 evidence captured",
+              "actual": "AC-RELAX-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-RELAX-002",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-RELAX-002",
+              "acIds": [
+                "AC-RELAX-002"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-RELAX-002 evidence captured",
+              "actual": "AC-RELAX-002 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-DOCS-001",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-DOCS-001",
+              "acIds": [
+                "AC-DOCS-001"
+              ],
+              "surface": "repository",
+              "moment": "static",
+              "evidenceLevel": "static-unit",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-DOCS-001 evidence captured",
+              "actual": "AC-DOCS-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-DOCS-002",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-DOCS-002",
+              "acIds": [
+                "AC-DOCS-002"
+              ],
+              "surface": "cli",
+              "moment": "static",
+              "evidenceLevel": "completion-hygiene",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-DOCS-002 evidence captured",
+              "actual": "AC-DOCS-002 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-SCAN-001",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-SCAN-001",
+              "acIds": [
+                "AC-SCAN-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-SCAN-001 evidence captured",
+              "actual": "AC-SCAN-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-REGRESSION-001",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-REGRESSION-001",
+              "acIds": [
+                "AC-REGRESSION-001"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node --test tests/*.test.js",
+              "oracle": "AC-REGRESSION-001 evidence captured",
+              "actual": "AC-REGRESSION-001 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

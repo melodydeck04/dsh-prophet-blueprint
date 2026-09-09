@@ -1,26 +1,18 @@
 ---
 name: verify-feature
-description: Run the verification flow for one Feature and print AC pass / fail per Feature. Use when the user types `/verify-feature` or asks to run the AC checks for a specific Feature.
+description: Execute requested Feature acceptance checks with real snapshot evidence. For existing verification status, read the record instead. Supports explicit /verify-feature and model selection after a request to execute checks.
 user-invocable: true
 ---
 
 # verify-feature
 
-Run the framework's three-step verification flow for one Feature and print a per-AC result. Writes one verification record to `.blueprint/verifications/<feature-id>.json`. Do not retry; the flow is idempotent on the active cycle.
+Loading this Skill supplies instructions, not permission or executable code. Reply in Chinese unless requested otherwise.
 
-Steps:
+1. Resolve the selected Feature and current approval through Host context. Status-only questions read existing results and stop; completed Features return existing evidence.
+2. For requested execution, use Host verification-request, verification-prepare and verification-start. Pass the exact record hash, prepared workspace, preparation capability and current Session id. Keep capability-bearing operations in the supported Host context.
+3. Execute declared checks in the prepared snapshot using available tools. Retain command, actual output, exit code and required browser observations. A procedure is not evidence. Report unrun checks explicitly; never mark them passed.
+4. Submit through verification-result with the current record hash, attempt id and result capability. Use verification-finalize only after acceptance. Failures remain failures. Inspect durable state before recovery; never hand-write records or blindly retry.
 
-1. Resolve the Feature id from the user message. Refuse to proceed if the id is missing or the Feature has no approved Spec.
-2. Call `verifyFeature({ featureId })` from `lib/skills/backing-modules.js#verifyFeature`. The function:
-   - Calls `lib/verification.js#startFeatureVerification({ cwd, featureId, snapshot: workingTree })` to register the attempt.
-   - For each `AC-*` in the Spec, decides passed / failed based on the matching `## Verification` line in the Spec.
-   - Calls `lib/verification.js#submitFeatureVerificationResult` to record one entry per AC.
-   - Calls `lib/orchestration.js#complete` to move the Feature to `stage: completed`.
-3. Return the per-AC table (columns `id`, `verdict`, `evidence`) plus a one-line summary. The summary counts passed / failed / total.
-4. If the Feature is already at `stage: completed`, return the existing verdict without rerunning the flow.
+Programmatic adapter: ../../lib/skills/backing-modules.js#verifyFeature requires verification_ready and an explicit runChecks callback. It prepares, starts, invokes the runner in the snapshot, submits real evidence and finalizes only if accepted. This export is not a registered model tool; use a supported executable Host/API entry or report its absence.
 
-Notes:
-
-- The flow writes to `.blueprint/verifications/<feature-id>.json`. That file is a record, not a transient output. Do not delete it.
-- The skill is `user-invocable: true`. The model may not auto-trigger it; the human must type `/verify-feature <id>`.
-- If `startFeatureVerification` throws because the Spec is not approved, surface the error verbatim and stop. Do not start a verification cycle for an unapproved Feature.
+Return per-AC status, evidence and remaining blockers. Both model and user invocation are allowed; Host approval and validation remain mandatory.

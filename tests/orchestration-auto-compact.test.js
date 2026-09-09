@@ -47,18 +47,18 @@ function makeDashboard() {
 	return async (cwd) => ({ project: { root: cwd, name: "project" }, catalog: { features: [makeFeature()] } });
 }
 
-test("dispatchCommand forwards capture + tick to the watcher (AC-ORCH-001)", async () => {
+test("explicit refinement forwards capture + tick to the watcher (AC-ORCH-001)", async () => {
 	const current = makeAgent();
 	const watcher = makeStubWatcher();
 	const orchestrator = createBlueprintOrchestrator({}, {
 		dashboard: makeDashboard(),
 		watcher,
 	});
-	await orchestrator.dispatchCommand("blueprint", { agent: current, rawInput: "@feature:search x", signal: { aborted: false }, commandId: "cmd-1" });
+	await orchestrator.dispatchNatural({ action: "refine", request: "@feature:search x" }, { agent: current, signal: { aborted: false } });
 	assert.equal(watcher.captures.length, 1);
 	assert.equal(watcher.captures[0].sessionId, "chat-1");
 	assert.equal(watcher.captures[0].capture.agent, current);
-	assert.equal(watcher.captures[0].capture.commandId, "cmd-1");
+	assert.equal(watcher.captures[0].capture.signal.aborted, false);
 	assert.equal(watcher.ticks.length, 1);
 	assert.equal(watcher.ticks[0].sessionId, "chat-1");
 	assert.equal(watcher.ticks[0].cwd, "D:/project");
@@ -88,7 +88,7 @@ test("dispatchCommand: tick is fire-and-forget (chat handler returns before tick
 		dashboard: makeDashboard(),
 		watcher,
 	});
-	const handlerPromise = orchestrator.dispatchCommand("blueprint", { agent: current, rawInput: "x" });
+	const handlerPromise = orchestrator.dispatchNatural({ action: "refine", request: "x" }, { agent: current });
 	const settled = await Promise.race([handlerPromise, new Promise((r) => setTimeout(() => r("timeout"), 50))]);
 	assert.notEqual(settled, "timeout", "dispatchCommand must not wait for tick");
 	resolveTick({ skipped: "ok" });

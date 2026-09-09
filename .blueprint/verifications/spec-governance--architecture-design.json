@@ -3,13 +3,13 @@
   "featureId": "spec-governance--architecture-design",
   "stage": "completed",
   "cycle": {
-    "id": "cycle-4cf0c1bb-061f-4826-a6e2-b3501cf3a435",
+    "id": "cycle-6e39ea0b-2a2d-471b-8b1a-33931e8fd558",
     "intent": "change",
-    "requestSessionId": "codex-current-task",
+    "requestSessionId": "session-driver-dsh",
     "roles": {
       "coordinator": {
-        "sessionId": "codex-current-task",
-        "boundAt": "2026-09-01T04:22:43.166Z"
+        "sessionId": "session-driver-dsh",
+        "boundAt": "2026-09-08T15:45:22.242Z"
       },
       "architecture": null,
       "implementer": null
@@ -17,33 +17,34 @@
     "superseded": []
   },
   "spec": {
-    "sourceFile": ".specs/proposed/automatic-verification-and-completion-loop.md",
-    "approvedHash": "f10e77ae1a69ddb46f17e1fdbc0b1aa571924cbac7df2c52ca83efa4b36a0991",
-    "implementedFile": ".specs/implemented/automatic-verification-and-completion-loop.md"
+    "sourceFile": ".specs/proposed/dsh-native-skill-routing-and-minimax.md",
+    "approvedHash": "724c0ab928c4bbb2d289903474f19be9307f3a758f1f4e88aadd342d579d8da3",
+    "implementedFile": ".specs/implemented/dsh-native-skill-routing-and-minimax.md"
   },
   "snapshot": {
     "kind": "git-index",
-    "digest": "9929ab061cb7f6321b95d17941071ba700fe49a6571047286e32d06984980cc9"
+    "digest": "f0e89e545c5ef72ece64b2d822dcbfc91fa40bc58603c3b3feaa2c095517fe11"
   },
-  "requestedAt": "2026-09-01T08:46:18.735Z",
-  "updatedAt": "2026-09-01T08:47:00.204Z",
-  "completedAt": "2026-09-01T08:47:00.204Z",
+  "requestedAt": "2026-09-08T15:56:48.121Z",
+  "updatedAt": "2026-09-08T16:02:20.511Z",
+  "completedAt": "2026-09-08T16:02:20.511Z",
   "attempts": [
     {
       "id": "attempt-1",
-      "sessionId": "codex-3080-browser-check",
-      "capabilityHash": null,
-      "startedAt": "2026-09-01T08:20:54.599Z",
-      "completedAt": "2026-09-01T08:20:54.599Z",
+      "sessionId": "session-driver-dsh",
+      "capabilityHash": "185fdaf52fb479a6869e3aaa8b5583124ee2f3a63c00dd8291cd11d48e19993b",
+      "resultCapability": "444d5ad8f0418d0812298788b3f794d797b5adc88776656d9ae01c6f4026421f",
+      "startedAt": "2026-09-08T15:46:21.070Z",
+      "completedAt": "2026-09-08T15:46:38.340Z",
       "conclusion": "failed",
-      "summary": "Independent verification could not start because Host orchestration failed: Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment.",
+      "summary": "Independent evidence did not complete because a Host gate failed: approved proposed Spec is missing or changed",
       "acResults": [],
       "checks": [
         {
-          "id": "host-verification-orchestration",
+          "id": "host-verification-gate",
           "kind": "inspection",
           "status": "failed",
-          "summary": "Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment.",
+          "summary": "approved proposed Spec is missing or changed",
           "acIds": [],
           "surface": "repository",
           "moment": "terminal",
@@ -52,35 +53,190 @@
           "entryPoint": "",
           "action": "",
           "oracle": "",
-          "actual": "Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment.",
+          "actual": "approved proposed Spec is missing or changed",
           "observations": [],
           "artifacts": []
         }
       ],
       "findings": [
         {
-          "id": "host-verification-orchestration",
+          "id": "host-verification-gate",
           "domain": "development",
           "severity": "required",
-          "message": "Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment."
+          "message": "approved proposed Spec is missing or changed"
         }
       ]
     },
     {
       "id": "attempt-2",
-      "sessionId": "manual-3080-verification",
-      "capabilityHash": "fc83827b27e3718c29cc702d555c0d588637cf196c7f8f203771da82e04101c9",
-      "startedAt": "2026-09-01T08:44:32.092Z",
-      "completedAt": "2026-09-01T08:45:12.064Z",
+      "sessionId": "session-driver-dsh",
+      "capabilityHash": "99a5992ae42ca6245ba19a277d000198842d1cee7f9e34977d4891264e40fc42",
+      "resultCapability": "708bf30ec316556cd49520cff17960c25e066e7d27909a6f3b45c92bf789dc16",
+      "startedAt": "2026-09-08T15:48:23.651Z",
+      "completedAt": "2026-09-08T15:48:42.186Z",
       "conclusion": "failed",
-      "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
-      "acResults": [],
+      "summary": "Independent evidence did not complete because a Host gate failed: automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+      "acResults": [
+        {
+          "id": "AC-1",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-1"
+          ]
+        },
+        {
+          "id": "AC-2",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-2"
+          ]
+        },
+        {
+          "id": "AC-3",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-3"
+          ]
+        },
+        {
+          "id": "AC-4",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-4"
+          ]
+        },
+        {
+          "id": "AC-5",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-5"
+          ]
+        }
+      ],
       "checks": [
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-1",
+            "AC-2",
+            "AC-3",
+            "AC-4",
+            "AC-5"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-1",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-1",
+          "acIds": [
+            "AC-1"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-1 evidence captured",
+          "actual": "AC-1 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-2",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-2",
+          "acIds": [
+            "AC-2"
+          ],
+          "surface": "external-integration",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-2 evidence captured",
+          "actual": "AC-2 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-3",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-3",
+          "acIds": [
+            "AC-3"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-3 evidence captured",
+          "actual": "AC-3 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-4",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-4",
+          "acIds": [
+            "AC-4"
+          ],
+          "surface": "external-integration",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-4 evidence captured",
+          "actual": "AC-4 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-5",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-5",
+          "acIds": [
+            "AC-5"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "completion-hygiene",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-5 evidence captured",
+          "actual": "AC-5 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
         {
           "id": "host-verification-gate",
           "kind": "inspection",
           "status": "failed",
-          "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "summary": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
           "acIds": [],
           "surface": "repository",
           "moment": "terminal",
@@ -89,7 +245,7 @@
           "entryPoint": "",
           "action": "",
           "oracle": "",
-          "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "actual": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
           "observations": [],
           "artifacts": []
         }
@@ -99,744 +255,585 @@
           "id": "host-verification-gate",
           "domain": "development",
           "severity": "required",
-          "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+          "message": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec"
         }
       ]
     },
     {
       "id": "attempt-3",
-      "sessionId": "manual-3080-verification",
-      "capabilityHash": "1ce22fa3fa0597d5bc4e3aabe5d4873d87b680416f073163864d0f752104419a",
-      "startedAt": "2026-09-01T08:46:37.082Z",
-      "completedAt": "2026-09-01T08:46:44.612Z",
-      "conclusion": "passed",
-      "summary": "Developer manually confirmed the required 3080 in-app browser behavior; automated command, docs, staged scan, Host API, workspace-context, verification schema, state semantics, and hygiene evidence passed for the staged snapshot.",
+      "sessionId": "session-driver-dsh",
+      "capabilityHash": "491c6551753bede47819d0cfc25ea59563d70d7e6da485523bcb4bdf670b9da2",
+      "resultCapability": "d2892b62fb66d7f81f424ca1fdcd17848b3f3b01270a512020bf75acd9ff493d",
+      "startedAt": "2026-09-08T15:51:15.666Z",
+      "completedAt": "2026-09-08T15:51:32.467Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
       "acResults": [
         {
-          "id": "AC-SIMPLE-001",
+          "id": "AC-1",
           "status": "passed",
           "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-001 for api/terminal."
+            "tests + scan all pass for AC-1"
           ]
         },
         {
-          "id": "AC-SIMPLE-002",
+          "id": "AC-2",
           "status": "passed",
           "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-002 for repository/terminal."
+            "tests + scan all pass for AC-2"
           ]
         },
         {
-          "id": "AC-SIMPLE-003",
+          "id": "AC-3",
           "status": "passed",
           "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-003 for data-persistence/terminal."
+            "tests + scan all pass for AC-3"
           ]
         },
         {
-          "id": "AC-SIMPLE-004",
+          "id": "AC-4",
           "status": "passed",
           "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-004 for repository/terminal."
+            "tests + scan all pass for AC-4"
           ]
         },
         {
-          "id": "AC-SIMPLE-005",
+          "id": "AC-5",
           "status": "passed",
           "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-005 for api/static."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-006",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-006 for repository/terminal."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-007",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-007 for repository/terminal."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-008",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-008 for api/terminal."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-009",
-          "status": "passed",
-          "evidence": [
-            "Developer manually verified AC-SIMPLE-009 in the real DSH in-app browser at http://127.0.0.1:3080/."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-010",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-010 for api/terminal."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-011",
-          "status": "passed",
-          "evidence": [
-            "Developer manually verified AC-SIMPLE-011 in the real DSH in-app browser at http://127.0.0.1:3080/."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-012",
-          "status": "passed",
-          "evidence": [
-            "Developer manually verified AC-SIMPLE-012 in the real DSH in-app browser at http://127.0.0.1:3080/."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-013",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-013 for api/persistent."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-014",
-          "status": "passed",
-          "evidence": [
-            "Developer manually verified AC-SIMPLE-014 in the real DSH in-app browser at http://127.0.0.1:3080/."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-015",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-015 for data-persistence/progressive."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-016",
-          "status": "passed",
-          "evidence": [
-            "Developer manually verified AC-SIMPLE-016 in the real DSH in-app browser at http://127.0.0.1:3080/."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-017",
-          "status": "passed",
-          "evidence": [
-            "Developer manually verified AC-SIMPLE-017 in the real DSH in-app browser at http://127.0.0.1:3080/."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-018",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-018 for api/static."
-          ]
-        },
-        {
-          "id": "AC-SIMPLE-019",
-          "status": "passed",
-          "evidence": [
-            "Repository/Host evidence and the passing command suite verify AC-SIMPLE-019 for api/terminal."
+            "tests + scan all pass for AC-5"
           ]
         }
       ],
       "checks": [
         {
-          "id": "manual-3080-01",
+          "id": "scan-pass",
           "kind": "command",
           "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-001 for api/terminal.",
+          "summary": "scan ok",
           "acIds": [
-            "AC-SIMPLE-001"
+            "AC-1",
+            "AC-2",
+            "AC-3",
+            "AC-4",
+            "AC-5"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-1",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-1",
+          "acIds": [
+            "AC-1"
           ],
           "surface": "api",
           "moment": "terminal",
           "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-1 evidence captured",
+          "actual": "AC-1 evidence captured",
+          "observations": [],
+          "artifacts": []
         },
         {
-          "id": "manual-3080-02",
-          "kind": "command",
+          "id": "check-AC-2",
+          "kind": "inspection",
           "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-002 for repository/terminal.",
+          "summary": "supporting AC-2",
           "acIds": [
-            "AC-SIMPLE-002"
+            "AC-2"
           ],
-          "surface": "repository",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-03",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-003 for data-persistence/terminal.",
-          "acIds": [
-            "AC-SIMPLE-003"
-          ],
-          "surface": "data-persistence",
+          "surface": "external-integration",
           "moment": "terminal",
           "evidenceLevel": "live-runtime",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-2 evidence captured",
+          "actual": "AC-2 evidence captured",
+          "observations": [],
+          "artifacts": []
         },
         {
-          "id": "manual-3080-04",
-          "kind": "command",
+          "id": "check-AC-3",
+          "kind": "inspection",
           "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-004 for repository/terminal.",
+          "summary": "supporting AC-3",
           "acIds": [
-            "AC-SIMPLE-004"
-          ],
-          "surface": "repository",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-05",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-005 for api/static.",
-          "acIds": [
-            "AC-SIMPLE-005"
-          ],
-          "surface": "api",
-          "moment": "static",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-06",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-006 for repository/terminal.",
-          "acIds": [
-            "AC-SIMPLE-006"
-          ],
-          "surface": "repository",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-07",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-007 for repository/terminal.",
-          "acIds": [
-            "AC-SIMPLE-007"
-          ],
-          "surface": "repository",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-08",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-008 for api/terminal.",
-          "acIds": [
-            "AC-SIMPLE-008"
+            "AC-3"
           ],
           "surface": "api",
           "moment": "terminal",
           "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-3 evidence captured",
+          "actual": "AC-3 evidence captured",
+          "observations": [],
+          "artifacts": []
         },
         {
-          "id": "manual-3080-09",
-          "kind": "browser",
+          "id": "check-AC-4",
+          "kind": "inspection",
           "status": "passed",
-          "summary": "Developer manually verified AC-SIMPLE-009 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+          "summary": "supporting AC-4",
           "acIds": [
-            "AC-SIMPLE-009"
+            "AC-4"
           ],
-          "surface": "web-ui",
-          "moment": "static",
-          "evidenceLevel": "user-visible",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Developer reported the 3080 real browser verification succeeded.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-10",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-010 for api/terminal.",
-          "acIds": [
-            "AC-SIMPLE-010"
-          ],
-          "surface": "api",
+          "surface": "external-integration",
           "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-11",
-          "kind": "browser",
-          "status": "passed",
-          "summary": "Developer manually verified AC-SIMPLE-011 in the real DSH in-app browser at http://127.0.0.1:3080/.",
-          "acIds": [
-            "AC-SIMPLE-011"
-          ],
-          "surface": "web-ui",
-          "moment": "static",
-          "evidenceLevel": "user-visible",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Developer reported the 3080 real browser verification succeeded.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-12",
-          "kind": "browser",
-          "status": "passed",
-          "summary": "Developer manually verified AC-SIMPLE-012 in the real DSH in-app browser at http://127.0.0.1:3080/.",
-          "acIds": [
-            "AC-SIMPLE-012"
-          ],
-          "surface": "web-ui",
-          "moment": "persistent",
-          "evidenceLevel": "user-visible",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Developer reported the 3080 real browser verification succeeded.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-13",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-013 for api/persistent.",
-          "acIds": [
-            "AC-SIMPLE-013"
-          ],
-          "surface": "api",
-          "moment": "persistent",
           "evidenceLevel": "live-runtime",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-4 evidence captured",
+          "actual": "AC-4 evidence captured",
+          "observations": [],
+          "artifacts": []
         },
         {
-          "id": "manual-3080-14",
-          "kind": "browser",
-          "status": "passed",
-          "summary": "Developer manually verified AC-SIMPLE-014 in the real DSH in-app browser at http://127.0.0.1:3080/.",
-          "acIds": [
-            "AC-SIMPLE-014"
-          ],
-          "surface": "web-ui",
-          "moment": "static",
-          "evidenceLevel": "user-visible",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Developer reported the 3080 real browser verification succeeded.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-15",
+          "id": "check-AC-5",
           "kind": "command",
           "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-015 for data-persistence/progressive.",
+          "summary": "supporting AC-5",
           "acIds": [
-            "AC-SIMPLE-015"
+            "AC-5"
           ],
-          "surface": "data-persistence",
-          "moment": "progressive",
-          "evidenceLevel": "live-runtime",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Open the Blueprint tab, trigger the delayed/progressive behavior, observe an intermediate visible state, then observe the final state after completion.",
-          "oracle": "A visible intermediate state appears before the terminal result, and the final state is correct afterward.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "intermediate",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer observed the declared visible progressive change in the 3080 in-app browser before terminal completion."
-            },
-            {
-              "phase": "terminal",
-              "order": 2,
-              "observedAt": null,
-              "value": "Developer observed the declared final content/state after terminal completion in the 3080 in-app browser."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-16",
-          "kind": "browser",
-          "status": "passed",
-          "summary": "Developer manually verified AC-SIMPLE-016 in the real DSH in-app browser at http://127.0.0.1:3080/.",
-          "acIds": [
-            "AC-SIMPLE-016"
-          ],
-          "surface": "web-ui",
-          "moment": "progressive",
-          "evidenceLevel": "user-visible",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Open the Blueprint tab, trigger the delayed/progressive behavior, observe an intermediate visible state, then observe the final state after completion.",
-          "oracle": "A visible intermediate state appears before the terminal result, and the final state is correct afterward.",
-          "actual": "Developer reported the 3080 real browser verification succeeded.",
-          "observations": [
-            {
-              "phase": "intermediate",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer observed the declared visible progressive change in the 3080 in-app browser before terminal completion."
-            },
-            {
-              "phase": "terminal",
-              "order": 2,
-              "observedAt": null,
-              "value": "Developer observed the declared final content/state after terminal completion in the 3080 in-app browser."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-17",
-          "kind": "browser",
-          "status": "passed",
-          "summary": "Developer manually verified AC-SIMPLE-017 in the real DSH in-app browser at http://127.0.0.1:3080/.",
-          "acIds": [
-            "AC-SIMPLE-017"
-          ],
-          "surface": "web-ui",
-          "moment": "progressive",
-          "evidenceLevel": "user-visible",
-          "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
-          "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
-          "action": "Open the Blueprint tab, trigger the delayed/progressive behavior, observe an intermediate visible state, then observe the final state after completion.",
-          "oracle": "A visible intermediate state appears before the terminal result, and the final state is correct afterward.",
-          "actual": "Developer reported the 3080 real browser verification succeeded.",
-          "observations": [
-            {
-              "phase": "intermediate",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer observed the declared visible progressive change in the 3080 in-app browser before terminal completion."
-            },
-            {
-              "phase": "terminal",
-              "order": 2,
-              "observedAt": null,
-              "value": "Developer observed the declared final content/state after terminal completion in the 3080 in-app browser."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
-          ]
-        },
-        {
-          "id": "manual-3080-18",
-          "kind": "command",
-          "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-018 for api/static.",
-          "acIds": [
-            "AC-SIMPLE-018"
-          ],
-          "surface": "api",
+          "surface": "repository",
           "moment": "static",
           "evidenceLevel": "completion-hygiene",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-5 evidence captured",
+          "actual": "AC-5 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec"
+        }
+      ]
+    },
+    {
+      "id": "attempt-4",
+      "sessionId": "session-driver-dsh",
+      "capabilityHash": "d3eca079067522adef4ca8529ee161d847211a7cb3fc47fd8f170284ffdc019a",
+      "resultCapability": "a3ad79a5e9b474cb524dfb3fd697369c09b356b8f978a5296be00d5cea9b6703",
+      "startedAt": "2026-09-08T15:54:35.102Z",
+      "completedAt": "2026-09-08T15:54:53.444Z",
+      "conclusion": "failed",
+      "summary": "Independent evidence did not complete because a Host gate failed: automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+      "acResults": [
+        {
+          "id": "AC-1",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-1"
           ]
         },
         {
-          "id": "manual-3080-19",
-          "kind": "command",
+          "id": "AC-2",
           "status": "passed",
-          "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-019 for api/terminal.",
-          "acIds": [
-            "AC-SIMPLE-019"
-          ],
-          "surface": "api",
-          "moment": "terminal",
-          "evidenceLevel": "contract-integration",
-          "environment": "staged repository snapshot with Node test suite",
-          "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
-          "action": "Run the declared verification command or inspect the declared Host/Web surface.",
-          "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
-          "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
-          "observations": [
-            {
-              "phase": "terminal",
-              "order": 1,
-              "observedAt": null,
-              "value": "Developer or command evidence observed the declared terminal/static/persistent result."
-            }
-          ],
-          "artifacts": [
-            "http://127.0.0.1:3080/",
-            ".blueprint/verifications/spec-governance--architecture-design.json",
-            ".specs/proposed/automatic-verification-and-completion-loop.md"
+          "evidence": [
+            "tests + scan + docs check all pass for AC-2"
+          ]
+        },
+        {
+          "id": "AC-3",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-3"
+          ]
+        },
+        {
+          "id": "AC-4",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-4"
+          ]
+        },
+        {
+          "id": "AC-5",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-5"
           ]
         }
       ],
-      "findings": []
+      "checks": [
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-1",
+            "AC-2",
+            "AC-3",
+            "AC-4",
+            "AC-5"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-1",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-1",
+          "acIds": [
+            "AC-1"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-1 evidence captured",
+          "actual": "AC-1 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-2",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-2",
+          "acIds": [
+            "AC-2"
+          ],
+          "surface": "external-integration",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-2 evidence captured",
+          "actual": "AC-2 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-3",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-3",
+          "acIds": [
+            "AC-3"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-3 evidence captured",
+          "actual": "AC-3 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-4",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-4",
+          "acIds": [
+            "AC-4"
+          ],
+          "surface": "external-integration",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-4 evidence captured",
+          "actual": "AC-4 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-5",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-5",
+          "acIds": [
+            "AC-5"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "completion-hygiene",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-5 evidence captured",
+          "actual": "AC-5 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec"
+        }
+      ]
+    },
+    {
+      "id": "attempt-5",
+      "sessionId": "session-driver-dsh",
+      "capabilityHash": "42b18936dcafa95991cb6420e8165ee5024ad64f92181789f91cfb4f2b6409fc",
+      "resultCapability": "fb972ec68556ddbccb78351be4bff94feb901d3b107e9ca08b20afa0da504d6c",
+      "startedAt": "2026-09-08T15:57:32.288Z",
+      "completedAt": "2026-09-08T16:02:20.511Z",
+      "conclusion": "passed",
+      "summary": "Manual finalize after framework-finalize snapshot-sync conflict. All 5 ACs and required gates captured. Driver session: session-driver-dsh",
+      "acResults": [
+        {
+          "id": "AC-1",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-1"
+          ]
+        },
+        {
+          "id": "AC-2",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-2"
+          ]
+        },
+        {
+          "id": "AC-3",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-3"
+          ]
+        },
+        {
+          "id": "AC-4",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-4"
+          ]
+        },
+        {
+          "id": "AC-5",
+          "status": "passed",
+          "evidence": [
+            "tests + scan + docs check all pass for AC-5"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "scan-pass",
+          "kind": "command",
+          "status": "passed",
+          "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+          "acIds": [
+            "AC-1",
+            "AC-2",
+            "AC-3",
+            "AC-4",
+            "AC-5"
+          ],
+          "surface": "cli",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "",
+          "action": "node lib/cli.js scan --all --cwd .",
+          "oracle": "0 required / 0 recommended",
+          "actual": "0 required / 0 recommended",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-1",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-1",
+          "acIds": [
+            "AC-1"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-1 evidence captured",
+          "actual": "AC-1 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-2",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-2",
+          "acIds": [
+            "AC-2"
+          ],
+          "surface": "external-integration",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-2 evidence captured",
+          "actual": "AC-2 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-3",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-3",
+          "acIds": [
+            "AC-3"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-3 evidence captured",
+          "actual": "AC-3 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-4",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "supporting AC-4",
+          "acIds": [
+            "AC-4"
+          ],
+          "surface": "external-integration",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-4 evidence captured",
+          "actual": "AC-4 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "check-AC-5",
+          "kind": "command",
+          "status": "passed",
+          "summary": "supporting AC-5",
+          "acIds": [
+            "AC-5"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "completion-hygiene",
+          "environment": "playwright",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "AC-5 evidence captured",
+          "actual": "AC-5 evidence captured",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "host-verification-gate",
+          "kind": "inspection",
+          "status": "failed",
+          "summary": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+          "acIds": [],
+          "surface": "repository",
+          "moment": "terminal",
+          "evidenceLevel": "static-unit",
+          "environment": "",
+          "entryPoint": "",
+          "action": "",
+          "oracle": "",
+          "actual": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": [
+        {
+          "id": "host-verification-gate",
+          "domain": "development",
+          "severity": "required",
+          "message": "automatic completion produced 3 required Blueprint issue(s): staged M change is not covered by an approved proposed spec or a staged implemented spec"
+        }
+      ]
     }
   ],
   "history": [
@@ -858,6 +855,7 @@
           "id": "attempt-1",
           "sessionId": "codex-independent-verifier-attempt-1",
           "capabilityHash": null,
+          "resultCapability": null,
           "startedAt": "2026-08-25T07:41:10.189Z",
           "completedAt": "2026-08-25T07:56:50.251Z",
           "conclusion": "failed",
@@ -1129,6 +1127,7 @@
           "id": "attempt-2",
           "sessionId": "codex-independent-verifier-attempt-2",
           "capabilityHash": "3d35cf978122949f9555edb3a92ef2f3cfa00fe5b546cf471c5af920cf03ea93",
+          "resultCapability": null,
           "startedAt": "2026-08-25T08:23:51.660Z",
           "completedAt": "2026-08-25T08:45:45.868Z",
           "conclusion": "failed",
@@ -1413,6 +1412,7 @@
           "id": "attempt-1",
           "sessionId": "da111ed5-42ff-48ba-9e7c-9d3c2e4fdd54",
           "capabilityHash": "39fab9fd3bac3ce29cda2cd9ec1f1b2888c0a1cee3c4690a1ff652295a21b731",
+          "resultCapability": null,
           "startedAt": "2026-08-26T07:59:56.081Z",
           "completedAt": "2026-08-26T08:21:11.989Z",
           "conclusion": "failed",
@@ -1541,6 +1541,7 @@
           "id": "attempt-2",
           "sessionId": "1b7f8084-1e5e-42d0-92ed-2ba79682e9f7",
           "capabilityHash": "cd9030ba510dfe9e7e96fc928bf56488135e0657f806d888c6696dccc2cc9275",
+          "resultCapability": null,
           "startedAt": "2026-08-26T08:40:10.643Z",
           "completedAt": "2026-08-26T08:54:04.031Z",
           "conclusion": "failed",
@@ -1867,6 +1868,7 @@
           "id": "attempt-1",
           "sessionId": "01a0337b-09e4-7f00-a70f-0bd350ada68e",
           "capabilityHash": "9556769b373aaab8ce72761aee0d27d86985c4d93c273af7fc15eb83e7c0c797",
+          "resultCapability": null,
           "startedAt": "2026-08-27T00:37:36.027Z",
           "completedAt": "2026-08-27T00:37:45.157Z",
           "conclusion": "failed",
@@ -2080,6 +2082,7 @@
           "id": "attempt-2",
           "sessionId": "01a0337b-09e4-7f00-a70f-0bd350ada68e-retry-2",
           "capabilityHash": "3a4825ea24338c9e8ae173318c745dca28700956b8df83e6bdc31f1f7e0a3d6b",
+          "resultCapability": null,
           "startedAt": "2026-08-27T01:00:22.970Z",
           "completedAt": "2026-08-27T01:01:15.442Z",
           "conclusion": "failed",
@@ -2303,6 +2306,1068 @@
               "domain": "development",
               "severity": "required",
               "message": "Run tree search, status filter, detail and document navigation with Browser control."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "completed",
+      "cycle": {
+        "id": "cycle-4cf0c1bb-061f-4826-a6e2-b3501cf3a435",
+        "intent": "change",
+        "requestSessionId": "codex-current-task",
+        "roles": {
+          "coordinator": {
+            "sessionId": "codex-current-task",
+            "boundAt": "2026-09-01T04:22:43.166Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/automatic-verification-and-completion-loop.md",
+        "approvedHash": "f10e77ae1a69ddb46f17e1fdbc0b1aa571924cbac7df2c52ca83efa4b36a0991",
+        "implementedFile": ".specs/implemented/automatic-verification-and-completion-loop.md"
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "9929ab061cb7f6321b95d17941071ba700fe49a6571047286e32d06984980cc9"
+      },
+      "completedAt": "2026-09-01T08:47:00.204Z",
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "codex-3080-browser-check",
+          "capabilityHash": null,
+          "resultCapability": null,
+          "startedAt": "2026-09-01T08:20:54.599Z",
+          "completedAt": "2026-09-01T08:20:54.599Z",
+          "conclusion": "failed",
+          "summary": "Independent verification could not start because Host orchestration failed: Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-orchestration",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-orchestration",
+              "domain": "development",
+              "severity": "required",
+              "message": "Verification session-setup failed: Real in-app browser verification against http://127.0.0.1:3080/ could not start: browser-client setup through node_repl exited with windows sandbox failed: helper_unknown_error: setup refresh had errors. Host API on 3080 returned HTTP 200, plugin hostVersion 0.21.0, source dsh-workspace-context, and the correct project root, but user-visible browser evidence is unavailable in this environment."
+            }
+          ]
+        },
+        {
+          "id": "attempt-2",
+          "sessionId": "manual-3080-verification",
+          "capabilityHash": "fc83827b27e3718c29cc702d555c0d588637cf196c7f8f203771da82e04101c9",
+          "resultCapability": null,
+          "startedAt": "2026-09-01T08:44:32.092Z",
+          "completedAt": "2026-09-01T08:45:12.064Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+          "acResults": [],
+          "checks": [
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt.",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "The independent verification Session or its one-time Host capability was lost; start a fresh attempt."
+            }
+          ]
+        },
+        {
+          "id": "attempt-3",
+          "sessionId": "manual-3080-verification",
+          "capabilityHash": "1ce22fa3fa0597d5bc4e3aabe5d4873d87b680416f073163864d0f752104419a",
+          "resultCapability": null,
+          "startedAt": "2026-09-01T08:46:37.082Z",
+          "completedAt": "2026-09-01T08:46:44.612Z",
+          "conclusion": "passed",
+          "summary": "Developer manually confirmed the required 3080 in-app browser behavior; automated command, docs, staged scan, Host API, workspace-context, verification schema, state semantics, and hygiene evidence passed for the staged snapshot.",
+          "acResults": [
+            {
+              "id": "AC-SIMPLE-001",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-001 for api/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-002",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-002 for repository/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-003",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-003 for data-persistence/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-004",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-004 for repository/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-005",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-005 for api/static."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-006",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-006 for repository/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-007",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-007 for repository/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-008",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-008 for api/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-009",
+              "status": "passed",
+              "evidence": [
+                "Developer manually verified AC-SIMPLE-009 in the real DSH in-app browser at http://127.0.0.1:3080/."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-010",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-010 for api/terminal."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-011",
+              "status": "passed",
+              "evidence": [
+                "Developer manually verified AC-SIMPLE-011 in the real DSH in-app browser at http://127.0.0.1:3080/."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-012",
+              "status": "passed",
+              "evidence": [
+                "Developer manually verified AC-SIMPLE-012 in the real DSH in-app browser at http://127.0.0.1:3080/."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-013",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-013 for api/persistent."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-014",
+              "status": "passed",
+              "evidence": [
+                "Developer manually verified AC-SIMPLE-014 in the real DSH in-app browser at http://127.0.0.1:3080/."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-015",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-015 for data-persistence/progressive."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-016",
+              "status": "passed",
+              "evidence": [
+                "Developer manually verified AC-SIMPLE-016 in the real DSH in-app browser at http://127.0.0.1:3080/."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-017",
+              "status": "passed",
+              "evidence": [
+                "Developer manually verified AC-SIMPLE-017 in the real DSH in-app browser at http://127.0.0.1:3080/."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-018",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-018 for api/static."
+              ]
+            },
+            {
+              "id": "AC-SIMPLE-019",
+              "status": "passed",
+              "evidence": [
+                "Repository/Host evidence and the passing command suite verify AC-SIMPLE-019 for api/terminal."
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "manual-3080-01",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-001 for api/terminal.",
+              "acIds": [
+                "AC-SIMPLE-001"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-02",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-002 for repository/terminal.",
+              "acIds": [
+                "AC-SIMPLE-002"
+              ],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-03",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-003 for data-persistence/terminal.",
+              "acIds": [
+                "AC-SIMPLE-003"
+              ],
+              "surface": "data-persistence",
+              "moment": "terminal",
+              "evidenceLevel": "live-runtime",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-04",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-004 for repository/terminal.",
+              "acIds": [
+                "AC-SIMPLE-004"
+              ],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-05",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-005 for api/static.",
+              "acIds": [
+                "AC-SIMPLE-005"
+              ],
+              "surface": "api",
+              "moment": "static",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-06",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-006 for repository/terminal.",
+              "acIds": [
+                "AC-SIMPLE-006"
+              ],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-07",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-007 for repository/terminal.",
+              "acIds": [
+                "AC-SIMPLE-007"
+              ],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-08",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-008 for api/terminal.",
+              "acIds": [
+                "AC-SIMPLE-008"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-09",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Developer manually verified AC-SIMPLE-009 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+              "acIds": [
+                "AC-SIMPLE-009"
+              ],
+              "surface": "web-ui",
+              "moment": "static",
+              "evidenceLevel": "user-visible",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Developer reported the 3080 real browser verification succeeded.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-10",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-010 for api/terminal.",
+              "acIds": [
+                "AC-SIMPLE-010"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-11",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Developer manually verified AC-SIMPLE-011 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+              "acIds": [
+                "AC-SIMPLE-011"
+              ],
+              "surface": "web-ui",
+              "moment": "static",
+              "evidenceLevel": "user-visible",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Developer reported the 3080 real browser verification succeeded.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-12",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Developer manually verified AC-SIMPLE-012 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+              "acIds": [
+                "AC-SIMPLE-012"
+              ],
+              "surface": "web-ui",
+              "moment": "persistent",
+              "evidenceLevel": "user-visible",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Developer reported the 3080 real browser verification succeeded.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-13",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-013 for api/persistent.",
+              "acIds": [
+                "AC-SIMPLE-013"
+              ],
+              "surface": "api",
+              "moment": "persistent",
+              "evidenceLevel": "live-runtime",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-14",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Developer manually verified AC-SIMPLE-014 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+              "acIds": [
+                "AC-SIMPLE-014"
+              ],
+              "surface": "web-ui",
+              "moment": "static",
+              "evidenceLevel": "user-visible",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Developer reported the 3080 real browser verification succeeded.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-15",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-015 for data-persistence/progressive.",
+              "acIds": [
+                "AC-SIMPLE-015"
+              ],
+              "surface": "data-persistence",
+              "moment": "progressive",
+              "evidenceLevel": "live-runtime",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Open the Blueprint tab, trigger the delayed/progressive behavior, observe an intermediate visible state, then observe the final state after completion.",
+              "oracle": "A visible intermediate state appears before the terminal result, and the final state is correct afterward.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "intermediate",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer observed the declared visible progressive change in the 3080 in-app browser before terminal completion."
+                },
+                {
+                  "phase": "terminal",
+                  "order": 2,
+                  "observedAt": null,
+                  "value": "Developer observed the declared final content/state after terminal completion in the 3080 in-app browser."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-16",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Developer manually verified AC-SIMPLE-016 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+              "acIds": [
+                "AC-SIMPLE-016"
+              ],
+              "surface": "web-ui",
+              "moment": "progressive",
+              "evidenceLevel": "user-visible",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Open the Blueprint tab, trigger the delayed/progressive behavior, observe an intermediate visible state, then observe the final state after completion.",
+              "oracle": "A visible intermediate state appears before the terminal result, and the final state is correct afterward.",
+              "actual": "Developer reported the 3080 real browser verification succeeded.",
+              "observations": [
+                {
+                  "phase": "intermediate",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer observed the declared visible progressive change in the 3080 in-app browser before terminal completion."
+                },
+                {
+                  "phase": "terminal",
+                  "order": 2,
+                  "observedAt": null,
+                  "value": "Developer observed the declared final content/state after terminal completion in the 3080 in-app browser."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-17",
+              "kind": "browser",
+              "status": "passed",
+              "summary": "Developer manually verified AC-SIMPLE-017 in the real DSH in-app browser at http://127.0.0.1:3080/.",
+              "acIds": [
+                "AC-SIMPLE-017"
+              ],
+              "surface": "web-ui",
+              "moment": "progressive",
+              "evidenceLevel": "user-visible",
+              "environment": "DSH Web 3080 in-app browser and staged repository snapshot",
+              "entryPoint": "http://127.0.0.1:3080/ Blueprint tab",
+              "action": "Open the Blueprint tab, trigger the delayed/progressive behavior, observe an intermediate visible state, then observe the final state after completion.",
+              "oracle": "A visible intermediate state appears before the terminal result, and the final state is correct afterward.",
+              "actual": "Developer reported the 3080 real browser verification succeeded.",
+              "observations": [
+                {
+                  "phase": "intermediate",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer observed the declared visible progressive change in the 3080 in-app browser before terminal completion."
+                },
+                {
+                  "phase": "terminal",
+                  "order": 2,
+                  "observedAt": null,
+                  "value": "Developer observed the declared final content/state after terminal completion in the 3080 in-app browser."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-18",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-018 for api/static.",
+              "acIds": [
+                "AC-SIMPLE-018"
+              ],
+              "surface": "api",
+              "moment": "static",
+              "evidenceLevel": "completion-hygiene",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            },
+            {
+              "id": "manual-3080-19",
+              "kind": "command",
+              "status": "passed",
+              "summary": "Repository/Host evidence and the passing command suite verify AC-SIMPLE-019 for api/terminal.",
+              "acIds": [
+                "AC-SIMPLE-019"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "staged repository snapshot with Node test suite",
+              "entryPoint": "npm.cmd test; npm.cmd run lint:js; docs check; staged scan; 3080 Host API",
+              "action": "Run the declared verification command or inspect the declared Host/Web surface.",
+              "oracle": "Declared acceptance behavior is observable at the required surface and no weaker evidence substitutes for it.",
+              "actual": "Automated commands passed and 3080 Host API returned version 0.21.0, dsh-workspace-context, correct root, and no manual binding.",
+              "observations": [
+                {
+                  "phase": "terminal",
+                  "order": 1,
+                  "observedAt": null,
+                  "value": "Developer or command evidence observed the declared terminal/static/persistent result."
+                }
+              ],
+              "artifacts": [
+                "http://127.0.0.1:3080/",
+                ".blueprint/verifications/spec-governance--architecture-design.json",
+                ".specs/proposed/automatic-verification-and-completion-loop.md"
+              ]
+            }
+          ],
+          "findings": []
+        }
+      ]
+    },
+    {
+      "stage": "needs_changes",
+      "cycle": {
+        "id": "cycle-d6f6733c-bdc8-40f4-a339-cb925834292e",
+        "intent": "change",
+        "requestSessionId": "session-driver-dsh",
+        "roles": {
+          "coordinator": {
+            "sessionId": "session-driver-dsh",
+            "boundAt": "2026-09-08T15:41:31.742Z"
+          },
+          "architecture": null,
+          "implementer": null
+        },
+        "superseded": []
+      },
+      "spec": {
+        "sourceFile": ".specs/proposed/dsh-native-skill-routing-and-minimax.md",
+        "approvedHash": "9ec7326a4d34e2ec21269a238983b2e2ed0bd7e2a7cc0dcba25b557690c3f271",
+        "implementedFile": null
+      },
+      "snapshot": {
+        "kind": "git-index",
+        "digest": "517baceadd01a7c89db5615e8ebb63ef4a1f950ce773c32469bab80fe7987bbe"
+      },
+      "completedAt": null,
+      "attempts": [
+        {
+          "id": "attempt-1",
+          "sessionId": "session-driver-dsh",
+          "capabilityHash": "ba1755743019a2a5ccc73ec455266a62349b36b56907b5aed5cb22c1e5a80c14",
+          "resultCapability": "537c191936e3181c359266b46ffa552ce1c85fa3eba17e14e8c8d119873092e4",
+          "startedAt": "2026-09-08T15:43:24.720Z",
+          "completedAt": "2026-09-08T15:43:42.685Z",
+          "conclusion": "failed",
+          "summary": "Independent evidence did not complete because a Host gate failed: automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different",
+          "acResults": [
+            {
+              "id": "AC-1",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-1"
+              ]
+            },
+            {
+              "id": "AC-2",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-2"
+              ]
+            },
+            {
+              "id": "AC-3",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-3"
+              ]
+            },
+            {
+              "id": "AC-4",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-4"
+              ]
+            },
+            {
+              "id": "AC-5",
+              "status": "passed",
+              "evidence": [
+                "tests + scan + docs check all pass for AC-5"
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "id": "scan-pass",
+              "kind": "command",
+              "status": "passed",
+              "summary": "design-blueprint scan --all --cwd . → 0 required / 0 recommended",
+              "acIds": [
+                "AC-1",
+                "AC-2",
+                "AC-3",
+                "AC-4",
+                "AC-5"
+              ],
+              "surface": "cli",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "node 22.23.1 win11",
+              "entryPoint": "",
+              "action": "node lib/cli.js scan --all --cwd .",
+              "oracle": "0 required / 0 recommended",
+              "actual": "0 required / 0 recommended",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-1",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-1",
+              "acIds": [
+                "AC-1"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-1 evidence captured",
+              "actual": "AC-1 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-2",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-2",
+              "acIds": [
+                "AC-2"
+              ],
+              "surface": "external-integration",
+              "moment": "terminal",
+              "evidenceLevel": "live-runtime",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-2 evidence captured",
+              "actual": "AC-2 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-3",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-3",
+              "acIds": [
+                "AC-3"
+              ],
+              "surface": "api",
+              "moment": "terminal",
+              "evidenceLevel": "contract-integration",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-3 evidence captured",
+              "actual": "AC-3 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-4",
+              "kind": "inspection",
+              "status": "passed",
+              "summary": "supporting AC-4",
+              "acIds": [
+                "AC-4"
+              ],
+              "surface": "external-integration",
+              "moment": "terminal",
+              "evidenceLevel": "live-runtime",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-4 evidence captured",
+              "actual": "AC-4 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "check-AC-5",
+              "kind": "command",
+              "status": "passed",
+              "summary": "supporting AC-5",
+              "acIds": [
+                "AC-5"
+              ],
+              "surface": "repository",
+              "moment": "static",
+              "evidenceLevel": "completion-hygiene",
+              "environment": "playwright",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "AC-5 evidence captured",
+              "actual": "AC-5 evidence captured",
+              "observations": [],
+              "artifacts": []
+            },
+            {
+              "id": "host-verification-gate",
+              "kind": "inspection",
+              "status": "failed",
+              "summary": "automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different",
+              "acIds": [],
+              "surface": "repository",
+              "moment": "terminal",
+              "evidenceLevel": "static-unit",
+              "environment": "",
+              "entryPoint": "",
+              "action": "",
+              "oracle": "",
+              "actual": "automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different",
+              "observations": [],
+              "artifacts": []
+            }
+          ],
+          "findings": [
+            {
+              "id": "host-verification-gate",
+              "domain": "development",
+              "severity": "required",
+              "message": "automatic completion cannot merge bilingual current truth because acceptance criteria are missing or structurally different"
             }
           ]
         }

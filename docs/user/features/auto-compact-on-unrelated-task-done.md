@@ -8,7 +8,7 @@ The framework dispatches DSH's `/compact` slash command on the developer's behal
 
 The 200 KiB byte floor implicitly rate-limits the trigger. A successful compact summarises the conversation and drops the byte count, so the next auto-compact requires another 200 KiB to accumulate, which is the natural minimum cost worth paying.
 
-The dispatch is fire-and-forget. The CLI subprocess writes the `task/done` event to `session.jsonl`; a host-side watcher (`lib/auto-compact-watcher.js`) installed by the plugin's cordis entry observes the new event on the next `/blueprint` invocation, evaluates the trigger, and calls `ctx.compaction.compactNow(agent, signal, commandId)` — the same API the human `/compact` slash command uses internally. The chat handler does not block on the compact.
+The dispatch is fire-and-forget. The CLI subprocess writes the `task/done` event to `session.jsonl`; a host-side watcher (`lib/auto-compact-watcher.js`) installed by the plugin's Cordis entry observes the new event on the next `/blueprint` invocation, evaluates the trigger, resolves the active Agent's optional compaction engine through `ctx.agentPresets.serviceFor(agent, "compaction")`, and calls `engine.compactIfNeeded(agent, "context-overflow", signal)`. The chat handler does not block on the compact.
 
 ## When to reach for it
 
@@ -26,13 +26,13 @@ The trigger is event-driven (`task/done`); there is no periodic background sweep
 
 **What if the prior `task/done` is missing or has no `data.spec`?** The trigger is a no-op. The framework never invents a Feature from absent data.
 
-**How is `/compact` actually invoked?** The plugin's host-side watcher calls `ctx.compaction.compactNow(agent, signal, commandId)` — the same API the human `/compact` slash command uses internally. There is no manual `/compact` step for the developer.
+**How is compacting actually invoked?** The plugin's host-side watcher resolves the active Agent preset's optional `compaction` engine and calls `compactIfNeeded(agent, "context-overflow", signal)`. It does not require a host-level `/compact` command or host-plane `compaction` service.
 
-**What if my DSH profile does not expose `ctx.compaction`?** The host-side watcher logs a one-time `info` message at boot and reduces to a no-op. The CLI's `todo mark done` then prints `Auto-compact: skipped (no DSH slash-command dispatch surface; manual /compact required).` so the developer can fall back to typing `/compact` manually. The developer must upgrade the DSH baseline or pin a known-good version before this Feature can ship in full.
+**What if my Agent preset has no compaction engine?** The watcher logs one `info` message and skips auto-compact. The CLI still records the `task/done` event and prints its local dispatch outcome; no plugin startup dependency or DSH upgrade is required.
 
 ## It's working if
 
-- `design-blueprint todo mark <id> --spec <path> done` on a Feature switch with > 200 KiB accumulated prints `Auto-compact: skipped (no DSH slash-command dispatch surface; manual /compact required).` from the CLI's local run, and the next `/blueprint ...` invocation triggers the host-side watcher, which calls `ctx.compaction.compactNow` against the active session's agent.
+- `design-blueprint todo mark <id> --spec <path> done` on a Feature switch with > 200 KiB accumulated prints its local dispatch outcome, and the next `/blueprint ...` invocation triggers the host-side watcher, which resolves the active session's preset compaction engine.
 - The same CLI command on the same Spec prints `Auto-compact: skipped (same feature as previous: <featureId>).`.
 - The same CLI command on a Feature switch with < 200 KiB accumulated prints `Auto-compact: skipped (under threshold: <n> bytes < 200 KiB).`.
 - The first `task/done` in a fresh `session.jsonl` prints `Auto-compact: skipped (no previous task).`.

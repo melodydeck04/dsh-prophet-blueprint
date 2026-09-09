@@ -361,7 +361,7 @@ test("todo mark done on a different Spec with > 200 KiB bytes reports no-dispatc
 	}
 });
 
-test("CLI prints; host-side watcher dispatches via ctx.compaction.compactNow (AC-CLI-006)", async () => {
+test("CLI prints; host-side watcher dispatches through the active Agent preset (AC-CLI-006)", async () => {
 	const root = await fixture();
 	try {
 		await writeTodoYaml(root);
@@ -374,9 +374,14 @@ test("CLI prints; host-side watcher dispatches via ctx.compaction.compactNow (AC
 		assert.match(cli.stdout, /Auto-compact: skipped \(no DSH slash-command dispatch surface/);
 
 		const { createAutoCompactWatcher } = await import("../lib/auto-compact-watcher.js");
-		const compactNowCalls = [];
+		const compactIfNeededCalls = [];
 		const ctx = {
-			compaction: { compactNow: async (agent, signal, commandId) => { compactNowCalls.push({ agent, signal, commandId }); return null; } },
+			agentPresets: {
+				serviceFor(agent, name) {
+					assert.equal(name, "compaction");
+					return { compactIfNeeded: async (...args) => { compactIfNeededCalls.push({ agent, args }); return null; } };
+				},
+			},
 			logger: { info() {}, warn() {} },
 		};
 		const watcher = createAutoCompactWatcher({ ctx, logger: { info() {}, warn() {} } });
@@ -384,8 +389,10 @@ test("CLI prints; host-side watcher dispatches via ctx.compaction.compactNow (AC
 		const tickResult = await watcher.tick({ cwd: root, sessionId: "s-host-2", nowMs: Date.now() });
 		assert.equal(tickResult.invoked, true);
 		assert.equal(tickResult.reason, "feature-switch");
-		assert.equal(compactNowCalls.length, 1);
-		assert.equal(compactNowCalls[0].commandId, "blueprint-auto-compact");
+		assert.equal(compactIfNeededCalls.length, 1);
+		assert.equal(compactIfNeededCalls[0].agent.id, "host-agent");
+		assert.equal(compactIfNeededCalls[0].args[0].id, "host-agent");
+		assert.equal(compactIfNeededCalls[0].args[1], "context-overflow");
 	} finally {
 		await rm(root, { recursive: true, force: true });
 	}

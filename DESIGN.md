@@ -84,10 +84,12 @@ The client cannot execute shell commands, write arbitrary paths, create or resum
 
 ## DSH compatibility
 
-The runtime baseline is DSH `0.1.1-rc.2` at official release revision `b150a55`, Cordis `4.0.1`, and Node.js `22.23.1`. The Host is a Cordis function plugin with declared `commands`, `systemPrompt`, `webServer`, and `tools` dependencies. The rc.2 Client uses `window.__ModuleLoader__.load`, the public `conversation.view` `slots.inject`/`slots.register` composition, Session projection, and input-trigger source contracts.
+The runtime baseline is DSH `0.1.1-rc.2` at official release revision `b150a55`, Cordis `4.0.1`, and Node.js `22.23.1`. The Host is a Cordis function plugin with declared `commands`, `systemPrompt`, `webServer`, `tools`, `skills`, and `agentPresets` dependencies. It never requires a host-plane `compaction` service: auto-compact resolves an optional preset-scoped engine through `agentPresets.serviceFor(agent, "compaction")`. The rc.2 Client uses `window.__ModuleLoader__.load`, the public `conversation.view` `slots.inject`/`slots.register` composition, Session projection, and input-trigger source contracts.
 
 The current master Client slot API differs and is migration guidance only. Upgrading the DSH baseline requires updating the compatibility record, peer graph, implementation, and real-profile checks together. Private APIs are never used as cross-version substitutes.
 
 
 
 
+
+Routing uses skillRoutingMessage before refinement; classifyIntent remains a legacy advisory helper. The Host dispatch supports route/status/refine/begin/complete. Compaction runs only on explicit refinement. verifyFeature requires a check runner and uses Host-prepared snapshot capabilities; Skill loading never executes an export.

@@ -10,7 +10,7 @@ Design Blueprint 是一个 DSH 插件，用于完成一条简单的开发闭环�
 
 ## 开发者体验
 
-- 输入普通需求或使用 `/blueprint <需求>`；两者进入同一个类型化完善契约。
+- 输入普通请求或使用 `/blueprint <请求>`；当前 Agent 从可用 Skill 目录中选择功能，状态与解释请求保持只读。明确要求完善需求时，才进入类型化完善契约。
 - 需要明确归属时使用 `@feature:<id>`。归属有歧义时会失败关闭，并且最多显示三个候选项。
 - 在 DSH Web 中，Blueprint 会自动跟随当前 Session 所属的 workspace path。`/blueprint-use <项目路径>` 只是在旧 Session、无项目 Session 或有意跨项目查看且 DSH 没有暴露可用 workspace path / Session `cwd` 时使用的手动 escape hatch。
 - Blueprint 会按需拆解参与者与目标、入口、正常流程、输入与输出、状态、规则、失败、边界、权限、持久化、兼容性、非目标和可观察验收。
@@ -42,13 +42,13 @@ Feature 父子关系表达产品能力包含。Component 归属、契约、部�
 - Host 组合：Cordis function plugin
 - Client 组合：通过 rc.2 的 `slots.inject` / `slots.register` 契约接入 `conversation.view`
 
-Host 注册公开的命令、系统提示、Web server 和工具服务。它不要求 DSH Agent 服务，也不强制创建 coordinator、architect、implementer 和 verifier 角色家族。Client 使用 DSH 懒加载模块、公开 conversation view slot、Session 投影、理解 DSH workspace 的项目解析和 input-trigger source。它不修改 Shell、不调用私有输入框 API、不创建 Session，也不拥有生命周期权限。
+Host 注册公开的命令、系统提示、Web server、工具、Skills 和 Agent-preset 服务。它不要求 DSH Agent 服务、host-plane `compaction` 服务，也不强制创建 coordinator、architect、implementer 和 verifier 角色家族。自动 compact 从当前 Agent preset 解析可选引擎，因此即使 DSH Web 没有暴露 host-plane compaction 也能加载插件。Client 使用 DSH 懒加载模块、公开 conversation view slot、Session 投影、理解 DSH workspace 的项目解析和 input-trigger source。它不修改 Shell、不调用私有输入框 API、不创建 Session，也不拥有生命周期权限。
 
 软件包继续作为由 `package.json` 和 `cordis.patch.yml` 声明的仓外 DSH bundle。最新 master 文档可用于迁移参考，但运行时代码遵循精确的已安装版本契约。
 
 ## 命令与 API
 
-- `/blueprint <需求>` 在当前 Chat 中完善一项需求。
+- `/blueprint <请求>` 在当前 Chat 中分派请求，仅在请求的目标需要时进入需求完善。
 - `/blueprint-use <项目路径>` 为无项目或旧 Session 记录一个手动兜底 Blueprint 项目。普通 DSH Web workspace 会根据当前 Session 所属 workspace path 自动选择；兜底永远不会覆盖 workspace path，也不会覆盖从 Session `cwd` 发现的真实 Blueprint 项目。
 - `/blueprint-status` 不触发模型回合，直接报告公开 Feature 状态。
 - `/blueprint-map` 不触发模型回合，直接输出 Feature 层级。
@@ -83,3 +83,4 @@ Blueprint 不保证一句不完整需求只有一个正确解释；它会暴露�
 
 
 
+/blueprint 入口现在提供只读路由上下文，由当前 Agent 从原生 Skill 目录选择能力。显式 refine 仍用于变更规划。状态查询不触发压缩。MiniMax 提示词修改仍待真实模型评估，尚未声称实测提升。

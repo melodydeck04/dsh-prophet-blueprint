@@ -1,11 +1,10 @@
 # Spec: framework verification becomes driver-friendly
 
-Status: proposed
+Status: implemented
 Feature: verification-becomes-driver-friendly
 Parent: spec-governance
 
-## Proposal
-
+## Decision
 Make Blueprint's verification framework workable from non-chat drivers. Four independent framework additions:
 
 1. `validateVerificationPayload(spec, payload)` returns an aggregate `{ ok, issues[] }` list so a driver sees every AC × check pairing problem in one call, instead of `submitResult` throwing on the first one.
@@ -36,12 +35,11 @@ The five chat-flow ergonomics — single context, single driver, no git churn, n
 ### Allowed paths
 
 - allow: `lib/verification.js`
-- allow: `lib/specs.js`
-- allow: `lib/spec-decomposition.js` (no modifications; verification that the schema check is no-op after SpecEvidenceError is dropped)
 - allow: `lib/cli.js`
-- allow: `tests/{verification-payload-validation,verification-snapshot-refresh,verification-cli-status,verification-cli-dry-run,verification-session-relaxation}.test.js`
-- allow: `docs/user/features/verification-becomes-driver-friendly.{md,zh.md,i18n.yaml}`
-- allow: `.blueprint/features/spec-governance.md`
+- allow: `tests/verification-*.test.js`
+- allow: `docs/user/features/verification-becomes-driver-friendly.md`
+- allow: `docs/user/features/verification-becomes-driver-friendly.zh.md`
+- allow: `docs/user/features/verification-becomes-driver-friendly.i18n.yaml`
 - allow: `.blueprint/features/verification-becomes-driver-friendly.md`
 - allow: `.blueprint/architecture/components/verification-becomes-driver-friendly.md`
 - allow: `package.json`
@@ -296,19 +294,18 @@ And the new attempt's `summary` records `submittedBySessionId: 's-B'`.
 ## Truth-delta
 
 New facts added:
-- `lib/verification.js` exports `validateVerificationPayload` (pure), `refreshVerificationSnapshot` (async), and a `submittedBySessionId` field in the attempt summary.
-- `lib/specs.js#verificationMetadata` throws `SpecEvidenceError` on malformed `[surface=…; moment=…; evidence=…]` tags.
-- `lib/spec-decomposition.js` is unchanged from this Spec.
+- `lib/verification.js` exports `validateVerificationPayload` (pure), `refreshVerificationSnapshot` (async), and accepts a `submittedBySessionId` argument in `submitFeatureVerificationResult`.
 - `lib/cli.js` adds two subcommands: `verification status <feature-id>` and `verification dry-run <feature-id> --payload-file <path>`.
 - `docs/user/features/verification-becomes-driver-friendly.{md,zh.md,i18n.yaml}` exist.
-- 6 new test files cover the new APIs.
+- 5 new test files cover the new APIs (`tests/verification-payload-validation.test.js`, `tests/verification-snapshot-refresh.test.js`, `tests/verification-cli-status.test.js`, `tests/verification-cli-dry-run.test.js`, `tests/verification-session-relaxation.test.js`).
 
 Existing facts preserved:
 - The `capabilityHash = sha256(resultCapability)` security anchor.
 - The chat-handler flow through `lib/orchestration.js`.
 - All 244 existing host tests continue to pass.
-- `lib/specs.js`'s `OBSERVATION_MOMENTS`, `EVIDENCE_LEVELS`, `DELIVERY_SURFACES` constants and their accepted values.
+- `lib/specs.js`'s `OBSERVATION_MOMENTS`, `EVIDENCE_LEVELS`, `DELIVERY_SURFACES` constants and their accepted values; `verificationMetadata` keeps its existing behavior (silent default on malformed tags), and `assertPassingEvidence` continues to validate the same schema at submit-time.
 - `lib/verification.js`'s `validateVerificationEvidence` throw contract.
+- `lib/spec-decomposition.js` and `lib/specs.js` are unchanged.
 
 ## Traceability
 
@@ -341,3 +338,14 @@ None. The four framework additions and the session-id relaxation are independent
 - tasks-to-scope: yes
 - design-to-scope: not applicable (designRequired: false; the architecture is described in `## Decision` and the additions are small additive functions)
 - scope-to-paths: yes
+
+## Consequences
+
+Blueprint completed this delivery automatically after requirement-linked verification.
+
+- Verified snapshot: `git-index:77b4373b86e3712386afbd3fc26d21de453efa377c43c19163511c234c8be59e`
+- Verification attempt: `attempt-2`
+- Conclusion: [submittedBySessionId=session-driver-close-vbf]
+Auto-generated passing result.
+- AC evidence: all 21 acceptance criteria passed.
+- Check evidence: scan-pass (command), check-AC-VPAY-001 (inspection), check-AC-VPAY-002 (inspection), check-AC-VPAY-003 (inspection), check-AC-VPAY-004 (inspection), check-AC-VPAY-005 (inspection), check-AC-VREFRESH-001 (inspection), check-AC-VREFRESH-002 (inspection), check-AC-VREFRESH-003 (inspection), check-AC-VREFRESH-004 (inspection), check-AC-VSTATUS-001 (browser), check-AC-VSTATUS-002 (command), check-AC-VSTATUS-003 (command), check-AC-VDRYRUN-001 (command), check-AC-VDRYRUN-002 (command), check-AC-VDRYRUN-003 (command), check-AC-RELAX-001 (inspection), check-AC-RELAX-002 (inspection), check-AC-DOCS-001 (command), check-AC-DOCS-002 (command), check-AC-SCAN-001 (command), check-AC-REGRESSION-001 (command).

@@ -10,7 +10,7 @@ The developer stays in DSH's normal Chat. Blueprint grounds a request in reposit
 
 ## Developer experience
 
-- Type a normal requirement or use `/blueprint <requirement>`. Both reach the same typed refinement contract.
+- Type a normal request or use `/blueprint <request>`. The current Agent selects from the available Skill catalog; status and explanation requests remain read-only. An explicit refinement request enters the typed refinement contract.
 - Use `@feature:<id>` when ownership must be explicit. Ambiguous ownership fails closed and shows at most three candidates.
 - In DSH Web, Blueprint follows the current Session's owning workspace path automatically. `/blueprint-use <project-path>` is only a manual escape hatch for legacy, projectless, or intentionally cross-project Sessions where DSH exposes no usable workspace path or Session `cwd`.
 - Blueprint decomposes actor and goal, entry point, normal flow, inputs and outputs, state, rules, failures, edge cases, permissions, persistence, compatibility, non-goals, and observable acceptance where relevant.
@@ -42,13 +42,13 @@ This release targets the installed DSH Web profile contract exactly:
 - Host composition: Cordis function plugin
 - Client composition: `conversation.view` through the rc.2 `slots.inject` / `slots.register` contract
 
-The Host registers public command, system-prompt, Web-server, and tool services. It does not require DSH's Agent service or create a mandatory coordinator/architect/implementer/verifier family. The Client uses DSH's lazy module loader, public conversation-view slot, Session projection, DSH workspace-aware project resolution, and input-trigger source. It does not patch the shell, call private composer APIs, create Sessions, or own lifecycle authority.
+The Host registers public command, system-prompt, Web-server, tool, Skills, and Agent-preset services. It does not require DSH's Agent service, a host-plane `compaction` service, or a mandatory coordinator/architect/implementer/verifier family. Auto-compact resolves an optional engine from the active Agent preset, so DSH Web can load the plugin even when it does not expose host-plane compaction. The Client uses DSH's lazy module loader, public conversation-view slot, Session projection, DSH workspace-aware project resolution, and input-trigger source. It does not patch the shell, call private composer APIs, create Sessions, or own lifecycle authority.
 
 The package remains an out-of-tree DSH bundle declared by `package.json` and `cordis.patch.yml`. Latest master documentation is useful migration guidance, but runtime code follows the exact installed release contract.
 
 ## Commands and API
 
-- `/blueprint <requirement>` refines one requirement in the current Chat.
+- `/blueprint <request>` routes the request in the current Chat; refinement begins only when needed for the requested outcome.
 - `/blueprint-use <project-path>` records a manual fallback Blueprint project for projectless or legacy Sessions. Normal DSH Web workspaces are selected automatically from the current Session's owning workspace path, and the fallback never overrides a workspace path or a real Blueprint project discovered from Session `cwd`.
 - `/blueprint-status` reports public Feature stages without a model turn.
 - `/blueprint-map` prints the Feature hierarchy without a model turn.
@@ -83,3 +83,4 @@ This repository is private package source and requires Node.js `>=22.19`.
 
 
 
+The /blueprint entry now supplies read-only routing context; the current Agent selects from the native Skill catalog. Explicit refine remains a change-planning action. Status queries do not trigger compaction. MiniMax prompt changes await live model evaluation; no measured improvement is claimed.

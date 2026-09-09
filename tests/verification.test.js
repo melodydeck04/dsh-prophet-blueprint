@@ -32,6 +32,7 @@ import {
 } from "../lib/verification.js";
 import { approveFeatureProposal, loadFeatureWorkflow } from "../lib/workflow.js";
 import { getBlueprintDashboard } from "../lib/web-api.js";
+import { verifyFeature } from "../lib/skills/backing-modules.js";
 import { loadFeatureCatalog } from "../lib/features.js";
 import { loadArchitectureCatalog } from "../lib/architecture.js";
 
@@ -219,6 +220,32 @@ async function startPreparedVerification(root, record, sessionId) {
 		preparationCapability: prepared.preparationCapability,
 	});
 }
+
+test("verification Skill executes snapshot checks and retains failure before completing a passing retry", async () => {
+	const root = await createGitFixture();
+	const hash = (await facts(root)).workflow.states.get("accounts").spec.reviewHash;
+	await approveFeatureProposal({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+	await commitAll(root, "approve proposal");
+	await beginFeatureImplementation({ cwd: root, featureId: "accounts", expectedSpecHash: hash, intent: "change", requestSessionId: "coordinator" });
+	for (const pass of [false, true]) {
+		await writeFile(join(root, "lib/accounts/index.js"), `export const account = ${pass};\n`, "utf8");
+		await git(root, "add", "lib/accounts/index.js");
+		await requestFeatureVerification({ cwd: root, featureId: "accounts", expectedSpecHash: hash });
+		const outcome = await verifyFeature({ cwd: root, featureId: "accounts", sessionId: `verifier-${pass}`, runChecks: async ({ workspacePath }) => {
+			assert.notEqual(workspacePath, root);
+			let passed = true;
+			try {
+				await execFile(process.execPath, ["--input-type=module", "-e", "import { readFileSync } from 'node:fs'; import assert from 'node:assert/strict'; assert.match(readFileSync('lib/accounts/index.js', 'utf8'), /account = true/);"], { cwd: workspacePath, windowsHide: true });
+			} catch { passed = false; }
+			assert.equal(passed, pass);
+			return passed ? passedResult() : failedResult();
+		} });
+		assert.equal(pass ? outcome.completed : outcome.complete, pass);
+	}
+	const record = (await facts(root)).verification.records.get("accounts");
+	assert.equal(record.stage, "completed");
+	assert.equal(record.attempts.length, 2);
+});
 
 test("approved delivery fails once, retains evidence, and completes automatically after a fresh passing attempt", async () => {
 	const root = await createGitFixture();
