@@ -106,3 +106,14 @@ The chat-agent flow continues to work without changes; this Feature is additive.
 - AC-DOCS-002: `node lib/cli.js docs check --cwd .` reports 0 required and 0 recommended issues after the new docs land. [surface=cli; moment=static; evidence=completion-hygiene]
 - AC-SCAN-001: `node lib/cli.js scan --all --cwd .` reports 0 required and 0 recommended issues after this Spec lands. [surface=cli; moment=terminal; evidence=contract-integration]
 - AC-REGRESSION-001: All 244 existing host tests continue to pass after the change, plus the new tests in this Spec. [surface=cli; moment=terminal; evidence=contract-integration]
+
+## Verified current behavior
+
+<!-- blueprint-current:framework-finalize-snapshot-coherence.md -->
+
+### applyTransaction keeps snapshot coherent during Spec finalize
+
+- AC-FIN-1: After `applyTransaction` completes a Spec promote, the git-index snapshot's `approvedSpecFiles` set contains the new implemented path and NOT the old proposed path. (Verified by reading the snapshot via `loadFeatureWorkflow` after the transaction returns.)
+- AC-FIN-2: A full verification cycle (`beginFeatureImplementation` → `requestFeatureVerification` → `prepareFeatureVerification` → `startFeatureVerification` → `submitFeatureVerificationResult` → `completeVerifiedFeature`) on a Spec with a broad scope (covering at least `lib/**`, `tests/**`, `docs/user/**`) reaches `stage: "completed"` without `manual-finalize` intervention. (Verified by running a synthetic cycle in `tests/verification-finalize-coherence.test.js` and asserting the final stage.)
+- AC-FIN-3: A full verification cycle on a Spec whose `.zh.md` uses the bilingual merged heading `## Acceptance criteria / 验收条件` (relying on the sectionList fix from `framework-verification-section-list-bilingual-merged-headings`) also reaches `stage: "completed"` without manual-finalize intervention. (Verifies that the two fixes compose: sectionList accepts the heading AND finalize keeps the snapshot coherent.)
+- AC-FIN-4: After a rolled-back `applyTransaction` (simulated by an injected scan failure), the original approval record at `.blueprint/approvals/<featureId>.json` is restored to its pre-transaction content. The next cycle can re-run without needing re-approval.

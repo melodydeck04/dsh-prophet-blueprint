@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "featureId": "verification-becomes-driver-friendly",
+  "spec": ".specs/implemented/framework-finalize-snapshot-coherence.md",
+  "specHash": "ef6b8e9de81aae48cf6373888bd66f4582ed8ff8022ec5808808f75f94e634f9",
+  "approvedAt": "2026-09-09T14:15:35.620Z"
+}

@@ -106,3 +106,14 @@ chat-agent 流程不变；本 Feature 是叠加的。
 - AC-DOCS-002:`node lib/cli.js docs check --cwd .` 报 0 required / 0 recommended issue。[surface=cli; moment=static; evidence=completion-hygiene]
 - AC-SCAN-001:`node lib/cli.js scan --all --cwd .` 报 0 required / 0 recommended issue。[surface=cli; moment=terminal; evidence=contract-integration]
 - AC-REGRESSION-001:改动后,所有 244 条既有 host 测试继续通过,加上本 Spec 的新测试。[surface=cli; moment=terminal; evidence=contract-integration]
+
+## 已验证的当前行为
+
+<!-- blueprint-current:framework-finalize-snapshot-coherence.md -->
+
+### applyTransaction 在 Spec finalize 期间保持 snapshot 一致
+
+- AC-FIN-1：`applyTransaction` 完成 Spec promote 后，git-index snapshot 的 `approvedSpecFiles` 集合**包含**新实现路径、**不包含**旧 proposed 路径。（通过 transaction 返回后用 `loadFeatureWorkflow` 读 snapshot 验证。）
+- AC-FIN-2：scope 较广的 Spec（至少覆盖 `lib/**`、`tests/**`、`docs/user/**`）跑完整 verification cycle（`beginFeatureImplementation` → `requestFeatureVerification` → `prepareFeatureVerification` → `startFeatureVerification` → `submitFeatureVerificationResult` → `completeVerifiedFeature`）到 `stage: "completed"`，**无 manual-finalize 介入**。（在 `tests/verification-finalize-coherence.test.js` 跑合成 cycle 断言最终 stage。）
+- AC-FIN-3：`.zh.md` 用双语合并标题 `## Acceptance criteria / 验收条件` 的 Spec（依赖前一份 Spec 修的 sectionList）跑同样完整 cycle，也到 `stage: "completed"`，**无 manual-finalize 介入**。（验证两处修复组合正确：sectionList 接受合并标题 AND finalize 保持 snapshot 一致。）
+- AC-FIN-4：模拟注入 scan 失败让 `applyTransaction` 回滚后，`.blueprint/approvals/<featureId>.json` 恢复到 transaction 前内容。下一次 cycle 可重跑无需重新审批。
