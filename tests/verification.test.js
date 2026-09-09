@@ -20,11 +20,13 @@ import {
 	completeVerifiedFeature,
 	failFeatureVerificationOrchestration,
 	loadVerificationCatalog,
+	mergeCurrentBrief,
 	normalizeVerificationResult,
 	parseVerificationRecord,
 	prepareFeatureVerification,
 	requestFeatureVerification,
 	requestLegacyFeatureVerification,
+	sectionList,
 	startFeatureVerification,
 	submitFeatureVerificationResult,
 	validateVerificationEvidence,
@@ -520,4 +522,53 @@ test("failed findings produce deterministic development, Spec, architecture, and
 		{ id: "finding-architecture", domain: "architecture", severity: "required", message: "ownership repair" },
 	] }] });
 	assert.match(mixed, /路线：mixed/);
+});
+
+test("sectionList — single-language heading returns rows (AC-SECT-1)", () => {
+	const content = "## 验收条件\n\n- AC-1: x\n- AC-2: y\n";
+	assert.deepEqual(sectionList(content, "验收条件"), ["- AC-1: x", "- AC-2: y"]);
+});
+
+test("sectionList — slash-merged heading returns rows (AC-SECT-2)", () => {
+	const content = "## Acceptance criteria / 验收条件\n\n- AC-1: x\n- AC-2: y\n";
+	assert.deepEqual(sectionList(content, "验收条件"), ["- AC-1: x", "- AC-2: y"]);
+});
+
+test("sectionList — parenthetical-merged heading returns rows (AC-SECT-3)", () => {
+	const content = "## 验收条件（Acceptance criteria）\n\n- AC-1: x\n- AC-2: y\n";
+	assert.deepEqual(sectionList(content, "验收条件"), ["- AC-1: x", "- AC-2: y"]);
+});
+
+test("sectionList — em-dash-merged heading returns rows (AC-SECT-4)", () => {
+	const content = "## 验收条件 — Acceptance criteria\n\n- AC-1: x\n- AC-2: y\n";
+	assert.deepEqual(sectionList(content, "验收条件"), ["- AC-1: x", "- AC-2: y"]);
+});
+
+test("sectionList — heading-with-target-as-prefix is rejected (AC-SECT-5)", () => {
+	const content = "## 验收条件总览\n\n- AC-1: x\n";
+	assert.deepEqual(sectionList(content, "验收条件"), []);
+});
+
+test("sectionList — non-## line is rejected (AC-SECT-6)", () => {
+	const content = "not a heading\n- AC-1: x\n";
+	assert.deepEqual(sectionList(content, "验收条件"), []);
+});
+
+test("mergeCurrentBrief — accepts bilingual merged heading in ZH Spec (AC-SECT-7)", () => {
+	// AC-SECT-7 contract: mergeCurrentBrief must run to completion on a .zh.md
+	// whose AC heading is a bilingual merge. The marker is absent from the
+	// fixture, so the function appends a marker line. Verifying the marker
+	// appears in the output proves the function did not early-return.
+	const zh = "## Acceptance criteria / 验收条件\n\n- AC-1: first\n- AC-2: second\n\n## Verification\n\n- AC-1: t\n";
+	const marker = "blueprint-current:verify-bilingual.md";
+	const out = mergeCurrentBrief(zh, {
+		marker,
+		heading: "已验证的当前行为",
+		title: "Test Feature",
+		acceptance: ["- AC-1: first", "- AC-2: second"],
+	});
+	assert.ok(out.includes(`<!-- ${marker} -->`), "mergeCurrentBrief must append the marker (proves no early-return on a ZH spec with bilingual merged heading)");
+	assert.ok(out.includes("## 已验证的当前行为"), "mergeCurrentBrief must append the verified-behavior heading");
+	assert.ok(out.includes("### Test Feature"), "mergeCurrentBrief must append the feature title");
+	assert.ok(out.includes("- AC-1: first"), "mergeCurrentBrief must keep the AC bullet from the input");
 });
