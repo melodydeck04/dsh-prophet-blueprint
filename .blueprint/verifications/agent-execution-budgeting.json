@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "featureId": "agent-execution-budgeting",
+  "stage": "completed",
+  "cycle": {
+    "id": "cycle-d0b2983f-e895-42d6-8c0a-9245657bd83e",
+    "intent": "change",
+    "requestSessionId": "session-driver-aeb",
+    "roles": {
+      "coordinator": {
+        "sessionId": "session-driver-aeb",
+        "boundAt": "2026-09-10T04:52:24.731Z"
+      },
+      "architecture": null,
+      "implementer": null
+    },
+    "superseded": []
+  },
+  "spec": {
+    "sourceFile": ".specs/proposed/agent-execution-budgeting.md",
+    "approvedHash": "5fe7c7b503b9d2c9730a194b5ec6649ea94be8314eb21be2e8ccfb19be7ac1af",
+    "implementedFile": ".specs/implemented/agent-execution-budgeting.md"
+  },
+  "snapshot": null,
+  "requestedAt": null,
+  "updatedAt": "2026-09-10T07:03:30.125Z",
+  "completedAt": "2026-09-10T07:03:30.125Z",
+  "attempts": [],
+  "history": []
+}

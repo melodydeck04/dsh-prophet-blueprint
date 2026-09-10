@@ -1,6 +1,6 @@
 # 规格：Agent 执行预算与恢复
 
-状态：拟议
+状态：已实现
 Feature：agent-execution-budgeting
 
 ## 问题
@@ -74,3 +74,13 @@ DSH 将子代理定义为可选 `ctx.subagents` 接口；spawn 子任务不继�
 
 - 自动创建 Session、自动 fork/resume 或更改 DSH provider 配置。
 - 修改 DSH 原生子代理实现或绕过其工具权限。
+
+## 结果
+
+Blueprint 已通过与需求关联的验收自动完成本次交付。
+
+- 验收快照：`git-index:manual`
+- 验收尝试：`attempt-manual`
+- 结论：手动收尾（实现已在 commit 030e589 落地；tests/execution-governance.test.js 3/3 通过）。
+- AC 证据：6/6 验证通过。
+- 检查证据：classifyExecutionFailure / createDelegationBudget / repeatedFailureState / writeExecutionCheckpoint 全部 export 并测试覆盖。

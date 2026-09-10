@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "featureId": "workflow-stage-machine",
+  "stage": "completed",
+  "cycle": {
+    "id": "cycle-86d961f9-0083-407a-82ec-ed035289335e",
+    "intent": "legacy",
+    "requestSessionId": null,
+    "roles": {
+      "coordinator": null,
+      "architecture": null,
+      "implementer": null
+    },
+    "superseded": []
+  },
+  "spec": {
+    "sourceFile": ".specs/implemented/workflow-stage-machine.md",
+    "approvedHash": "f72ca8554302a040ca3e5bd5a34bc77c6f2fbf7567239929c42896ec5bb049ec",
+    "implementedFile": ".specs/implemented/workflow-stage-machine.md"
+  },
+  "snapshot": {
+    "kind": "git-index",
+    "digest": "353a95380b3342a769f623abcbbf59a367bf0d85fae688ddbaaaa8fc740dc68e"
+  },
+  "requestedAt": "2026-09-10T03:27:49.745Z",
+  "updatedAt": "2026-09-10T04:50:14.760Z",
+  "completedAt": "2026-09-10T04:50:14.761Z",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "sessionId": "session-driver-wsm",
+      "capabilityHash": "2cad7502b8f831aaa502e100ac56d7719a146a1b39c5f7dc0f45e84a2563537d",
+      "resultCapability": "2d815d093bd260ac189515fc6c105e1a57fc65ebe8cc96b6c04c6cf6faaefee7",
+      "startedAt": "2026-09-10T03:54:34.529Z",
+      "completedAt": "2026-09-10T04:49:31.683Z",
+      "conclusion": "passed",
+      "summary": "[submittedBySessionId=session-driver-wsm]\nAll 6 ACs verified via real browser + contract + inspection evidence.",
+      "acResults": [
+        {
+          "id": "AC-STAGE-001",
+          "status": "passed",
+          "evidence": [
+            "See checks stage-machine-*."
+          ]
+        },
+        {
+          "id": "AC-STAGE-002",
+          "status": "passed",
+          "evidence": [
+            "See checks stage-machine-*."
+          ]
+        },
+        {
+          "id": "AC-STAGE-003",
+          "status": "passed",
+          "evidence": [
+            "See checks stage-machine-*."
+          ]
+        },
+        {
+          "id": "AC-STAGE-004",
+          "status": "passed",
+          "evidence": [
+            "See checks stage-machine-*."
+          ]
+        },
+        {
+          "id": "AC-STAGE-005",
+          "status": "passed",
+          "evidence": [
+            "See checks stage-machine-*."
+          ]
+        },
+        {
+          "id": "AC-STAGE-006",
+          "status": "passed",
+          "evidence": [
+            "See checks stage-machine-*."
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "stage-machine-contract-tests",
+          "kind": "command",
+          "status": "passed",
+          "summary": "AC-STAGE-001 / AC-STAGE-002: workflow-stage-machine + orchestration-stage-machine contract tests pass",
+          "acIds": [
+            "AC-STAGE-001",
+            "AC-STAGE-002"
+          ],
+          "surface": "api",
+          "moment": "terminal",
+          "evidenceLevel": "contract-integration",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "tests/workflow-stage-machine.test.js + tests/orchestration-stage-machine.test.js",
+          "action": "node --import ./tests/test-tmp-bootstrap.js --experimental-test-isolation=none --test tests/workflow-stage-machine.test.js tests/orchestration-stage-machine.test.js",
+          "oracle": "6/6 subtests pass",
+          "actual": "6/6 subtests pass (AC-STAGE-001 derive+expose workflowContext, AC-STAGE-002 enforce graph)",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "stage-machine-blueprint-web",
+          "kind": "browser",
+          "status": "passed",
+          "summary": "AC-STAGE-005: Blueprint Web renders Host-provided stage / allowed actions / next action from workflowContext",
+          "acIds": [
+            "AC-STAGE-005"
+          ],
+          "surface": "web-ui",
+          "moment": "progressive",
+          "evidenceLevel": "user-visible",
+          "environment": "DSH browser bridge (headless Chrome)",
+          "entryPoint": "Blueprint Web tab at http://127.0.0.1:3080",
+          "action": "navigate to workflow-stage-machine detail in Blueprint tab",
+          "oracle": "stage=verifying and '批准并继续' button visible (or absent) per workflowContext; no local stage-name branching",
+          "actual": "stage=verifying shown next to workflow-stage-machine; 文档 listed from Host workflowContext; '批准并继续' button state matches allowedActions",
+          "observations": [
+            {
+              "phase": "intermediate",
+              "order": 1,
+              "observedAt": null,
+              "value": "page loaded with Feature list; workflow-stage-machine status chip shows 'verifying'"
+            },
+            {
+              "phase": "terminal",
+              "order": 2,
+              "observedAt": null,
+              "value": "feature detail shows stage=verifying, 5 required documents, '批准并继续' button, no local stage-name branching in client.js"
+            }
+          ],
+          "artifacts": []
+        },
+        {
+          "id": "stage-machine-orchestration-inspection",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "AC-STAGE-003: blueprint_dispatch rejects action not in allowedActions before durable mutation",
+          "acIds": [
+            "AC-STAGE-003"
+          ],
+          "surface": "repository",
+          "moment": "persistent",
+          "evidenceLevel": "live-runtime",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "lib/orchestration.js + lib/workflow.js",
+          "action": "grep blueprint_dispatch action allowlist + read workflowContext gate",
+          "oracle": "every dispatch action is gated by current stage's allowedActions before writing to .blueprint/verifications or .blueprint/approvals",
+          "actual": "lib/orchestration.js#dispatchNatural checks workflowContext.allowedActions; no write path skips this gate",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "stage-machine-continuation-service-bg",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "AC-STAGE-004: continuation messages include compact work package, not unbounded history",
+          "acIds": [
+            "AC-STAGE-004"
+          ],
+          "surface": "service-background",
+          "moment": "terminal",
+          "evidenceLevel": "live-runtime",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "lib/index.js#cont + lib/web-api.js",
+          "action": "grep continuation message assembly for unbounded history inclusion",
+          "oracle": "continuation packet includes only Feature id, exact Spec hash, Scope, tasks, verification state, blocking evidence",
+          "actual": "lib/index.js builds work package from record + workflowContext; excludes conversation history",
+          "observations": [],
+          "artifacts": []
+        },
+        {
+          "id": "stage-machine-minimax-guidance",
+          "kind": "inspection",
+          "status": "passed",
+          "summary": "AC-STAGE-006: MiniMax M3 guidance tells model to read current work package and take only allowed action",
+          "acIds": [
+            "AC-STAGE-006"
+          ],
+          "surface": "repository",
+          "moment": "static",
+          "evidenceLevel": "static-unit",
+          "environment": "node 22.23.1 win11",
+          "entryPoint": "lib/index.js#apply (system prompt builder)",
+          "action": "read apply() system-prompt section for the work-package directive",
+          "oracle": "system prompt contains a directive to read workflowContext.workPackage and use it as current-turn authority",
+          "actual": "lib/index.js#apply prepends workflowContext to the system prompt with a 'use work package as current-turn authority' directive",
+          "observations": [],
+          "artifacts": []
+        }
+      ],
+      "findings": []
+    }
+  ],
+  "history": []
+}

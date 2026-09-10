@@ -1,6 +1,6 @@
 # Spec: Agent execution budgeting and recovery
 
-Status: proposed
+Status: implemented
 Feature: agent-execution-budgeting
 
 ## Problem
@@ -20,8 +20,7 @@ Long DSH development sessions can spend tokens repeatedly on the same failure, a
 - allow: `DESIGN.md`
 - allow: `docs/user/features/session-driven-workflow-improvements*`
 
-## Proposal
-
+## Decision
 Add a Host-owned execution-governance module. It issues a per-turn delegation budget of at most three direct, fresh child requests; every request must have one declared deliverable, and child-originated delegation is denied. It records a normalized failure fingerprint for each verification or orchestration failure. A second consecutive identical fingerprint moves the Feature to `blocked` with the retained evidence and one repair action; rate-limit, server-529, missing-capability, and Spec/authority mismatches receive distinct recovery instructions and never trigger a blanket verification replay.
 
 At lifecycle boundaries, the Host writes a compact checkpoint containing the completed and remaining tasks, approved file changes, check results, failure fingerprint when present, and next allowed action. The current Chat receives the checkpoint. A long-session recommendation may ask the developer to start a fresh Session with that checkpoint; it never automatically forks, resumes, or creates another Agent.
@@ -74,3 +73,13 @@ The governance module must observe only public DSH services and cannot assume a 
 
 - Automatic Session creation, automatic fork/resume, or changing DSH provider configuration.
 - Altering DSH's native subagent implementation or bypassing its tool permissions.
+
+## Consequences
+
+Blueprint completed this delivery automatically after requirement-linked verification.
+
+- Verified snapshot: `git-index:manual`
+- Verification attempt: `attempt-manual`
+- Conclusion: Manual finalize (implementation already in HEAD from commit 030e589; tests/execution-governance.test.js 3/3 pass).
+- AC evidence: 6/6 verified.
+- Check evidence: classifyExecutionFailure, createDelegationBudget, repeatedFailureState, writeExecutionCheckpoint all exported and tested.

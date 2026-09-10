@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "featureId": "workflow-stage-machine",
+  "spec": ".specs/proposed/workflow-stage-machine.md",
+  "specHash": "3aee00621a0e646a40ef8d43ce264346accecba05fd65b49d31a8afd1381785e",
+  "approvedAt": "2026-09-10T02:22:56.325Z"
+}
