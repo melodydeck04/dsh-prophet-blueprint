@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "featureId": "agent-execution-budgeting",
+  "spec": ".specs/proposed/agent-execution-budgeting.md",
+  "specHash": "5fe7c7b503b9d2c9730a194b5ec6649ea94be8314eb21be2e8ccfb19be7ac1af",
+  "approvedAt": "2026-09-10T02:33:56.784Z"
+}

@@ -62,6 +62,10 @@ Host 注册公开的命令、系统提示、Web server、工具、Skills 和 Age
 
 程序化导出包括 `./chat-commands`、`./orchestration`、`./project-binding`、`./web-api`、`./workflow`、`./verification`、`./features`、`./architecture`、`./reconciliation`、`./assistant-actions`、`./scan`、`./docs`、`./specs`、`./snapshot`、`./policy`、`./config`、`./init`、`./install-hook`、`./stamps` 和 `./version`。
 
+## 开发者工具
+
+[`tools/peek-session.mjs`](tools/peek-session.mjs) 是用于 zstd 压缩 DSH 会话日志的只读本地检查器，也支持子代理谱系。列表、树形、摘要、过滤、归档和隐私说明见[会话日志 cookbook](docs/cookbook/inspect-dsh-session-logs.md)。它不属于已发布的插件运行时，也不会启动 DSH。
+
 ## 项目权威
 
 `design-blueprint.json` 指定常驻指令、架构、公开契约、Spec 生命周期、Feature／审批／验证目录、文档政策和变更 Scope。仓库相对路径使用受支持的 `*`、`**` 和 `?` glob 语法；绝对路径和父级穿越会被拒绝。

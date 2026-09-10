@@ -45,10 +45,11 @@ verification.js ----- surface-aware evidence, staged snapshot, hygiene, completi
 - `lib/chat-commands.js` resolves one owning Feature and creates the shared `/blueprint` and tool refinement packet. It defines decomposition dimensions, stable requirement/scenario formats, quality gates, the three-question cap, and structural-risk triggers.
 - `lib/specs.js` parses the human-readable Spec into the canonical Change Package: identity, intent, impact/design, execution, verification targets, lifecycle, truth delta, and traceability. Explicit verification metadata uses `[surface=...; moment=...; evidence=...]`; legacy declarations receive a conservative deterministic classification.
 - `lib/orchestration.js` is the single-Chat adapter. It steers the initiating Agent for slash input, exposes `/blueprint-use` only as a manual fallback escape hatch, and exposes one `blueprint_dispatch` tool with `refine`, `begin`, and `complete` actions. It does not create mandatory role Agents.
-- `lib/workflow.js` joins proposed Specs, exact approvals, and verification state. Its public projection collapses internal states into six developer-facing stages.
+- `lib/workflow.js` joins proposed Specs, exact approvals, and verification state. Its public projection collapses internal states into six developer-facing stages and derives one immutable work package (`currentStage`, `allowedActions`, `nextRequiredAction`) for the current turn.
 - `lib/verification.js` binds delivery to an exact staged snapshot, validates each AC against its delivery surface, observation moment, and minimum evidence level, records append-only attempts, runs completion hygiene, recomputes Host gates, and performs recoverable completion. Optional independent verification can reuse the retained read/test guard without changing the default path.
+- `lib/execution-governance.js` provides provider-neutral delegation budgets, normalized operational-failure recovery guidance, repeated-failure blocking decisions, and durable compact checkpoints. It does not replace DSH's native subagent seam.
 - `lib/features.js`, `lib/architecture.js`, and `lib/reconciliation.js` load the developer-owned Feature tree, advanced Component projection, and current coverage findings without inventing product boundaries from directories.
-- `lib/web-api.js` exposes a bounded same-origin read model and deterministic actions. Document reads are restricted to paths already registered to the selected Feature.
+- `lib/web-api.js` exposes a bounded same-origin read model and deterministic actions. `approve-and-begin` records an exact approval, starts the lifecycle cycle, and returns the resulting Dashboard plus a continuation receipt. Document reads are restricted to paths already registered to the selected Feature.
 - `lib/scan.js`, `lib/snapshot.js`, `lib/policy.js`, and `lib/docs.js` enforce exact snapshot scope, lifecycle, documentation, and bilingual correspondence.
 - `lib/index.js` registers Cordis effects for commands, system prompt, model tool, and exact Web route. Every registration returns a disposer owned by plugin scope.
 
@@ -74,13 +75,13 @@ Completion hygiene inspects newly staged material for secret-like values and und
 
 `verifying` is reserved for a running attempt, automatically collectible evidence, or Host completion gates with no known failure. A known failure is `blocked`. The public projection attaches a reason code, owning layer, concise evidence, and exactly one recommended next action.
 
-The normal verifying Agent is the current DSH Agent. High-risk policy may add an independent read-only verifier. Agent identity, Session titles, browser storage, prompt markers, manual fallback bindings, and model prose never replace DSH workspace identity, repository authority, or Host checks.
+The normal verifying Agent is the current DSH Agent. High-risk policy may add an independent read-only verifier. Each mutating Blueprint dispatch reads the Host-derived work package and rejects an action outside its allowlist. Agent identity, Session titles, browser storage, prompt markers, manual fallback bindings, and model prose never replace DSH workspace identity, repository authority, or Host checks.
 
 ## Web client boundary
 
 The Web client is a searchable Feature hierarchy and detail/document viewer. A Feature detail projects current bilingual behavior, parent and children, dependencies, code paths, contracts, tests, documents, active Spec and exact hash, Change Package verification targets and traceability rows, actionable status, internal diagnostic state, and history available from registered artifacts. When the DSH Session `cwd` is not a Blueprint project, the setup state can bind the current Session to an existing Blueprint root supplied by the developer.
 
-The client cannot execute shell commands, write arbitrary paths, create or resume Agents, submit fabricated verification, or change the Chat target through selection. Exact approval remains a deterministic developer action; after approval the developer continues in the same DSH Chat.
+The client cannot execute shell commands, write arbitrary paths, create or resume Agents, submit fabricated verification, or change the Chat target through selection. `批准并继续` remains a deterministic developer action: it applies the Host-returned Dashboard immediately and asks the Host to queue one plugin-attributed follow-up only for the same live Session. An unavailable Agent is reported in the receipt and never fabricated as a delivered Chat message.
 
 ## DSH compatibility
 

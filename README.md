@@ -62,6 +62,10 @@ The package remains an out-of-tree DSH bundle declared by `package.json` and `co
 
 Programmatic exports include `./chat-commands`, `./orchestration`, `./project-binding`, `./web-api`, `./workflow`, `./verification`, `./features`, `./architecture`, `./reconciliation`, `./assistant-actions`, `./scan`, `./docs`, `./specs`, `./snapshot`, `./policy`, `./config`, `./init`, `./install-hook`, `./stamps`, and `./version`.
 
+## Developer tools
+
+[`tools/peek-session.mjs`](tools/peek-session.mjs) is a read-only local inspector for zstd-compressed DSH session logs, including subagent lineage. See the [session-log cookbook](docs/cookbook/inspect-dsh-session-logs.md) for list, tree, summary, filtering, archive, and privacy guidance. It is not part of the published plugin runtime and never starts DSH.
+
 ## Project authority
 
 `design-blueprint.json` names standing instructions, architecture, public contracts, the Spec lifecycle, Feature/approval/verification roots, documentation policy, and change scope. Repository-relative paths use the supported `*`, `**`, and `?` glob vocabulary; absolute paths and parent traversal are rejected.
